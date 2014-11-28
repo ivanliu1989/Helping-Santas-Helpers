@@ -1,17 +1,17 @@
-setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
-gc(); rm(list=ls())
-load('data/toys_rev1.RData')
-source("hours.R")
-
 ######################
 ### Init Parameter ###
 ######################
-input <- toy[8888,]
-reference_start_time <- strftime("2015/1/1 0:0", "%Y-%m-%d %H:%M:%OS")  # set when elf starts working on toy
-id = input$ToyId
-arrival_minute <- convert_to_minute(as.character(input$Arrival_time))
-duration <- as.integer(input$Duration)
-completed_minute <- 0
+toy_init <- function(input){
+    reference_start_time <- strftime("2015/1/1 0:0", "%Y-%m-%d %H:%M:%OS")  # set when elf starts working on toy
+    id = input$ToyId
+    arrival_minute <- convert_to_minute(as.character(input$Arrival_time))
+    duration <- as.integer(input$Duration)
+    completed_minute <- 0  
+    return(data.frame(reference_start_time=reference_start_time, id=id, 
+                      arrival_minute=arrival_minute, duration=duration, completed_minute=completed_minute))
+}
+input <- toy[888,]
+toy_task <- toy_init(input)
 
 
 ##################################
@@ -24,7 +24,8 @@ outside_toy_start_period <- function(arrival_minute, start_minute){
     # :return: True of outside of allowed starting period, False otherwise    
     return (start_minute < arrival_minute)
 }
-outside_toy_start_period(arrival_minute, 20000)
+outside_toy_start_period(toy_task$arrival_minute, 10000)
+
 
 ##################################
 ### 是否完成根据工作时间和效率 ###
@@ -36,10 +37,10 @@ is_complete <- function(duration, completed_minute, start_minute, elf_duration, 
     # param rating: elf's productivity rating
     # return: Boolean
     if (duration/rating <= elf_duration){
-        completed_minute <- start_minute + as.integer(ceil(duration/rating))
+        completed_minute <- start_minute + as.integer(ceiling(duration/rating))
         return(completed_minute)
     }else{
         return(FALSE)
-    }
-    
+    } 
 }
+is_complete(toy_task$duration, toy_task$completed_minute, 10000, 1000, 1.0)

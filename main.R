@@ -1,0 +1,4 @@
+setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
+gc(); rm(list=ls())
+load('data/toys_rev1.RData')
+source("hours.R")
