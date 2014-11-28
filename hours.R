@@ -40,24 +40,26 @@ is_sanctioned_time(hours_init, 19*60-1)
 ##############################
 ### 分配每分钟是否工作时间 ###
 ##############################
-def get_sanctioned_breakdown(self, start_minute, duration):
-    """ Whole days (24-hr time periods) contribute fixed quantities of sanctioned and unsanctioned time. After
-        accounting for the whole days in the duration, the remainder minutes are tabulated as un/sanctioned.
-        :param start_minute:
-        :param duration:
-        :return:
-        """
-full_days = duration / (self.minutes_in_24h)
-sanctioned = full_days * self.hours_per_day * 60
-unsanctioned = full_days * (24 - self.hours_per_day) * 60
-remainder_start = start_minute + full_days * self.minutes_in_24h
-for minute in xrange(remainder_start, start_minute+duration):
-    if self.is_sanctioned_time(minute):
-    sanctioned += 1
-else:
-    unsanctioned += 1
-return sanctioned, unsanctioned
-
+get_sanctioned_breakdown <- function(hours_init, start_minute, duration){
+#     Whole days (24-hr time periods) contribute fixed quantities of sanctioned and unsanctioned time. After
+#     accounting for the whole days in the duration, the remainder minutes are tabulated as un/sanctioned.
+#     :param start_minute:
+#     :param duration:
+#     :return:
+    full_days <- duration / (hours_init$minutes_in_24h)
+    sanctioned <- full_days * hours_init$hours_per_day * 60
+    unsanctioned <- full_days * (24 - hours_init$hours_per_day) * 60
+    remainder_start <- start_minute + full_days * hours_init$minutes_in_24h
+    for(minute in remainder_start:(start_minute+duration)){
+        if (is_sanctioned_time(hours_init, minute)){
+            sanctioned <- sanctioned + 1
+        }else{
+            unsanctioned <- unsanctioned + 1
+        }
+    }
+    return (data.frame(sanctioned=sanctioned, unsanctioned=unsanctioned))
+}
+get_sanctioned_breakdown(hours_init, 12*60, 100)
 
 
 ####################################
