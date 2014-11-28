@@ -24,9 +24,9 @@ update_elf <- function(elf_list, hrs, toy, start_minute, duration){
 #     :param duration: duration of work, in minutes
 #     :return: void
     update_next_available_minute(elf_list, hrs, start_minute, duration)
-    update_productivity(hrs, start_minute, int(elf_list, math.ceil(toy.duration / self.rating)))
+    update_productivity(hrs, start_minute, int(elf_list, ceiling(toy$duration / elf_list$rating)))
 }
-
+update_elf(elf_list, hrs, toy, start_minute, duration)
 
 ##########################
 ### 更新下次可工作时间 ###
