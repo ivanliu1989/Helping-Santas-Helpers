@@ -4,6 +4,10 @@ gc(); rm(list=ls())
 toy <- read.csv('data/toys_rev1.csv')
 elf <- data.frame(ElfId=c(1:900), Productivity = rep(1.0,900), Available = rep(1, 900))
 sample <- read.csv('data/sampleSubmission_rev1.csv')
+
+save(sample, file = 'data/sampleSubmission_rev1.RData')
+
+
 a <- 1.02
 b <- 0.9
 h <- 60

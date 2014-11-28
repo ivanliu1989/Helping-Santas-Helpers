@@ -1,6 +1,5 @@
 setwd('/Users/ivan/Work_directory/FICO/')
 gc(); rm(list=ls())
-toy <- read.csv('data/toys_rev1.csv')
 
 ## init ##
 init <- c(
@@ -23,9 +22,10 @@ convert_to_minute <- function(arrival){
     age = as.integer(difftime(time1, time2, units = "mins"))
     return(age)
 }
-def is_sanctioned_time(init, minute):
-    """ Return boolean True or False if a given time (in minutes) is a sanctioned working day minute.  """
-return ((minute - self.day_start) % self.minutes_in_24h) < (self.hours_per_day * 60)
+
+# def is_sanctioned_time(init, minute):
+#     """ Return boolean True or False if a given time (in minutes) is a sanctioned working day minute.  """
+# return ((minute - self.day_start) % self.minutes_in_24h) < (self.hours_per_day * 60)
 
 is_sanctioned_time <- function(init, minute){
 #     Return boolean True or False if a given time (in minutes) is a sanctioned working day minute.
