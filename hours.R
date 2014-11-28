@@ -50,7 +50,7 @@ get_sanctioned_breakdown <- function(hours_init, start_minute, duration){
     sanctioned <- full_days * hours_init$hours_per_day * 60
     unsanctioned <- full_days * (24 - hours_init$hours_per_day) * 60
     remainder_start <- start_minute + full_days * hours_init$minutes_in_24h
-    for(minute in remainder_start:(start_minute+duration)){
+    for(minute in remainder_start:(start_minute+duration-1)){
         if (is_sanctioned_time(hours_init, minute)){
             sanctioned <- sanctioned + 1
         }else{
@@ -59,53 +59,59 @@ get_sanctioned_breakdown <- function(hours_init, start_minute, duration){
     }
     return (data.frame(sanctioned=sanctioned, unsanctioned=unsanctioned))
 }
-get_sanctioned_breakdown(hours_init, 12*60, 100)
+get_sanctioned_breakdown(hours_init, 12*60, 1000)
 
 
 ####################################
 ### 给一分钟，计算下一个工作分钟 ###
 ####################################
-def next_sanctioned_minute(self, minute):
-    """ Given a minute, finds the next sanctioned minute.
-        :param minute: integer representing a minute since reference time
-        :return: next sanctioned minute
-        """
-# next minute is a sanctioned minute
-if self.is_sanctioned_time(minute) and self.is_sanctioned_time(minute+1):
-    return minute + 1
-num_days = minute / self.minutes_in_24h
-return self.day_start + (num_days + 1) * self.minutes_in_24h
-
-
+next_sanctioned_minute <- function(hours_init, minute){
+#     Given a minute, finds the next sanctioned minute.
+#     :param minute: integer representing a minute since reference time
+#     :return: next sanctioned minute
+    if(is_sanctioned_time(hours_init, minute) & is_sanctioned_time(hours_init, (minute+1))){
+        return(minute + 1)
+    }
+    num_days <- minute / hours_init$minutes_in_24h
+    return(hours_init$day_start + (num_days + 1) * hours_init$minutes_in_24h)
+}
+next_sanctioned_minute(hours_init, hours_init$day_start+12)
 
 ################################
 ### 剩余时间和下次可工作时间 ###
 ################################
-def apply_resting_period(self, start, num_unsanctioned):
-    """ Enforces the rest period and returns the minute when the elf is next available for work.
-        Rest period is only applied to sanctioned work hours.
-        :param start: minute the REST period starts
-        :param num_unsanctioned: always > 0 number of unsanctioned minutes that need resting minutes
-        :return: next available minute after rest period has been applied
-        """
-num_days_since_jan1 = start / self.minutes_in_24h
-rest_time = num_unsanctioned
-rest_time_in_working_days = rest_time / (60 * self.hours_per_day)
-rest_time_remaining_minutes = rest_time % (60 * self.hours_per_day)
+apply_resting_period <- function(hours_init, start, num_unsanctioned){
+#     Enforces the rest period and returns the minute when the elf is next available for work.
+#     Rest period is only applied to sanctioned work hours.
+#     :param start: minute the REST period starts
+#     :param num_unsanctioned: always > 0 number of unsanctioned minutes that need resting minutes
+#     :return: next available minute after rest period has been applied
+    num_days_since_jan1 <- start / hours_init$minutes_in_24h
+    rest_time <- num_unsanctioned
+    rest_time_in_working_days <- rest_time / (60 * hours_init$hours_per_day)
+    rest_time_remaining_minutes <- rest_time %% (60 * hours_init$hours_per_day)
+    
+#     rest time is only applied to sanctioned work hours. If local_start is at an unsanctioned time,
+#     need to set it to be the next start of day
+    local_start <- start %% hours_init$minutes_in_24h  # minute of the day (relative to a current day) the work starts
+    if(local_start < hours_init$day_start){
+        local_start <- hours_init$day_start
+    }else if(local_start > hours_init$day_end){
+        num_days_since_jan1 <- num_days_since_jan1 + 1
+    }
+    local_start <- hours_init$day_start
 
-# rest time is only applied to sanctioned work hours. If local_start is at an unsanctioned time,
-# need to set it to be the next start of day
-local_start = start % self.minutes_in_24h  # minute of the day (relative to a current day) the work starts
-if local_start < self.day_start:
-    local_start = self.day_start
-elif local_start > self.day_end:
-    num_days_since_jan1 += 1
-local_start = self.day_start
+    if((local_start + rest_time_remaining_minutes) > hours_init$day_end){
+        rest_time_in_working_days <- rest_time_in_working_days + 1
+    }
+    rest_time_remaining_minutes <- rest_time_remaining_minutes - (hours_init$day_end - local_start)
+    local_start <- hours_init$day_start
+    
+    total_days <- num_days_since_jan1 + rest_time_in_working_days
+    return (total_days * hours_init$minutes_in_24h + local_start + rest_time_remaining_minutes)
+}
+apply_resting_period(hours_init, 12*60, 585.3333)
 
-if local_start + rest_time_remaining_minutes > self.day_end:
-    rest_time_in_working_days += 1
-rest_time_remaining_minutes -= (self.day_end - local_start)
-local_start = self.day_start
 
-total_days = num_days_since_jan1 + rest_time_in_working_days
-return total_days * self.minutes_in_24h + local_start + rest_time_remaining_minutes
+
+
