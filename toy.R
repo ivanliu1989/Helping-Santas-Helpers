@@ -10,8 +10,8 @@ toy_init <- function(input){
     return(data.frame(reference_start_time=reference_start_time, id=id, 
                       arrival_minute=arrival_minute, duration=duration, completed_minute=completed_minute))
 }
-input <- toy[888,]
-toy_task <- toy_init(input)
+# input <- toy[888,]
+# toy_task <- toy_init(input)
 
 
 ##################################
@@ -24,7 +24,7 @@ outside_toy_start_period <- function(arrival_minute, start_minute){
     # :return: True of outside of allowed starting period, False otherwise    
     return (start_minute < arrival_minute)
 }
-outside_toy_start_period(toy_task$arrival_minute, 10000)
+# outside_toy_start_period(toy_task$arrival_minute, 10000)
 
 
 ##################################
@@ -43,4 +43,4 @@ is_complete <- function(duration, completed_minute, start_minute, elf_duration, 
         return(FALSE)
     } 
 }
-is_complete(toy_task$duration, toy_task$completed_minute, 10000, 1000, 1.0)
+# is_complete(toy_task$duration, toy_task$completed_minute, 10000, 1000, 1.0)

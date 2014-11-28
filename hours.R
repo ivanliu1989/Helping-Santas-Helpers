@@ -1,11 +1,16 @@
 ######################
 ### Init Parameter ###
 ######################
+hours_per_day <- 10 # 10 hour day: 9 - 19
+day_start <- 9 * 60
+day_end <- (9 + hours_per_day) * 60
+minutes_in_24h <- 24 * 60
+
 hours_init <- data.frame(
-    hours_per_day = 10, # 10 hour day: 9 - 19
-    day_start = 9 * 60,
-    day_end = (9 + hours_per_day) * 60,
-    minutes_in_24h = 24 * 60
+    hours_per_day = hours_per_day, # 10 hour day: 9 - 19
+    day_start = day_start,
+    day_end = day_end,
+    minutes_in_24h = minutes_in_24h
 )
 
 
@@ -24,7 +29,7 @@ convert_to_minute <- function(arrival){
     age = as.integer(difftime(time1, time2, units = "mins"))
     return(age)
 }
-convert_to_minute(as.character(input$Arrival_time))
+# convert_to_minute(as.character(input$Arrival_time))
 
 
 ######################
@@ -34,7 +39,7 @@ is_sanctioned_time <- function(hours_init, minute){
 #     Return boolean True or False if a given time (in minutes) is a sanctioned working day minute.
     return (((minute - hours_init$day_start) %% hours_init$minutes_in_24h) < (hours_init$hours_per_day * 60))
 }
-is_sanctioned_time(hours_init, 19*60-1)
+# is_sanctioned_time(hours_init, 19*60-1)
 
 
 ##############################
@@ -59,7 +64,7 @@ get_sanctioned_breakdown <- function(hours_init, start_minute, duration){
     }
     return (data.frame(sanctioned=sanctioned, unsanctioned=unsanctioned))
 }
-get_sanctioned_breakdown(hours_init, 12*60, 1000)
+# get_sanctioned_breakdown(hours_init, 12*60, 1000)
 
 
 ####################################
@@ -75,7 +80,7 @@ next_sanctioned_minute <- function(hours_init, minute){
     num_days <- minute / hours_init$minutes_in_24h
     return(hours_init$day_start + (num_days + 1) * hours_init$minutes_in_24h)
 }
-next_sanctioned_minute(hours_init, hours_init$day_start+12)
+# next_sanctioned_minute(hours_init, hours_init$day_start+12)
 
 ################################
 ### 剩余时间和下次可工作时间 ###
@@ -110,7 +115,7 @@ apply_resting_period <- function(hours_init, start, num_unsanctioned){
     total_days <- num_days_since_jan1 + rest_time_in_working_days
     return (total_days * hours_init$minutes_in_24h + local_start + rest_time_remaining_minutes)
 }
-apply_resting_period(hours_init, 12*60, 585.3333)
+# apply_resting_period(hours_init, 12*60, 585.3333)
 
 
 
