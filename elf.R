@@ -11,25 +11,31 @@ elf_init <- function(input){
     return(data.frame(id=id, rating=rating, next_available_time=next_available_time,
                       rating_increase=rating_increase, rating_decrease=rating_decrease))
 }
-elf_init(elf)
+elf_list <- elf_init(elf)
 
 ##############################
 ### 更新效率和下次工作时间 ###
 ##############################
-def update_elf(self, hrs, toy, start_minute, duration):
-    """ Updates the elf's productivity rating and next available time based on last toy completed.
-        :param hrs: Hours object for bookkeeping
-        :param toy: Toy object for the toy the elf just finished
-        :param start_minute: minute work started
-        :param duration: duration of work, in minutes
-        :return: void
-        """
-    self.update_next_available_minute(hrs, start_minute, duration)
-    self.update_productivity(hrs, start_minute, int(math.ceil(toy.duration / self.rating)))
+update_elf <- function(elf_list, hrs, toy, start_minute, duration){
+#     Updates the elf's productivity rating and next available time based on last toy completed.
+#     :param hrs: Hours object for bookkeeping
+#     :param toy: Toy object for the toy the elf just finished
+#     :param start_minute: minute work started
+#     :param duration: duration of work, in minutes
+#     :return: void
+    update_next_available_minute(elf_list, hrs, start_minute, duration)
+    update_productivity(hrs, start_minute, int(elf_list, math.ceil(toy.duration / self.rating)))
+}
+
 
 ##########################
 ### 更新下次可工作时间 ###
 ##########################
+update_next_available_minute <- function(elf_list, hrs, start_minute, duration){
+    
+    
+}
+
 def update_next_available_minute(self, hrs, start_minute, duration):
     """ Apply the resting time constraint and determine the next minute when the elf can work next.
         Here, elf can only start work during sanctioned times
@@ -53,6 +59,11 @@ def update_next_available_minute(self, hrs, start_minute, duration):
 ####################
 ### 更新工作效率 ###
 ####################
+update_productivity <- function(elf_list, hrs, start_minute, toy_required_minutes){
+    
+    
+}
+
 def update_productivity(self, hrs, start_minute, toy_required_minutes):
     """ Update the elf's productivity rating based on the number of minutes the toy required that were
         worked during sanctioned and unsanctioned times.
