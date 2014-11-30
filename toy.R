@@ -10,7 +10,7 @@ toy_init <- function(input){
     return(data.frame(reference_start_time=reference_start_time, id=id, 
                       arrival_minute=arrival_minute, duration=duration, completed_minute=completed_minute))
 }
-# input <- toy[888,]
+# input <- toys_rev2[888,]
 # toy_task <- toy_init(input)
 
 
