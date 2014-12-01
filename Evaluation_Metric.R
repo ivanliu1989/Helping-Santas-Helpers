@@ -51,4 +51,4 @@ load('data/sampleSubmission_rev2.RData')
 hrs <- Hours()
 score_submission(sampleSubmission_rev2, myToys, hrs, NUM_ELVES)
 
-print(paste('total time =', (Sys.time() - start)))
+print(paste('total time =', as.integer(Sys.time() - start)))
