@@ -72,9 +72,14 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
         
         # work_start_time cannot be before toy's arrival
         if (work_start_time < current_toy$arrival_minute){
-            print(paste('Work_start_time:', work_start_time, 'before arrival minute:',current_toy$arrival_minute))
+            stop(paste('Work_start_time:', work_start_time, 'before arrival minute:',current_toy$arrival_minute))
         }
+        current_elf$next_available_time <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[1]
+        work_duration <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[2]
+        current_elf <- update_elf(current_elf, hrs, current_toy, work_start_time, work_duration)
         
+        # write to file in correct format
+        wcsv <- rbind(wcsv, c(current_toy$id, current_elf$id, time_string, work_duration))
     }
     colnames(wcsv) <- c('ToyId', 'ElfId', 'StartTime', 'Duration')
     
@@ -82,15 +87,7 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
 }
 
 
-# work_start_time cannot be before toy's arrival
-if work_start_time < current_toy.arrival_minute:
-    print 'Work_start_time before arrival minute: {0}, {1}'.\
-format(work_start_time, current_toy.arrival_minute)
-exit(-1)
 
-current_elf.next_available_time, work_duration = \
-assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)
-current_elf.update_elf(hrs, current_toy, work_start_time, work_duration)
 
 # put elf back in heap
 heapq.heappush(myelves, (current_elf.next_available_time, current_elf))
