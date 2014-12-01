@@ -54,7 +54,7 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
 #     :return:
     source("hours.R")
     hrs <- hours_init
-    ref_time <- strftime("2014/1/1 0:0", "%Y-%m-%d %H:%M:%OS")
+    ref_time <- strptime(c("1.1.2014 0:0"), format = "%d.%m.%Y %H:%M")
     myToys <- toy_init(toy_file)
     wcsv <- data.frame()
     
@@ -62,8 +62,8 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
         current_toy <- myToys[i,]
         
         # get next available elf
-        elf_available_time <- myelves$next_available_time ####
-        current_elf <- myelves
+        elf_available_time <- myelves$next_available_time[1]
+        current_elf <- myelves[1,]
         
         work_start_time <- elf_available_time
         if (current_toy$arrival_minute > elf_available_time){
@@ -78,24 +78,17 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
         work_duration <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[2]
         current_elf <- update_elf(current_elf, hrs, current_toy, work_start_time, work_duration)
         
+        # put elf back in heap
+        myelves[1,] <- current_elf
+        myelves <- myelves[order(myelves$next_available_time),]
+        
         # write to file in correct format
+        tt <- ref_time + 60*work_start_time
+        time_string <- strftime(tt, '%Y %m %d %H %M')
         wcsv <- rbind(wcsv, c(current_toy$id, current_elf$id, time_string, work_duration))
     }
     colnames(wcsv) <- c('ToyId', 'ElfId', 'StartTime', 'Duration')
-    
-    
 }
-
-
-
-
-# put elf back in heap
-heapq.heappush(myelves, (current_elf.next_available_time, current_elf))
-
-# write to file in correct format
-tt = ref_time + datetime.timedelta(seconds=60*work_start_time)
-time_string = " ".join([str(tt.year), str(tt.month), str(tt.day), str(tt.hour), str(tt.minute)])
-wcsv.writerow([current_toy.id, current_elf.id, time_string, work_duration])
 
 
 ############
