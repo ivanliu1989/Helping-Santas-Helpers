@@ -32,13 +32,13 @@ assign_elf_to_toy <- function(input_time, current_elf, current_toy, hrs){
     #     :return: list of elves in order of next available
     source("hours.R")
     start_time <- next_sanctioned_minute(hours_init, input_time)  # double checks that work starts during sanctioned work hours
-    duration <- as.integer(ceiling(current_toy$Duration / current_elf$rating))
-    sanctioned <- get_sanctioned_breakdown(start_time, duration)$sanctioned
-    unsanctioned <- get_sanctioned_breakdown(start_time, duration)$unsanctioned
+    duration <- as.integer(ceiling(current_toy$duration / current_elf$rating))
+    sanctioned <- get_sanctioned_breakdown(hrs, start_time, duration)$sanctioned
+    unsanctioned <- get_sanctioned_breakdown(hrs, start_time, duration)$unsanctioned
     if(unsanctioned == 0){
         return (data.frame(next_sanctioned_minute((start_time + duration)), duration))
     }else{
-        return (data.frame(apply_resting_period((start_time + duration),unsanctioned), duration))
+        return (data.frame(apply_resting_period(hrs, (start_time + duration),unsanctioned), duration))
     }
 }
 
@@ -74,7 +74,7 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
         if (work_start_time < current_toy$arrival_minute){
             stop(paste('Work_start_time:', work_start_time, 'before arrival minute:',current_toy$arrival_minute))
         }
-        current_elf$next_available_time <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[1]
+        current_elf$next_available_time[1] <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[1]
         work_duration <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[2]
         current_elf <- update_elf(current_elf, hrs, current_toy, work_start_time, work_duration)
         
@@ -100,9 +100,9 @@ start <- Sys.time()
 NUM_ELVES <- 900
 
 load('data/toys_rev2.RData')
-load('data/sampleSubmission_rev2.RData')
+load('data/sampleSubmission_rev1.RData')
 
 myelves <- create_elves(NUM_ELVES)
-submissions <- solution_firstAvailableElf(toys_rev2, sampleSubmission_rev2, myelves)
+submissions <- solution_firstAvailableElf(toys_rev2, sample, myelves)
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
