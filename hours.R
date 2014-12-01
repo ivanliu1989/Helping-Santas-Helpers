@@ -55,7 +55,7 @@ get_sanctioned_breakdown <- function(hours_init, start_minute, duration){
     sanctioned <- full_days * hours_init$hours_per_day * 60
     unsanctioned <- full_days * (24 - hours_init$hours_per_day) * 60
     remainder_start <- start_minute + full_days * hours_init$minutes_in_24h
-    for(minute in remainder_start:(start_minute+duration-1)){
+    for(minute in remainder_start:(start_minute + duration - 1)){
         if (is_sanctioned_time(hours_init, minute)){
             sanctioned <- sanctioned + 1
         }else{

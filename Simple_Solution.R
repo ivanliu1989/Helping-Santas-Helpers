@@ -1,10 +1,3 @@
-setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
-setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
-gc(); rm(list=ls())
-
-source("hours.R"); source("elf.R"); source("toy.R")
-elf <- data.frame(elfid = 1:900)
-
 ####################
 ### create_elves ###
 ####################
@@ -75,7 +68,7 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
             stop(paste('Work_start_time:', work_start_time, 'before arrival minute:',current_toy$arrival_minute))
         }
         current_elf$next_available_time[1] <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[1]
-        work_duration <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[2]
+        work_duration <- assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)[1,2]
         current_elf <- update_elf(current_elf, hrs, current_toy, work_start_time, work_duration)
         
         # put elf back in heap
@@ -95,8 +88,13 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
 ############
 ### MAIN ###
 ############
-start <- Sys.time()
+setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
+setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
+gc(); rm(list=ls())
 
+source("hours.R"); source("elf.R"); source("toy.R")
+elf <- data.frame(elfid = 1:900)
+start <- Sys.time()
 NUM_ELVES <- 900
 
 load('data/toys_rev2.RData')
