@@ -48,7 +48,7 @@ myToys <- read_toys(toys_rev2, NUM_TOYS)
 print ' -- All toys read. Starting to score submission. '
 
 load('data/sampleSubmission_rev2.RData')
-hrs <- Hours()
+hrs <- hours_init
 score_submission(sampleSubmission_rev2, myToys, hrs, NUM_ELVES)
 
 print(paste('total time =', as.integer(Sys.time() - start)))

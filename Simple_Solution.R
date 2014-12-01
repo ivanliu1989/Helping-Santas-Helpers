@@ -42,7 +42,6 @@ assign_elf_to_toy <- function(input_time, current_elf, current_toy, hrs){
     }
 }
 
-
 ##################################
 ### solution_firstAvailableElf ###
 ##################################
