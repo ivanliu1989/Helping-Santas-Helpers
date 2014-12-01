@@ -43,4 +43,4 @@ is_complete <- function(duration, completed_minute, start_minute, elf_duration, 
         return(FALSE)
     } 
 }
-# is_complete(toy_task$duration, toy_task$completed_minute, 10000, 1000, 1.0)
+# is_complete(toy_task$duration, toy_task$completed_minute, 100000, 10, 1.2)
