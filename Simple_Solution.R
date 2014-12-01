@@ -45,6 +45,61 @@ assign_elf_to_toy <- function(input_time, current_elf, current_toy, hrs){
 ##################################
 ### solution_firstAvailableElf ###
 ##################################
+solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
+#     Creates a simple solution where the next available elf is assigned a toy. Elves do not start
+#     work outside of sanctioned hours.
+#     :param toy_file: filename for toys file (input)
+#     :param soln_file: filename for solution file (output)
+#     :param myelves: list of elves in a priority queue ordered by next available time
+#     :return:
+    source("hours.R")
+    hrs <- hours_init
+    ref_time <- strftime("2014/1/1 0:0", "%Y-%m-%d %H:%M:%OS")
+    myToys <- toy_init(toy_file)
+    wcsv <- data.frame()
+    
+    for(i in 1:nrow(myToys)){
+        current_toy <- myToys[i,]
+        
+        # get next available elf
+        elf_available_time <- myelves$next_available_time ####
+        current_elf <- myelves
+        
+        work_start_time <- elf_available_time
+        if (current_toy$arrival_minute > elf_available_time){
+            work_start_time <- current_toy$arrival_minute
+        }
+        
+        # work_start_time cannot be before toy's arrival
+        if (work_start_time < current_toy$arrival_minute){
+            print(paste('Work_start_time:', work_start_time, 'before arrival minute:',current_toy$arrival_minute))
+        }
+        
+    }
+    colnames(wcsv) <- c('ToyId', 'ElfId', 'StartTime', 'Duration')
+    
+    
+}
+
+
+# work_start_time cannot be before toy's arrival
+if work_start_time < current_toy.arrival_minute:
+    print 'Work_start_time before arrival minute: {0}, {1}'.\
+format(work_start_time, current_toy.arrival_minute)
+exit(-1)
+
+current_elf.next_available_time, work_duration = \
+assign_elf_to_toy(work_start_time, current_elf, current_toy, hrs)
+current_elf.update_elf(hrs, current_toy, work_start_time, work_duration)
+
+# put elf back in heap
+heapq.heappush(myelves, (current_elf.next_available_time, current_elf))
+
+# write to file in correct format
+tt = ref_time + datetime.timedelta(seconds=60*work_start_time)
+time_string = " ".join([str(tt.year), str(tt.month), str(tt.day), str(tt.hour), str(tt.minute)])
+wcsv.writerow([current_toy.id, current_elf.id, time_string, work_duration])
+
 
 ############
 ### MAIN ###

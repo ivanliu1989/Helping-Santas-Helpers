@@ -22,11 +22,11 @@ convert_to_minute <- function(arrival){
 #     Jan 1, 2014 at 00:00 (aka, midnight Dec 31, 2013)
 #     :param arrival: string in format '2014 12 17 7 03' for Dec 17, 2014 at 7:03 am
 #     :return: integer (minutes since arrival time)
-    time = strsplit(x = arrival, split = ' ')
-    time1 = paste(paste(time[[1]][1],time[[1]][2],time[[1]][3],sep = '/'),paste(time[[1]][4],time[[1]][5],sep = ":"),sep = " ")
-    time1 = strftime(time1, "%Y-%m-%d %H:%M:%OS")
-    time2 = strftime("2014/1/1 0:0", "%Y-%m-%d %H:%M:%OS")
-    age = as.integer(difftime(time1, time2, units = "mins"))
+    time <- strsplit(x = arrival, split = ' ')
+    time1 <- paste(paste(time[[1]][1],time[[1]][2],time[[1]][3],sep = '/'),paste(time[[1]][4],time[[1]][5],sep = ":"),sep = " ")
+    time1 <- strftime(time1, "%Y-%m-%d %H:%M:%OS")
+    time2 <- strftime("2014/1/1 0:0", "%Y-%m-%d %H:%M:%OS")
+    age <- as.integer(difftime(time1, time2, units = "mins"))
     return(age)
 }
 # convert_to_minute(input$Arrival_time)
