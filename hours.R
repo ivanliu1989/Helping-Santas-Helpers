@@ -29,7 +29,7 @@ convert_to_minute <- function(arrival){
     age = as.integer(difftime(time1, time2, units = "mins"))
     return(age)
 }
-# convert_to_minute(as.character(input$Arrival_time))
+# convert_to_minute(input$Arrival_time)
 
 
 ######################
