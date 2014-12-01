@@ -9,9 +9,9 @@ elf <- data.frame(elfid = 1:900)
 ### create_elves ###
 ####################
 create_elves <- function(NUM_ELVES){
-#     Elves are stored in a sorted list using heapq to maintain their order by next available time.
-#     List elements are a tuple of (next_available_time, elf object)
-#     :return: list of elves
+    #     Elves are stored in a sorted list using heapq to maintain their order by next available time.
+    #     List elements are a tuple of (next_available_time, elf object)
+    #     :return: list of elves
     source("elf.R")
     elf <- data.frame(elfid = 1:900)
     list_elves <- elf_init(elf)
@@ -23,13 +23,13 @@ create_elves <- function(NUM_ELVES){
 ### assign_elf_to_toy ###
 #########################
 assign_elf_to_toy <- function(input_time, current_elf, current_toy, hrs){
-#     Given a toy, assigns the next elf to the toy. Computes the elf's updated rating,
-#     applies the rest period (if any), and sets the next available time.
-#     :param input_time: list of tuples (next_available_time, elf)
-#     :param current_elf: elf object
-#     :param current_toy: toy object
-#     :param hrs: hours object
-#     :return: list of elves in order of next available
+    #     Given a toy, assigns the next elf to the toy. Computes the elf's updated rating,
+    #     applies the rest period (if any), and sets the next available time.
+    #     :param input_time: list of tuples (next_available_time, elf)
+    #     :param current_elf: elf object
+    #     :param current_toy: toy object
+    #     :param hrs: hours object
+    #     :return: list of elves in order of next available
     source("hours.R")
     start_time <- next_sanctioned_minute(hours_init, input_time)  # double checks that work starts during sanctioned work hours
     duration <- as.integer(ceiling(current_toy$Duration / current_elf$rating))
@@ -46,12 +46,12 @@ assign_elf_to_toy <- function(input_time, current_elf, current_toy, hrs){
 ### solution_firstAvailableElf ###
 ##################################
 solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
-#     Creates a simple solution where the next available elf is assigned a toy. Elves do not start
-#     work outside of sanctioned hours.
-#     :param toy_file: filename for toys file (input)
-#     :param soln_file: filename for solution file (output)
-#     :param myelves: list of elves in a priority queue ordered by next available time
-#     :return:
+    #     Creates a simple solution where the next available elf is assigned a toy. Elves do not start
+    #     work outside of sanctioned hours.
+    #     :param toy_file: filename for toys file (input)
+    #     :param soln_file: filename for solution file (output)
+    #     :param myelves: list of elves in a priority queue ordered by next available time
+    #     :return:
     source("hours.R")
     hrs <- hours_init
     ref_time <- strptime(c("1.1.2014 0:0"), format = "%d.%m.%Y %H:%M")
@@ -88,6 +88,7 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
         wcsv <- rbind(wcsv, c(current_toy$id, current_elf$id, time_string, work_duration))
     }
     colnames(wcsv) <- c('ToyId', 'ElfId', 'StartTime', 'Duration')
+    return(wcsv)
 }
 
 
@@ -102,6 +103,6 @@ load('data/toys_rev2.RData')
 load('data/sampleSubmission_rev2.RData')
 
 myelves <- create_elves(NUM_ELVES)
-solution_firstAvailableElf(toys_rev2, sampleSubmission_rev2, myelves)
+submissions <- solution_firstAvailableElf(toys_rev2, sampleSubmission_rev2, myelves)
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
