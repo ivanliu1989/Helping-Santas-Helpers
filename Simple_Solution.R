@@ -101,6 +101,6 @@ load('data/toys_rev2.RData')
 load('data/sampleSubmission_rev1.RData')
 
 myelves <- create_elves(NUM_ELVES)
-submissions <- solution_firstAvailableElf(toys_rev2, sample, myelves)
+submissions <- solution_firstAvailableElf(toys_rev2[1:1000,], sample, myelves)
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
