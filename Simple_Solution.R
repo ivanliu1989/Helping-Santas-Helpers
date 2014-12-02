@@ -88,6 +88,7 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
 ############
 ### MAIN ###
 ############
+# tips: vectorize
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
@@ -95,12 +96,12 @@ gc(); rm(list=ls())
 source("hours.R"); source("elf.R"); source("toy.R")
 elf <- data.frame(elfid = 1:900)
 start <- Sys.time()
-NUM_ELVES <- 900
+NUM_ELVES <- 100
 
 load('data/toys_rev2.RData')
 load('data/sampleSubmission_rev1.RData')
 
 myelves <- create_elves(NUM_ELVES)
-submissions <- solution_firstAvailableElf(toys_rev2[1:1000,], sample, myelves)
+submissions <- solution_firstAvailableElf(toys_rev2[1:10000,], sample, myelves)
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
