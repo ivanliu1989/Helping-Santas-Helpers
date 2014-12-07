@@ -95,7 +95,15 @@ def solution_firstAvailableElf(toy_file, soln_file, myelves):
                 time_string = " ".join([str(tt.year), str(tt.month), str(tt.day), str(tt.hour), str(tt.minute)])
                 wcsv.writerow([current_toy.id, current_elf.id, time_string, work_duration])
 
-
+def sort_toys():
+    import pandas as pd
+    toys = pd.read_csv("toys_rev2.csv")
+    toys["Start"] = toys["Arrival_time"].apply(lambda x: Hours.convert_to_minute(x))
+    toys["Finish"] = toys["Start"] + toys["Duration"]
+    toys = toys.sort("Finish")
+    toys.drop("Start", axis=1, inplace=True)
+    toys.drop("Finish", axis=1, inplace=True)
+    toys.to_csv("toys.csv", index=False)
 # ======================================================================= #
 # === MAIN === #
 
@@ -103,10 +111,12 @@ if __name__ == '__main__':
 
     start = time.time()
 
+    sort_toys()
+
     NUM_ELVES = 900
 
-    toy_file = os.path.join(os.getcwd(), 'toys_rev2.csv')
-    soln_file = os.path.join(os.getcwd(), 'sampleSubmission_rev2.csv')
+    toy_file = os.path.join(os.getcwd(), 'toys.csv')
+    soln_file = os.path.join(os.getcwd(), 'Submission_benchmark.csv')
 
     myelves = create_elves(NUM_ELVES)
     solution_firstAvailableElf(toy_file, soln_file, myelves)
