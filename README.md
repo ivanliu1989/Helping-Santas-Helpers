@@ -5,4 +5,7 @@ Every year Santa has to satisfy a grueling toy-production schedule. Toy orders a
 
 vectorized
 
-simple solution:  Score - 1875730155.06 | Time - 2681.2335
+simple solution: Score - 1875730155.06 | Time - 2681.2335
+sorted solution: Score - 1862020962.7 | Time - 2584.91999984
+
+
