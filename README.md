@@ -64,5 +64,5 @@ fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
 1. Sort by productivity 
 2. Allocate the proper productivity to build time
 3. A new loop to calculate the next toy build time within the sactioned hours
-
+time available | sort productivity rate | minimum unsanction 
 
