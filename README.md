@@ -3,6 +3,7 @@ Helping-Santas-Helpers
 
 Every year Santa has to satisfy a grueling toy-production schedule. Toy orders arrive all year long and the Elfin Workers Union is stronger than ever. Let's help Santa develop a job scheduling algorithm that meets his toy target while keeping his elves healthy and happy.
 
+
 ##### Toys Constrains
 num = 10,000,000 <br>
 id | arrive time | build time 
@@ -12,6 +13,7 @@ id | arrive time | build time
  - all toys must be finished
 1. **outside_toy_start_period()**: True of outside of allowed starting period, False otherwise. 
 2. **is_complete()**: True of the toy is completed given duration of work and elf's productivity rating, False otherwise. 
+
 
 ##### Working Constrains
 start = January 1, 2014 at 9:00 am <br>
@@ -25,6 +27,7 @@ unsanctioned = 19:00 to 9:00 (14 hours) * 7 <br>
 4. **next_sanctioned_minute**: Given a minute, finds the next sanctioned minute.
 5. **apply_resting_period**: Enforces the rest period and returns the minute when the elf is next available for work. Rest period is only applied to sanctioned work hours.
 
+
 ##### Elves Constrains
 num = 900 <br>
 id | productivity rate
@@ -34,6 +37,12 @@ id | productivity rate
 1. **update_elf**: Updates the elf's productivity rating and next available time based on last toy completed.
 2. **update_next_available_minute**: Apply the resting time constraint and determine the next minute when the elf can work next.
 3. **update_productivity**: Update the elf's productivity rating based on the number of minutes of sanctioned and unsanctioned times.
+
+
+##### Solution
+
+
+##### Evaluation
 
 
 ##### results
