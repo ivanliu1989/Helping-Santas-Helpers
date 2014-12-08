@@ -57,7 +57,8 @@ NUM_ELVES = 900<br>
 simple solution: Score - 1875730155.06 | Time - 2681.2335 <br>
 sorted solution: Score - 1862020962.7 | Time - 2584.91999984<br>
 fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
-fixed sansationed solution: Score - 2058850705.9 | Time - 2532.48336697<br>
+800 elves solution: Score - 2058850705.9 | Time - 2532.48336697<br>
+850 elves solution: Score - 1955181153.14 | Time - 3694.09899998<br>
 
 #### Improvements
 1. Sort by productivity 
