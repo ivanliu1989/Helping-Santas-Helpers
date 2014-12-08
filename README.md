@@ -41,7 +41,7 @@ id | productivity rate
 
 #### Solution
 NUM_ELVES = 900 <br>
-myelves = create_elves(NUM_ELVES)
+myelves = create_elves(NUM_ELVES)<br>
 1. **create_elves(NUM_ELVES)**: Elves are stored in a sorted list using heapq to maintain their order by next available time.<br>
 2. **assign_elf_to_toy(input_time, current_elf, current_toy, hrs)**: Assigns the next elf to the toy. Computes elf's updated rating, rest period (if any), and next available time.<br>
 3. **solution_firstAvailableElf(toy_file, soln_file, myelves)**: Creates a simple solution where the next available elf is assigned a toy. Elves do not start work outside of sanctioned hours.<br>
@@ -49,7 +49,7 @@ myelves = create_elves(NUM_ELVES)
 
 #### Evaluation
 NUM_TOYS = 10000000 <br>
-NUM_ELVES = 900
+NUM_ELVES = 900<br>
 1. **read_toys(toy_file, num_toys)**: Reads the toy file and returns a dictionary of Toys. Toy file format: ToyId, Arrival_time, Duration<br>
 2. **score_submission(sub_file, myToys, hrs, NUM_ELVES)**: Score submission, constraint checking. Returns the time (in minutes) when final present is complete.<br>
 
