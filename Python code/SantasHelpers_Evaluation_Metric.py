@@ -114,15 +114,6 @@ def score_submission(sub_file, myToys, hrs, NUM_ELVES):
         print '\nSuccess!'
         print '  Score = {0}'.format(score)
 
-def sort_toys():
-    import pandas as pd
-    toys = pd.read_csv("toys_rev2.csv")
-    toys["Start"] = toys["Arrival_time"].apply(lambda x: Hours.convert_to_minute(x))
-    toys["Finish"] = toys["Start"] + toys["Duration"]
-    toys = toys.sort("Finish")
-    toys.drop("Start", axis=1, inplace=True)
-    toys.drop("Finish", axis=1, inplace=True)
-    toys.to_csv("toys.csv", index=False)
 # ======================================================================= #
 # === MAIN === #
 
@@ -130,8 +121,6 @@ if __name__ == '__main__':
     """ Evaluation script for Helping Santa's Helpers, the 2014 Kaggle Holiday Optimization Competition. """
 
     start = time.time()
-
-    sort_toys()
 
     NUM_TOYS = 10000000
     NUM_ELVES = 900

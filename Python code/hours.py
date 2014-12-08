@@ -55,9 +55,14 @@ class Hours:
         :return: next sanctioned minute
         """
         # next minute is a sanctioned minute
+        # if self.is_sanctioned_time(minute) and self.is_sanctioned_time(minute+1):
+            # return minute + 1
+        # num_days = minute / self.minutes_in_24h
+        # return self.day_start + (num_days + 1) * self.minutes_in_24h
+        
         if self.is_sanctioned_time(minute) and self.is_sanctioned_time(minute+1):
             return minute + 1
-        num_days = minute / self.minutes_in_24h
+        num_days = (minute - self.day_start) / self.minutes_in_24h
         return self.day_start + (num_days + 1) * self.minutes_in_24h
 
     def apply_resting_period(self, start, num_unsanctioned):
