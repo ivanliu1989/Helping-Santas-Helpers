@@ -75,10 +75,14 @@ next_sanctioned_minute <- function(hours_init, minute){
 #     :param minute: integer representing a minute since reference time
 #     :return: next sanctioned minute
     if(is_sanctioned_time(hours_init, minute) & is_sanctioned_time(hours_init, (minute+1))){
-        return(minute + 1)
+        next_min <- minute + 1
+    }else{
+        num_days <- as.integer(minute / hours_init$minutes_in_24h)
+        am_or_pm <- as.integer(((minute %% hours_init$minutes_in_24h)/hours_init$day_start)) 
+        # This is necessary, else end-of-day unsanctioned minutes jump over an entire day.
+        next_min <- hours_init$day_start + (num_days + am_or_pm / 2) * hours_init$minutes_in_24h
     }
-    num_days <- minute / hours_init$minutes_in_24h
-    return(hours_init$day_start + (num_days + 1) * hours_init$minutes_in_24h)
+    return(next_min)
 }
 # next_sanctioned_minute(hours_init, hours_init$day_start+12)
 
