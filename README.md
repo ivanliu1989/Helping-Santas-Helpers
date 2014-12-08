@@ -10,7 +10,7 @@ id | arrive time | build time
  - finish time = start time + build time
  - by only one elf and cannot stop
  - all toys must be finished
-1. *outside_toy_start_period()*: True of outside of allowed starting period, False otherwise. 
+1. **outside_toy_start_period()**: True of outside of allowed starting period, False otherwise. 
 2. is_complete(): True of the toy is completed given duration of work and elf's productivity rating, False otherwise. 
 
 
