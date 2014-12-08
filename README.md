@@ -57,6 +57,11 @@ NUM_ELVES = 900<br>
 simple solution: Score - 1875730155.06 | Time - 2681.2335 <br>
 sorted solution: Score - 1862020962.7 | Time - 2584.91999984<br>
 fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
+fixed sansationed solution: Score - 2058850705.9 | Time - 2532.48336697<br>
 
+#### Improvements
+1. Sort by productivity 
+2. Allocate the proper productivity to build time
+3. A new loop to calculate the next toy build time within the sactioned hours
 
 
