@@ -79,8 +79,8 @@ def solution_firstAvailableElf(toy_file, soln_file, myelves):
 
                 # work_start_time cannot be before toy's arrival
                 if work_start_time < current_toy.arrival_minute:
-                    print 'Work_start_time before arrival minute: {0}, {1}'.\
-                        format(work_start_time, current_toy.arrival_minute)
+                    print ('Work_start_time before arrival minute: {0}, {1}'.\
+                        format(work_start_time, current_toy.arrival_minute))
                     exit(-1)
 
                 current_elf.next_available_time, work_duration = \
@@ -113,7 +113,7 @@ if __name__ == '__main__':
 
     sort_toys()
 
-    NUM_ELVES = 900
+    NUM_ELVES = 800
 
     toy_file = os.path.join(os.getcwd(), 'toys.csv')
     soln_file = os.path.join(os.getcwd(), 'Submission_benchmark.csv')
@@ -121,4 +121,4 @@ if __name__ == '__main__':
     myelves = create_elves(NUM_ELVES)
     solution_firstAvailableElf(toy_file, soln_file, myelves)
 
-    print 'total runtime = {0}'.format(time.time() - start)
+    print ('total runtime = {0}'.format(time.time() - start))

@@ -56,5 +56,7 @@ NUM_ELVES = 900<br>
 #### results
 simple solution: Score - 1875730155.06 | Time - 2681.2335 <br>
 sorted solution: Score - 1862020962.7 | Time - 2584.91999984<br>
+fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
+
 
 
