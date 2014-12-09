@@ -4,7 +4,7 @@
 toy_init <- function(input){
     reference_start_time <- strftime("2014/1/1 0:0", "%Y-%m-%d %H:%M:%OS")  # set when elf starts working on toy
     id <- input$ToyId
-    arrival_minute <- convert_to_minute(as.character(input$Arrival_time))
+    arrival_minute <- sapply(as.character(toys_rev2$Arrival_time), convert_to_minute)
     duration <- as.integer(input$Duration)
     completed_minute <- 0  
     return(data.matrix(data.frame(reference_start_time = reference_start_time, id= id, 

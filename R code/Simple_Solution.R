@@ -109,7 +109,8 @@ start <- Sys.time()
 NUM_ELVES <- 900
 
 load('data/toys_rev2.RData')
-myToys <- toy_init(toys_rev2) 
+# myToys <- toy_init(toys_rev2) 
+# save(myToys, file='data/myToys.RData')
 
 myelves <- create_elves(NUM_ELVES)
 submissions <- solution_firstAvailableElf(myToys, myelves)
