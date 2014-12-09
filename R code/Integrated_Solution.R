@@ -23,8 +23,9 @@ convert_to_chardate <- function(arrive_int) {
     return(char_date)
 }
 
-is_sanctioned_time <- function(minute){
-    return (((minute - day_start) %% minutes_in_24h) < (hours_per_day * 60))
+is_sanctioned_time <- function(minute) {
+    is_sanctioned <- ((minute - day_start) %% minutes_in_24h) < (hours_per_day * 60)
+    return(is_sanctioned)
 }
 
 get_sanctioned_breakdown <- function(start_minute, work_duration) {
