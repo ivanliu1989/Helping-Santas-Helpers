@@ -13,7 +13,7 @@ create_elves <- function(num_elves){
     elf_mat[,'elf_id'] <- seq_len(num_elves)
     elf_mat[,'current_rating'] <- 1.0
     elf_mat[,'next_available_time'] <- 540  # Santa's Workshop opens Jan 1, 2014 9:00 (= 540 minutes)
-    return(list_elves)
+    return(elf_mat)
 }
 # elf_list <- create_elves(900)
 
