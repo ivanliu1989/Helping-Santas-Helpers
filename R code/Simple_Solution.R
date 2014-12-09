@@ -15,9 +15,9 @@ assign_elf_to_toy <- function(input_time, current_elf, current_toy){
     sanctioned <- get_sanctioned_breakdown(start_time, duration)[1]
     unsanctioned <- get_sanctioned_breakdown(start_time, duration)[2]
     if(unsanctioned == 0){
-        return (matrix(c(next_sanctioned_minute((start_time + duration)), duration),nrow=1))
+        return (c(next_sanctioned_minute((start_time + duration)), duration))
     }else{
-        return (matrix(c(apply_resting_period((start_time + duration),unsanctioned), duration),nrow=1))
+        return (c(apply_resting_period((start_time + duration),unsanctioned), duration))
     }
 }
 
@@ -32,8 +32,8 @@ assign_elf_to_toy <- function(input_time, current_elf, current_toy){
 #     :return:
 
 solution_firstAvailableElf <- function(myToys, myelves){
-    ref_time <- strptime(c("1.1.2014 0:0"), format = "%d.%m.%Y %H:%M")
-    wcsv <- data.matrix(data.frame('ToyId'=0, 'ElfId'=0, 'StartTime'=0, 'Duration'=0))
+    wcsv <- matrix(0, nrow = nrow(toys), ncol = 5, 
+                       dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
     
     for(i in 1:nrow(myToys)){
         current_toy <- myToys[i,]
@@ -41,14 +41,15 @@ solution_firstAvailableElf <- function(myToys, myelves){
         #######################
         ### select next elf ###
         #######################
+        myelves <- myelves[order(myelves[,2],decreasing = T),]
         for (j in 1:nrow(myelves)){
             if(current_toy[3] < myelves[j,3]){
                 break   
             }
         }
-        
         elf_available_time <- myelves[j, 3]
         current_elf <- myelves[j,]
+        
         
         work_start_time <- elf_available_time
         if (current_toy[3] > elf_available_time){
@@ -59,23 +60,16 @@ solution_firstAvailableElf <- function(myToys, myelves){
             stop(paste('Work_start_time:', work_start_time, 'before arrival minute:',current_toy[3]))
         }
         
-        #########################
-        ### assign elf to toy ###
-        #########################
-        current_elf[3] <- assign_elf_to_toy(work_start_time, current_elf, current_toy)[1]
-        work_duration <- assign_elf_to_toy(work_start_time, current_elf, current_toy)[2]
+#         current_elf[3] <- assign_elf_to_toy(work_start_time, current_elf, current_toy)[1]
+#         work_duration <- assign_elf_to_toy(work_start_time, current_elf, current_toy)[2]
+        work_duration <- as.integer(ceiling(current_toy[4] / current_elf[2]))
         current_elf <- update_elf(current_elf, current_toy, work_start_time, work_duration)
         
         # put elf back in heap
         myelves[j,] <- current_elf
-        ########################
-        ### sorting next elf ###
-        ########################
-        myelves <- myelves[order(myelves[,2],decreasing = T),]
-        
+                
         # write to file in correct format
-        tt <- ref_time + 60*work_start_time
-        time_string <- strftime(tt, '%Y %m %d %H %M')
+        time_string <- convert_to_chardate(work_start_time)
         wcsv <- rbind(wcsv, c(current_toy[2], current_elf[1], time_string, work_duration))
     }
     return(wcsv)
