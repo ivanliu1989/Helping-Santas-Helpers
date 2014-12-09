@@ -125,8 +125,13 @@ toy_init <- function(toys){
 ################
 ### Solution ###
 ################
+# assign_elf <- function(elves) {
+#     assigned_elf <-as.integer(elves[which.min(elves[,'next_available_time']),'elf_id'][1])
+#     return(assigned_elf)
+# }
+
 assign_elf <- function(elves) {
-    assigned_elf <-as.integer(elves[which.min(elves[,'next_available_time']),'elf_id'][1])
+    assigned_elf <-as.integer(elves[order(elves[,'next_available_time'], -elves[,'current_rating']),'elf_id'][1])
     return(assigned_elf)
 }
 
@@ -157,7 +162,7 @@ solution_sortedElf <- function(myToys, myelves){
         
         outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
         
-        if(current_toy %% 10000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
+        if(current_toy %% 100000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
                                 format(Sys.time(),format = '%Y-%m-%d %H:%M:%S'))    
     }
     return(outcomes)
