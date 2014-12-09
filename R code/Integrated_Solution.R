@@ -120,10 +120,10 @@ update_productivity <- function(elf_list, start_minute, toy_required_minutes){
 ###########
 toy_init <- function(input){
     id <- input$ToyId
-    arrival_minute <- sapply(as.character(toys_rev2$Arrival_time), convert_to_minute)
+    arrival_minute <- convert_to_minute(input[,2])
     duration <- as.integer(input$Duration)
     completed_minute <- 0  
-    return(data.matrix(data.frame(reference_start_time = reference_time, id= id, 
+    return(data.matrix(data.frame(reference_start_time = convert_to_minute(reference_time), id= id, 
                                   arrival_minute = arrival_minute, duration = duration, completed_minute = completed_minute)))
 }
 
@@ -144,13 +144,17 @@ is_complete <- function(duration, completed_minute, start_minute, elf_duration, 
 ### Solution ###
 ################
 solution_sortedElf <- function(myToys, myelves){
-    wcsv <- matrix(0, nrow = nrow(toys), ncol = 5, 
+    wcsv <- matrix(0, nrow = 0, ncol = 4, 
                    dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))   
     for(i in 1:nrow(myToys)){
         current_toy <- myToys[i,]
         
         ### select next elf ###
-        myelves <- myelves[order(myelves[,2],decreasing = T),]
+        for (j in 1:nrow(myelves)){
+            myelves[j,'score'] <- (max(myelves[j,3], current_toy[3]) + (current_toy[4] * myelves[j,2])) * 
+                ifelse(myelves[j,3]==540, log(1+1), log(1))
+        }
+        myelves <- myelves[order(-myelves[,'score']),]
         for (j in 1:nrow(myelves)){
             if(current_toy[3] < myelves[j,3]){
                 break   
@@ -185,6 +189,7 @@ solution_sortedElf <- function(myToys, myelves){
 ############
 ### MAIN ###
 ############
+# tips 1: new column - (p - finish time) * log(1+n)
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
@@ -193,11 +198,13 @@ start <- Sys.time()
 NUM_ELVES <- 900
 
 load('data/toys_rev2.RData')
+load('data/myToys.RData')
+load('data/sampleSubmission_rev1.RData')
 # myToys <- toy_init(toys_rev2) 
 # save(myToys, file='data/myToys.RData')
 
 myelves <- create_elves(NUM_ELVES)
-submissions <- data.frame(solution_sortedElf(myToys, myelves))
+submissions <- data.frame(solution_sortedElf(myToys, myelves), stringsAsFactors = F)
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
 
