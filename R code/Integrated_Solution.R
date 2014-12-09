@@ -145,20 +145,21 @@ is_complete <- function(duration, completed_minute, start_minute, elf_duration, 
 ### Solution ###
 ################
 solution_sortedElf <- function(myToys, myelves){
+    cat(format(Sys.time(),format = '%Y-%m-%d %H:%M:%S'))
     wcsv <- matrix(0, nrow = 0, ncol = 4, 
                    dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))   
     for(i in 1:nrow(myToys)){
         current_toy <- myToys[i,]
         
         ### select next elf ###
-        myelves[,'score'] <- (max(myelves[,3], current_toy[3]) + (current_toy[4] * myelves[,2])) * 
-            ifelse(myelves[,3]==540, log(1+1), log(1))
+#         myelves[,'score'] <- (max(myelves[,3], current_toy[3]) + (current_toy[4] * myelves[,2])) * 
+#             ifelse(myelves[,3]==540, log(1+1)+1, log(1)+1)
 #         for (j in 1:nrow(myelves)){
 #             myelves[j,'score'] <- (max(myelves[j,3], current_toy[3]) + (current_toy[4] * myelves[j,2])) * 
 #                 ifelse(myelves[j,3]==540, log(1+1), log(1))
 #         }
-        myelves <- myelves[order(myelves[,'score']),]
-#         myelves <- myelves[order(-myelves[,3], myelves[,2]),]
+#         myelves <- myelves[order(myelves[,'score']),]
+        myelves <- myelves[order(myelves[,3], -myelves[,2]),]
         for (j in 1:nrow(myelves)){
             if(current_toy[3] < myelves[j,3]){
                 break   
@@ -186,9 +187,10 @@ solution_sortedElf <- function(myToys, myelves){
         time_string <- convert_to_chardate(work_start_time)
 #         wcsv[j,] <- c(current_toy[2], current_elf[1], time_string, work_duration)
         wcsv <- rbind(wcsv,c(current_toy[2], current_elf[1], time_string, work_duration))
-        if(i %% 10000 == 0) cat('Completed', i/1000000, 'mil toys, makespan', time_string, 'minutes \n')
+        if(i %% 10000 == 0) cat('\nCompleted', i/1000000, 'mil toys, makespan', time_string, 'minutes |', 
+                                format(Sys.time(),format = '%Y-%m-%d %H:%M:%S'))    
     }
-    return(myelves)
+    return(wcsv)
 }
 
 ############
@@ -197,6 +199,7 @@ solution_sortedElf <- function(myToys, myelves){
 # tips 1: new column - (p - finish time) * log(1+n)
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
+setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 
 start <- Sys.time()
@@ -209,7 +212,7 @@ load('data/sampleSubmission_rev1.RData')
 # save(myToys, file='data/myToys.RData')
 
 myelves <- create_elves(NUM_ELVES)
-submissions_2 <- data.frame(solution_sortedElf(myToys[1:100,], myelves), stringsAsFactors = F)
+submissions <- data.frame(solution_sortedElf(myToys, myelves), stringsAsFactors = F)
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
 
