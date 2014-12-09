@@ -145,7 +145,7 @@ is_complete <- function(duration, completed_minute, start_minute, elf_duration, 
 ################
 solution_sortedElf <- function(myToys, myelves){
     wcsv <- matrix(0, nrow = nrow(toys), ncol = 5, 
-                   dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))   
+                   dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))   
     for(i in 1:nrow(myToys)){
         current_toy <- myToys[i,]
         
@@ -197,6 +197,8 @@ load('data/toys_rev2.RData')
 # save(myToys, file='data/myToys.RData')
 
 myelves <- create_elves(NUM_ELVES)
-submissions <- solution_sortedElf(myToys, myelves)
+submissions <- data.frame(solution_sortedElf(myToys, myelves))
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
+
+write.csv(submission, 'toys_submission', row.names = FALSE)
