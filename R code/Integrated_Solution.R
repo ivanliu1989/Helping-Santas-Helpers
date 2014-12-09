@@ -145,7 +145,7 @@ is_complete <- function(duration, completed_minute, start_minute, elf_duration, 
 ### Solution ###
 ################
 solution_sortedElf <- function(myToys, myelves){
-    wcsv <- matrix(0, nrow = 0, ncol = 4, 
+    wcsv <- matrix(0, nrow = 1000000, ncol = 4, 
                    dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))   
     for(i in 1:nrow(myToys)){
         current_toy <- myToys[i,]
@@ -182,8 +182,8 @@ solution_sortedElf <- function(myToys, myelves){
         
         # write to file in correct format
         time_string <- convert_to_chardate(work_start_time)
-        wcsv <- rbind(wcsv, c(current_toy[2], current_elf[1], time_string, work_duration))
-        if(i %% 100000 == 0) cat('Completed', i/1000000, 'mil toys, makespan', time_string, 'minutes \n')
+        wcsv[j,] <- c(current_toy[2], current_elf[1], time_string, work_duration)
+        if(i %% 10000 == 0) cat('Completed', i/1000000, 'mil toys, makespan', time_string, 'minutes \n')
     }
     return(wcsv)
 }
