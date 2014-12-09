@@ -165,6 +165,7 @@ solution_sortedElf <- function(myToys, myelves){
         if(current_toy %% 100000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
                                 format(Sys.time(),format = '%Y-%m-%d %H:%M:%S'))    
     }
+    cat('\nCompleted 10 mil toys at', convert_to_chardate(c_elf_start_time)) 
     return(outcomes)
 }
 
