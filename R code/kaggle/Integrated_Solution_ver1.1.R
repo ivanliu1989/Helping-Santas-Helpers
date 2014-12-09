@@ -141,19 +141,19 @@ solution_sortedElf <- function(myToys, myelves){
         c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
         c_toy_duration <- myToys[current_toy,'Duration']
         
-        next_elf <- assign_elf(elves)
+        next_elf <- assign_elf(myelves)
         
-        c_elf_id <- elves[next_elf, 'elf_id']
-        c_elf_start_time <- elves[next_elf, 'next_available_time']
-        c_elf_rating <- elves[next_elf, 'current_rating']
+        c_elf_id <- myelves[next_elf, 'elf_id']
+        c_elf_start_time <- myelves[next_elf, 'next_available_time']
+        c_elf_rating <- myelves[next_elf, 'current_rating']
         
         if(c_elf_start_time < c_toy_arrival) c_elf_start_time <- c_toy_arrival    
         
         work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
         
-        elves[next_elf, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
+        myelves[next_elf, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
         
-        elves[next_elf, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
+        myelves[next_elf, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
         
         outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
         
@@ -174,8 +174,9 @@ gc(); rm(list=ls())
 
 NUM_ELVES <- 900
 
+load('data/toys.RData')
 myelves <- create_elves(NUM_ELVES)
-submissions <- solution_sortedElf(myToys, myelves)
+submissions <- solution_sortedElf(toys, myelves)
 submissions_output <- data.frame(ToyId = as.integer(outcomes[,1]), 
                          ElfId = as.integer(outcomes[,2]), 
                          StartTime = convert_to_chardate(outcomes[,3]), 
