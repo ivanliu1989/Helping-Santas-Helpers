@@ -76,11 +76,12 @@ apply_resting_period <- function(start, num_unsanctioned){
 ### Elf ###
 ###########
 create_elves <- function(num_elves){
-    col_names <- c('elf_id', 'current_rating', 'next_available_time')
+    col_names <- c('elf_id', 'current_rating', 'next_available_time','score')
     elf_mat <- matrix(0, nrow = num_elves, ncol = length(col_names), dimnames = list(NULL,col_names))
     elf_mat[,'elf_id'] <- seq_len(num_elves)
     elf_mat[,'current_rating'] <- 1.0
     elf_mat[,'next_available_time'] <- 540 
+    elf_mat[,'score'] <- 0
     return(elf_mat)
 }
 
@@ -155,6 +156,7 @@ solution_sortedElf <- function(myToys, myelves){
                 ifelse(myelves[j,3]==540, log(1+1), log(1))
         }
         myelves <- myelves[order(-myelves[,'score']),]
+#         myelves <- myelves[order(-myelves[,3], myelves[,2]),]
         for (j in 1:nrow(myelves)){
             if(current_toy[3] < myelves[j,3]){
                 break   
@@ -204,7 +206,7 @@ load('data/sampleSubmission_rev1.RData')
 # save(myToys, file='data/myToys.RData')
 
 myelves <- create_elves(NUM_ELVES)
-submissions <- data.frame(solution_sortedElf(myToys, myelves), stringsAsFactors = F)
+submissions_2 <- data.frame(solution_sortedElf(myToys[1:100,], myelves), stringsAsFactors = F)
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
 
