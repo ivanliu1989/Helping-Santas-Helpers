@@ -7,7 +7,8 @@ toy_init <- function(input){
     arrival_minute <- convert_to_minute(as.character(input$Arrival_time))
     duration <- as.integer(input$Duration)
     completed_minute <- 0  
-    return(matrix(c(reference_start_time, id, arrival_minute, duration, completed_minute), nrow=1))
+    return(data.matrix(data.frame(reference_start_time = reference_start_time, id= id, 
+                      arrival_minute = arrival_minute, duration = duration, completed_minute = completed_minute)))
 }
 # input <- toys_rev2[888,]
 # toy_task <- toy_init(input)
@@ -35,8 +36,8 @@ outside_toy_start_period <- function(arrival_minute, start_minute){
 # param rating: elf's productivity rating
 # return: Boolean
 is_complete <- function(duration, completed_minute, start_minute, elf_duration, rating){
-    if (as.integer(duration)/rating <= elf_duration){
-        completed_minute <- start_minute + ceiling(as.integer(duration)/rating)
+    if (duration/rating <= elf_duration){
+        completed_minute <- start_minute + ceiling(duration/rating)
         return(completed_minute)
     }else{
         return(FALSE)

@@ -8,3 +8,7 @@ gc(); rm(list=ls())
 load('data/toys_rev2.RData')
 source("hours.R")
 elf <- data.frame(elfid = 1:900)
+
+source('R code/hours.R')
+source('R code/toy.R')
+source('R code/elf.R')
