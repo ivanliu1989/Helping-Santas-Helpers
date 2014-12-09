@@ -179,6 +179,12 @@ gc(); rm(list=ls())
 
 NUM_ELVES <- 900
 
+    setwd('/Users/ivan/Work_directory/FICO/workspace/')
+    toys <- read.csv('toys.csv', stringsAsFactors=FALSE)
+    toys[,'Arrival_time'] <- convert_to_minute(toys[,'Arrival_time'])
+    toys <- data.matrix(toys)
+    save(toys, file='data/toys_sorted.RData')
+
 load('data/toys.RData')
 myelves <- create_elves(NUM_ELVES)
 submissions <- solution_sortedElf(toys, myelves)
