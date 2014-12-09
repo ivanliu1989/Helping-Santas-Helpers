@@ -44,9 +44,8 @@ assign_elf_to_toy <- function(input_time, current_elf, current_toy){
 #     :param myelves: list of elves in a priority queue ordered by next available time
 #     :return:
 
-solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
+solution_firstAvailableElf <- function(myToys, myelves){
     ref_time <- strptime(c("1.1.2014 0:0"), format = "%d.%m.%Y %H:%M")
-    myToys <- toy_init(toy_file) 
     wcsv <- data.matrix(data.frame('ToyId'=0, 'ElfId'=0, 'StartTime'=0, 'Duration'=0))
     
     for(i in 1:nrow(myToys)){
@@ -55,8 +54,14 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
         #######################
         ### select next elf ###
         #######################
-        elf_available_time <- myelves[1, 3]
-        current_elf <- myelves[1,]
+        for (j in 1:nrow(myelves)){
+            if(current_toy[3] < myelves[j,3]){
+                break   
+            }
+        }
+        
+        elf_available_time <- myelves[j, 3]
+        current_elf <- myelves[j,]
         
         work_start_time <- elf_available_time
         if (current_toy[3] > elf_available_time){
@@ -75,7 +80,7 @@ solution_firstAvailableElf <- function(toy_file, soln_file, myelves){
         current_elf <- update_elf(current_elf, current_toy, work_start_time, work_duration)
         
         # put elf back in heap
-        myelves[1,] <- current_elf
+        myelves[j,] <- current_elf
         ########################
         ### sorting next elf ###
         ########################
@@ -104,9 +109,9 @@ start <- Sys.time()
 NUM_ELVES <- 900
 
 load('data/toys_rev2.RData')
-load('data/sampleSubmission_rev1.RData')
+myToys <- toy_init(toys_rev2) 
 
 myelves <- create_elves(NUM_ELVES)
-submissions <- solution_firstAvailableElf(toys_rev2[1:10000,], sample, myelves)
+submissions <- solution_firstAvailableElf(myToys, myelves)
 
 print (paste('total runtime = ', as.integer(Sys.time() - start)))
