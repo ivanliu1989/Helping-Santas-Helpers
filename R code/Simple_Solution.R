@@ -1,16 +1,3 @@
-####################
-### create_elves ###
-####################
-create_elves <- function(NUM_ELVES){
-    #     Elves are stored in a sorted list using heapq to maintain their order by next available time.
-    #     List elements are a tuple of (next_available_time, elf object)
-    #     :return: list of elves
-    elf <- data.frame(elfid = 1:900)
-    list_elves <- elf_init(elf)
-    return(list_elves)
-}
-
-
 #########################
 ### assign_elf_to_toy ###
 #########################
@@ -102,9 +89,8 @@ solution_firstAvailableElf <- function(myToys, myelves){
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
-
 source("R Code/hours.R"); source("R Code/elf.R"); source("R Code/toy.R")
-elf <- data.frame(elfid = 1:900)
+
 start <- Sys.time()
 NUM_ELVES <- 900
 

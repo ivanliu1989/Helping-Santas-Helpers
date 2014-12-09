@@ -32,6 +32,16 @@ convert_to_minute <- function(arrival){
 }
 # convert_to_minute('2014 1 1 1 1')
 
+# convert_to_minute <- function(arrival) {
+#     arrive_time <- as.POSIXct(arrival, '%Y %m %d %H %M', tz = 'UTC')
+#     age <- as.integer(difftime(arrive_time, reference_time, units = 'mins', tz = 'UTC'))
+#     return(age)
+# }
+# 
+# convert_to_chardate <- function(arrive_int) {
+#     char_date <- format(reference_time + arrive_int * 60, format = '%Y %m %d %H %M', tz = 'UTC')
+#     return(char_date)
+# }
 
 ######################
 ### 是否在工作时间 ###
@@ -69,6 +79,18 @@ get_sanctioned_breakdown <- function(start_minute, duration){
 }
 # get_sanctioned_breakdown(12*60, 500)
 
+# get_sanctioned_breakdown <- function(start_minute, work_duration) {
+#     full_days <- as.integer(work_duration / minutes_in_24h)
+#     sanctioned <- full_days * hours_per_day * 60
+#     unsanctioned <- full_days * (24 - hours_per_day) * 60
+#     remainder_start <- start_minute + full_days * minutes_in_24h
+#     remainder_end <- start_minute + work_duration - 1 # to avoid off-by-one per R iterator
+#     if(remainder_end >= remainder_start) {
+#         sanctioned <- sanctioned + sum(is_sanctioned_time(remainder_start:remainder_end))
+#         unsanctioned <- unsanctioned + sum(!is_sanctioned_time(remainder_start:remainder_end))
+#     }
+#     return(c(sanctioned, unsanctioned))
+# }
 
 ####################################
 ### 给一分钟，计算下一个工作分钟 ###
@@ -77,13 +99,14 @@ get_sanctioned_breakdown <- function(start_minute, duration){
 #     :param minute: integer representing a minute since reference time
 #     :return: next sanctioned minute
 
-next_sanctioned_minute <- function(minute){
-    if(is_sanctioned_time(minute) & is_sanctioned_time((minute+1))){
+next_sanctioned_minute <- function(minute) {
+    if(is_sanctioned_time(minute) && is_sanctioned_time(minute + 1)) {
         next_min <- minute + 1
-    }else{
+    } else {
         num_days <- as.integer(minute / minutes_in_24h)
         am_or_pm <- as.integer(((minute %% minutes_in_24h)/day_start)) 
         # This is necessary, else end-of-day unsanctioned minutes jump over an entire day.
+        # David Thaler's fix works at minutes >=540, but fails at 539
         next_min <- day_start + (num_days + am_or_pm / 2) * minutes_in_24h
     }
     return(next_min)

@@ -1,17 +1,21 @@
 ######################
 ### Init Parameter ###
 ######################
-elf_init <- function(input){
-#     Each Elf starts with a rating of 1.0 and are available at 09:00 on Jan 1.
-    id <- input$elfid
-    rating <- 1.0
-    next_available_time <- 540  # Santa's Workshop opens Jan 1, 2014 9:00 (= 540 minutes)
-    rating_increase <- 1.02
-    rating_decrease <- 0.90
-    return(data.matrix(data.frame(id=id, rating=rating, next_available_time=next_available_time,
-                      rating_increase=rating_increase, rating_decrease=rating_decrease)))
+rating_increase <- 1.02
+rating_decrease <- 0.90
+#     Elves are stored in a sorted list using heapq to maintain their order by next available time.
+#     List elements are a tuple of (next_available_time, elf object)
+#     :return: list of elves
+
+create_elves <- function(num_elves){
+    col_names <- c('elf_id', 'current_rating', 'next_available_time')
+    elf_mat <- matrix(0, nrow = num_elves, ncol = length(col_names), dimnames = list(NULL,col_names))
+    elf_mat[,'elf_id'] <- seq_len(num_elves)
+    elf_mat[,'current_rating'] <- 1.0
+    elf_mat[,'next_available_time'] <- 540  # Santa's Workshop opens Jan 1, 2014 9:00 (= 540 minutes)
+    return(list_elves)
 }
-# elf_list <- elf_init(elf)
+# elf_list <- create_elves(900)
 
 ##############################
 ### 更新效率和下次工作时间 ###
@@ -29,6 +33,7 @@ update_elf <- function(elf_list, toy, start_minute, duration){
     return(elf_list)
 }
 # update_elf(elf_list[1,], toy_task, 1221, 223)
+
 
 ##########################
 ### 更新下次可工作时间 ###
@@ -59,7 +64,6 @@ update_next_available_minute <- function(elf_list, start_minute, duration){
 # elf_list <- update_next_available_minute(elf_list, 1221, 523)
 
     
-
 ####################
 ### 更新工作效率 ###
 ####################
@@ -77,8 +81,8 @@ update_productivity <- function(elf_list, start_minute, toy_required_minutes){
     # number of required minutes to build toy worked by elf, broken up by sanctioned and unsanctioned minutes
     sanctioned <- get_sanctioned_breakdown(start_minute, toy_required_minutes)[1]
     unsanctioned <- get_sanctioned_breakdown(start_minute, toy_required_minutes)[2]
-    elf_list[2] <- max(0.25,min(4.0, elf_list[2] * (elf_list[4] ** (sanctioned/60)) * 
-                                        (elf_list[5] ** (unsanctioned/60))
+    elf_list[2] <- max(0.25,min(4.0, elf_list[2] * (rating_increase ** (sanctioned/60)) * 
+                                        (rating_decrease ** (unsanctioned/60))
                                     ))
     return(elf_list)
 }
