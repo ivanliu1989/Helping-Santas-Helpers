@@ -213,4 +213,5 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 
 write.csv(submissions_output, 'toys_submission_double_sort.csv', row.names = FALSE)
-toys <- read.csv('Submission_benchmark.csv', stringsAsFactors=FALSE)
+
+model_score <- convert_to_minute(submissions_output[-1,3]) * log(1+NUM_ELVES)
