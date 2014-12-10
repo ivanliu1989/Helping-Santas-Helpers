@@ -71,7 +71,7 @@ fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
 3. Cost Function (build * time): 2546-10-24 17:41 | 1906561661 
 
 #### R - results - Sorted Data
-1. Naive Benchmark Solution: 2534-05-14 09:33 | 2532-08-27 18:52 | 1855901611
+1. Naive Benchmark Solution: 2534-05-14 09:33 | 2532-08-27 18:52 | 1856032068.34
 
 #### Leaderboard
 2369-12-27 14:32
