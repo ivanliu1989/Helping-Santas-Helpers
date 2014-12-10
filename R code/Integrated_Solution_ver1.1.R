@@ -207,6 +207,7 @@ NUM_ELVES <- 900
     save(toys, file='data/toys_sorted.RData')
 
 load('data/toys.RData')
+toys <- toys[order(toys[,2]+toys[,3], toys[,2]),]
 myelves <- create_elves(NUM_ELVES)
 submissions <- solution_sortedElf(toys, myelves)
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
