@@ -188,7 +188,9 @@ solution_sortedElf <- function(myToys, myelves){
 ############
 ### MAIN ###
 ############
-# Cost Function = elf_build_time * (1 + log(1+n)) * max(1, elf_available / toy_arrival)
+# Cost Function = elf_build_time * (1 + log(1+n)) * max(1, elf_available / toy_arrival) | Minimize
+# Job Allocation = build_time * start_time (build_time + start_time) s| Minimize
+
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
