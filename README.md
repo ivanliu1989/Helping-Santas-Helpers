@@ -63,6 +63,14 @@ fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
 #### Improvements
 1. Sort by productivity 
 2. Allocate the proper productivity to build time
-3. A new loop to calculate the next toy build time within the sactioned hours
-time available | sort productivity rate | minimum unsanction 
+3. Cost Function = elf_build_time * (1 + log(1+n)) * max(1, elf_available / toy_arrival)
+
+#### R - results - Raw Data
+1. Naive Solution: 2538-03-09 09:17
+2. First Available and Highest Rate: 2538-03-10 10:55
+3. Cost Function (build * time): 
+
+#### R - results - Sorted Data
+1. Naive Benchmark Solution: 2599-6-17 14:29
+
 

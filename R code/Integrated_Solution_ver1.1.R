@@ -77,13 +77,13 @@ apply_resting_period <- function(start, num_unsanctioned){
 ### Elf ###
 ###########
 create_elves <- function(num_elves){
-    col_names <- c('elf_id', 'current_rating', 'next_available_time')
-    # col_names <- c('elf_id', 'current_rating', 'next_available_time','score')
+    # col_names <- c('elf_id', 'current_rating', 'next_available_time')
+    col_names <- c('elf_id', 'current_rating', 'next_available_time','score')
     elf_mat <- matrix(0, nrow = num_elves, ncol = length(col_names), dimnames = list(NULL,col_names))
     elf_mat[,'elf_id'] <- seq_len(num_elves)
     elf_mat[,'current_rating'] <- 1.0
     elf_mat[,'next_available_time'] <- 540 
-    # elf_mat[,'score'] <- 0
+    elf_mat[,'score'] <- 0
     return(elf_mat)
 }
 
@@ -130,23 +130,26 @@ toy_init <- function(toys){
 #     return(assigned_elf)
 # }
 
-assign_elf <- function(elves) {
-    assigned_elf <-as.integer(elves[order(elves[,'next_available_time'], -elves[,'current_rating']),'elf_id'][1])
-    return(assigned_elf)
-}
-
-# elf_cost <- function(c_toy_arrival, c_toy_duration, myelves){
-#     cost <- as.integer(ceiling(c_toy_duration/myelves[, 'current_rating'])) * 
-#         (1 + ifelse(myelves[, 'next_available_time']==540, log(2), log(1))) * 
-#         max(myelves[, 'next_available_time'] / c_toy_arrival, 1)
-#     return(cost)
-# }
-# 
-# assign_elf <- function(c_toy_arrival, c_toy_duration, elves) {
-#     elves[,'score'] <- elf_cost(c_toy_arrival, c_toy_duration, elves)
-#     assigned_elf <-as.integer(elves[which.min(elves[,'score']),'elf_id'][1])
+# assign_elf <- function(elves) {
+#     assigned_elf <-as.integer(elves[order(elves[,'next_available_time'], -elves[,'current_rating']),'elf_id'][1])
 #     return(assigned_elf)
 # }
+
+elf_cost <- function(c_toy_arrival, c_toy_duration, myelves){
+    comp1 <- ceiling(c_toy_duration/myelves[, 'current_rating'])
+#     comp2 <- (1 + ifelse(myelves[, 'next_available_time']==540, 
+#                          log(sum(myelves[, 'next_available_time']==540)), log(sum(myelves[, 'next_available_time']==540)+1)))
+    comp3 <- myelves[, 'next_available_time'] / c_toy_arrival
+    comp3[which(comp3<1)] <- 1
+    cost <-  comp1 * comp3
+    return(cost)
+}
+
+assign_elf <- function(c_toy_arrival, c_toy_duration, myelves) {
+    myelves[,'score'] <- elf_cost(c_toy_arrival, c_toy_duration, myelves)
+    assigned_elf <-as.integer(myelves[which.min(myelves[,'score']),'elf_id'][1])
+    return(assigned_elf)
+}
 
 solution_sortedElf <- function(myToys, myelves){
     cat(format(Sys.time(),format = '%Y-%m-%d %H:%M:%S'))
@@ -159,7 +162,7 @@ solution_sortedElf <- function(myToys, myelves){
         c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
         c_toy_duration <- myToys[current_toy,'Duration']
         
-        next_elf <- assign_elf(myelves)
+        next_elf <- assign_elf(c_toy_arrival, c_toy_duration, myelves)
         
         c_elf_id <- myelves[next_elf, 'elf_id']
         c_elf_start_time <- myelves[next_elf, 'next_available_time']
@@ -208,3 +211,4 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 
 write.csv(submissions_output, 'toys_submission_double_sort.csv', row.names = FALSE)
+toys <- read.csv('Submission_benchmark.csv', stringsAsFactors=FALSE)
