@@ -190,6 +190,7 @@ solution_sortedElf <- function(myToys, myelves){
 ############
 # Cost Function = elf_build_time * (1 + log(1+n)) * max(1, elf_available / toy_arrival) | Minimize
 # Job Allocation = build_time * start_time (build_time + start_time) s| Minimize
+# Lowest Rate Loss = 
 
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
@@ -212,6 +213,6 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  StartTime = convert_to_chardate(submissions[,3]), 
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 
-write.csv(submissions_output, 'toys_submission_double_sort.csv', row.names = FALSE)
+write.csv(submissions_output, 'toys_submission_cost_function.csv', row.names = FALSE)
 
-model_score <- convert_to_minute(submissions_output[-1,3]) * log(1+NUM_ELVES)
+model_score <- convert_to_minute(submissions_output[nrow(submissions_output),3]) * log(1+NUM_ELVES)

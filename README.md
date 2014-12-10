@@ -68,7 +68,7 @@ fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
 #### R - results - Raw Data
 1. Naive Solution: 2538-03-09 09:17 | 2538-03-13 17:12
 2. First Available and Highest Rate: 2538-03-10 10:55
-3. Cost Function (build * time): 
+3. Cost Function (build * time): 2546-10-24 17:41 | 1906561661 
 
 #### R - results - Sorted Data
 1. Naive Benchmark Solution: 2534-05-14 09:33
