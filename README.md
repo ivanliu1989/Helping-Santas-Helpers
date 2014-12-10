@@ -75,3 +75,7 @@ fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
 
 #### Leaderboard
 2369-12-27 14:32
+
+#### Strategies
+1. Punch-Rest-Train. Where a long shift (the punch) is taken to build a multiday item, followed by the mandatory rest, and at most 14 days of re-training.
+2. Diminishing shift extensions. This exploits the fact that there are multiple solutions to x* log 1.02 + y * log 0.9 = 0.
