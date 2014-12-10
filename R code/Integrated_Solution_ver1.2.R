@@ -130,28 +130,6 @@ assign_elf <- function(elves) {
     return(assigned_elf)
 }
 
-# assign_elf <- function(elves) {
-#     assigned_elf <-as.integer(elves[order(elves[,'next_available_time'], -elves[,'current_rating']),'elf_id'][1])
-#     return(assigned_elf)
-# }
-
-# elf_cost <- function(c_toy_arrival, c_toy_duration, myelves){
-#     comp1 <- ceiling(c_toy_duration/myelves[, 'current_rating'])
-# #     comp2 <- (1 + ifelse(myelves[, 'next_available_time']==540, 
-# #                          log(sum(myelves[, 'next_available_time']==540)), log(sum(myelves[, 'next_available_time']==540)+1)))
-#     comp3 <- myelves[, 'next_available_time'] / c_toy_arrival
-#     comp3[which(comp3<1)] <- 1
-#     cost <-  comp1 * comp3
-#     return(cost)
-# }
-# 
-# assign_elf <- function(c_toy_arrival, c_toy_duration, myelves) {
-#     myelves[,'score'] <- elf_cost(c_toy_arrival, c_toy_duration, myelves)
-#     assigned_elf <-as.integer(myelves[which.min(myelves[,'score']),'elf_id'][1])
-#     return(assigned_elf)
-# }
-
-
 solution_sortedElf <- function(myToys, myelves){
     cat(format(Sys.time(),format = '%Y-%m-%d %H:%M:%S'))
     outcomes <- matrix(0, nrow = nrow(myToys), ncol = 5, 
@@ -189,9 +167,8 @@ solution_sortedElf <- function(myToys, myelves){
 ############
 ### MAIN ###
 ############
-# Cost Function = elf_build_time * (1 + log(1+n)) * max(1, elf_available / toy_arrival) | Minimize
-# Job Allocation = build_time * start_time (build_time + start_time) s| Minimize
-# Lowest Rate Loss = get_sanctioned_breakdown(start_minute, duration/rate)
+# elf: Train-1 (0.5, 4.0) | Overwork-2 (4.0) | Retrain-3 (0.25, 0.5)
+# toy: Small-3/1 | Median-1/3 | Large-2
 
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
@@ -199,8 +176,12 @@ setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 
 NUM_ELVES <- 900
-
 load('data/toys.RData')
+
+par(mfcol=c(1,2))
+plot(density(toys[,'Arrival_time']))
+plot(table(toys[,'Duration']))
+
 toys <- toys[order(toys[,2]+toys[,3], toys[,2]),]
 myelves <- create_elves(NUM_ELVES)
 submissions <- solution_sortedElf(toys, myelves)
