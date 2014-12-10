@@ -200,12 +200,6 @@ gc(); rm(list=ls())
 
 NUM_ELVES <- 900
 
-    setwd('/Users/ivan/Work_directory/FICO/workspace/')
-    toys <- read.csv('toys.csv', stringsAsFactors=FALSE)
-    toys[,'Arrival_time'] <- convert_to_minute(toys[,'Arrival_time'])
-    toys <- data.matrix(toys)
-    save(toys, file='data/toys_sorted.RData')
-
 load('data/toys.RData')
 toys <- toys[order(toys[,2]+toys[,3], toys[,2]),]
 myelves <- create_elves(NUM_ELVES)
@@ -215,6 +209,7 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  StartTime = convert_to_chardate(submissions[,3]), 
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 
-write.csv(submissions_output, 'toys_submission_cost_function.csv', row.names = FALSE)
+write.csv(submissions_output, 'toys_submission_naive.csv', row.names = FALSE)
+write.csv(data.frame(toys, stringsAsFactors = F), 'toys.csv', row.names = FALSE)
 
 model_score <- convert_to_minute(submissions_output[nrow(submissions_output),3]) * log(1+NUM_ELVES)
