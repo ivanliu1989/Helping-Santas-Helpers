@@ -135,13 +135,15 @@ assign_elf <- function(elves) {
     return(assigned_elf)
 }
 
-# elf_cost <- function(c_toy_duration, c_elf_rating, c_elf_start_time){
-#     cost <- as.integer(ceiling(c_toy_duration/c_elf_rating)) * (1 + ifelse(c_elf_start_time==540, log(1+n), log(1)))
+# elf_cost <- function(c_toy_arrival, c_toy_duration, myelves){
+#     cost <- as.integer(ceiling(c_toy_duration/myelves[, 'current_rating'])) * 
+#         (1 + ifelse(myelves[, 'next_available_time']==540, log(2), log(1))) * 
+#         max(myelves[, 'next_available_time'] / c_toy_arrival, 1)
 #     return(cost)
 # }
 # 
-# assign_elf <- function(elves) {
-#     elves[,'score'] <- elf_cost(elves[,'score'])
+# assign_elf <- function(c_toy_arrival, c_toy_duration, elves) {
+#     elves[,'score'] <- elf_cost(c_toy_arrival, c_toy_duration, elves)
 #     assigned_elf <-as.integer(elves[which.min(elves[,'score']),'elf_id'][1])
 #     return(assigned_elf)
 # }
@@ -183,7 +185,7 @@ solution_sortedElf <- function(myToys, myelves){
 ############
 ### MAIN ###
 ############
-# Cost Function = elf build time * (1 + log(1+n))
+# Cost Function = elf_build_time * (1 + log(1+n)) * max(1, elf_available / toy_arrival)
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
@@ -201,8 +203,8 @@ load('data/toys.RData')
 myelves <- create_elves(NUM_ELVES)
 submissions <- solution_sortedElf(toys, myelves)
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
-                         ElfId = as.integer(submissions[,2]), 
-                         StartTime = convert_to_chardate(submissions[,3]), 
-                         Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
+                                 ElfId = as.integer(submissions[,2]), 
+                                 StartTime = convert_to_chardate(submissions[,3]), 
+                                 Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 
-write.csv(submissions_output, 'toys_submission_naive.csv', row.names = FALSE)
+write.csv(submissions_output, 'toys_submission_double_sort.csv', row.names = FALSE)
