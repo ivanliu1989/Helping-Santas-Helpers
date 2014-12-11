@@ -8,7 +8,7 @@ assign_elf <- function(myelves, di) {
     a <- myelves[,'current_rating']
     myelves[,'score'] <- 60 * (4*a -1) / (4 * log(1.02)) # >=da
     myelves[di < -1440*log(4*a)/(log(1.02)+log(0.9)),'score'] <- a[di < -1440*log(4*a)/(log(1.02)+log(0.9))] * (1.02^(10 * di / 24 * a[di < -1440*log(4*a)/(log(1.02)+log(0.9))])) * (0.9^(14 * di / 24 * a[di < -1440*log(4*a)/(log(1.02)+log(0.9))])) * 60 * exp(-di*(10*log(1.02) + 14*log(0.9))/(a[di < -1440*log(4*a)/(log(1.02)+log(0.9))] * 1440)-1) # [a * 600, da)
-    myelves[di < myelves[,'current_rating'] * 600 ,'score'] <- 0 # < 600 * a
+    myelves[di < a * 600 ,'score'] <- 0 # < 600 * a
     assigned_elf <-as.integer(myelves[order(myelves[,'score'], myelves[,'next_available_time']) ,'elf_id'][1])
     return(assigned_elf)
 }
