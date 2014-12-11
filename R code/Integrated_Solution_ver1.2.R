@@ -127,6 +127,8 @@ toy_init <- function(toys){
 ################
 assign_elf <- function(myelves, c_toy_size) {
     if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 2
+    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 1
+    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 3
     myelves <- myelves[which(myelves[,'score']==c_toy_size),]
     if(length(myelves)==4){
         assigned_elf <- as.integer(myelves['elf_id'])
