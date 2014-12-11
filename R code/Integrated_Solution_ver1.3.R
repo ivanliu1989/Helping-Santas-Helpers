@@ -1,22 +1,24 @@
 #########################
 ### Schedule Strategy ###
 #########################
-train_elf <- 0.5; overwork_elf <- 3.9
-# elf score | Where dt is the required training time to restore back to 'a', after work di
-dt <- 0 # < 600 * a
-dt <- a * (1.02^(10 * di / 24 * a)) * (0.9^(14 * di / 24 * a)) * 60 * exp(-di*(10*log(1.02) + 14*log(0.9))/(a * 1440)-1) # [a * 600, da)
-dt <- 60 * (4*a -1) / (4 * log(1.02)) # >=da
-
-assign_elf <- function(myelves, c_toy_size) {
-    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 2
-    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 1
-    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 3
-    myelves <- myelves[which(myelves[,'score']==c_toy_size),]
-    if(length(myelves)==4){
-        assigned_elf <- as.integer(myelves['elf_id'])
+# a: current_rating
+# dt: required training time to restore
+# di: duration
+elf_score <- function (a, di){
+    da <- -1440*log(4*a)/(log(1.02)+log(0.9))
+    if (di < 600 * a){
+        dt <- 0 # < 600 * a
+    }else if(di < da){
+        dt <- a * (1.02^(10 * di / 24 * a)) * (0.9^(14 * di / 24 * a)) * 60 * exp(-di*(10*log(1.02) + 14*log(0.9))/(a * 1440)-1) # [a * 600, da)
     }else{
-        assigned_elf <-as.integer(myelves[which.min(myelves[,'next_available_time']) ,'elf_id'][1])
+        dt <- 60 * (4*a -1) / (4 * log(1.02)) # >=da
     }
+    return(dt)
+}
+   
+assign_elf <- function(myelves, c_toy_duration) {
+    myelves[,'score'] <- sapply(myelves[,'current_rating'], function(x) elf_score(x, c_toy_duration))
+    assigned_elf <-as.integer(myelves[order(myelves[,'score'], myelves[,'next_available_time']) ,'elf_id'][1])
     return(assigned_elf)
 }
 
@@ -33,12 +35,8 @@ solution_sortedElf <- function(myToys, myelves){
         c_toy_id <- myToys[current_toy,'ToyId']
         c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
         c_toy_duration <- myToys[current_toy,'Duration']
-        c_toy_size <- myToys[current_toy,'Size']
         
-        myelves[which(myelves[,'current_rating']<overwork_elf),'score'] <- 2
-        myelves[which(myelves[,'current_rating']<=train_elf),'score'] <- 1
-        myelves[which(myelves[,'current_rating']>=overwork_elf),'score'] <- 3
-        next_elf <- assign_elf(myelves, c_toy_size)
+        next_elf <- assign_elf(myelves, c_toy_duration)
         
         c_elf_id <- myelves[next_elf, 'elf_id']
         c_elf_start_time <- myelves[next_elf, 'next_available_time']
