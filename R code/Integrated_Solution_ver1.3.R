@@ -1,6 +1,12 @@
 #########################
 ### Schedule Strategy ###
 #########################
+train_elf <- 0.5; overwork_elf <- 3.9
+# elf score | Where dt is the required training time to restore back to 'a', after work di
+dt <- 0 # < 600 * a
+dt <- a * (1.02^(10 * di / 24 * a)) * (0.9^(14 * di / 24 * a)) * 60 * exp(-di*(10*log(1.02) + 14*log(0.9))/(a * 1440)-1) # [a * 600, da)
+dt <- 60 * (4*a -1) / (4 * log(1.02)) # >=da
+
 assign_elf <- function(myelves, c_toy_size) {
     if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 2
     if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 1
@@ -72,15 +78,17 @@ NUM_ELVES <- 900
 myelves <- create_elves(NUM_ELVES)
 
 load('data/toys_classified.RData')
-s_toy <- 100; l_toy <- 720
-# toys <- data.matrix(transform(toys, Size = 0))
-toys[which(toys[,'Duration']<=l_toy),'Size'] <- 2 # Median 19.3%
-toys[which(toys[,'Duration']<=s_toy),'Size'] <- 1 # Small 57.5%
-toys[which(toys[,'Duration']>l_toy),'Size'] <- 3 # Large 23.2%
-# save(toys, file='data/toys_classified.RData')
-toys <- toys[order(toys[,2]+toys[,3], toys[,2]),]
+toy_break1 <- 2.5*60; toy_break2 <- 10*60; toy_break3 <- 40*60; toy_break4<- 48*60; exhaustion <- 208*60
+toys <- data.matrix(transform(toys, Exhaustion = 0))
+    toys[which(toys[,'Duration']>=toy_break4),'Size'] <- 5 # 1969432 20% - overwork
+    toys[which(toys[,'Duration']<toy_break4),'Size'] <- 4 # 52036 0.5% - 48 hour
+    toys[which(toys[,'Duration']<toy_break3),'Size'] <- 3 # 366753 3.7% - 40 hour
+    toys[which(toys[,'Duration']<toy_break2),'Size'] <- 2 # 1202851 12% - 10 hour
+    toys[which(toys[,'Duration']<toy_break1),'Size'] <- 1 # 6408928 64% - 2.5 hour
+    toys[which(toys[,'Duration']>=exhaustion),'Exhaustion'] <- 1 # 995590 10% less than 208 hours
+    toys[which(toys[,'Duration']<exhaustion),'Exhaustion'] <- 0 # 9004410 90% 208 hour
+toys <- toys[order(toys[,'Exhaustion'], toys[,'Arrival_time']),]
 
-train_elf <- 0.5; overwork_elf <- 3.9
 submissions <- solution_sortedElf(toys, myelves)
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
                                  ElfId = as.integer(submissions[,2]), 
