@@ -67,15 +67,17 @@ setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Sant
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('Functions.R')
+
 NUM_ELVES <- 900; s_toy <- 100; l_toy <- 720; train_elf <- 0.5; overwork_elf <- 3.9
-
-    toys <- data.matrix(transform(toys, Size = 0))
-    toys[which(toys[,'Duration']<=l_toy),'Size'] <- 2 # Median 19.3%
-    toys[which(toys[,'Duration']<=s_toy),'Size'] <- 1 # Small 57.5%
-    toys[which(toys[,'Duration']>l_toy),'Size'] <- 3 # Large 23.2%
-    save(toys, file='data/toys_classified.RData')
-
+myelves <- create_elves(NUM_ELVES)
 load('data/toys_classified.RData')
+
+toys <- data.matrix(transform(toys, Size = 0))
+toys[which(toys[,'Duration']<=l_toy),'Size'] <- 2 # Median 19.3%
+toys[which(toys[,'Duration']<=s_toy),'Size'] <- 1 # Small 57.5%
+toys[which(toys[,'Duration']>l_toy),'Size'] <- 3 # Large 23.2%
+save(toys, file='data/toys_classified.RData')
+
 toys <- toys[order(toys[,2]+toys[,3], toys[,2]),]
 
 # par(mfcol=c(1,1))
@@ -83,13 +85,11 @@ toys <- toys[order(toys[,2]+toys[,3], toys[,2]),]
 # plot(table(toys[,'Duration']))
 # boxplot(log(toys[,'Duration']))
 
-myelves <- create_elves(NUM_ELVES)
 submissions <- solution_sortedElf(toys, myelves)
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
                                  ElfId = as.integer(submissions[,2]), 
                                  StartTime = convert_to_chardate(submissions[,3]), 
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 
+convert_to_minute(submissions_output[nrow(submissions_output),3]) * log(1+NUM_ELVES)
 write.csv(submissions_output, 'toys_submission_classification_sort.csv', row.names = FALSE)
-
-model_score <- convert_to_minute(submissions_output[nrow(submissions_output),3]) * log(1+NUM_ELVES)
