@@ -69,13 +69,13 @@ myelves <- create_elves(NUM_ELVES)
 load('data/toys_classified.RData')
 toy_break1 <- 2.5*60; toy_break2 <- 10*60; toy_break3 <- 40*60; toy_break4<- 48*60; exhaustion <- 208*60
 toys <- data.matrix(transform(toys, Exhaustion = 0))
-    toys[which(toys[,'Duration']>=toy_break4),'Size'] <- 5 # 1969432 20% - overwork
-    toys[which(toys[,'Duration']<toy_break4),'Size'] <- 4 # 52036 0.5% - 48 hour
-    toys[which(toys[,'Duration']<toy_break3),'Size'] <- 3 # 366753 3.7% - 40 hour
-    toys[which(toys[,'Duration']<toy_break2),'Size'] <- 2 # 1202851 12% - 10 hour
-    toys[which(toys[,'Duration']<toy_break1),'Size'] <- 1 # 6408928 64% - 2.5 hour
-    toys[which(toys[,'Duration']>=exhaustion),'Exhaustion'] <- 1 # 995590 10% larger than 208 hours
-    toys[which(toys[,'Duration']<exhaustion),'Exhaustion'] <- 0 # 9004410 90% 208 hour
+toys[which(toys[,'Duration']>=toy_break4),'Size'] <- 5 # 1969432 20% - overwork
+toys[which(toys[,'Duration']<toy_break4),'Size'] <- 4 # 52036 0.5% - 48 hour
+toys[which(toys[,'Duration']<toy_break3),'Size'] <- 3 # 366753 3.7% - 40 hour
+toys[which(toys[,'Duration']<toy_break2),'Size'] <- 2 # 1202851 12% - 10 hour
+toys[which(toys[,'Duration']<toy_break1),'Size'] <- 1 # 6408928 64% - 2.5 hour
+toys[which(toys[,'Duration']>=exhaustion),'Exhaustion'] <- 1 # 995590 10% larger than 208 hours
+toys[which(toys[,'Duration']<exhaustion),'Exhaustion'] <- 0 # 9004410 90% 208 hour
 toys <- toys[order(toys[,'Exhaustion'], toys[,'Arrival_time']),]
 
 submissions <- solution_sortedElf(toys, myelves)
