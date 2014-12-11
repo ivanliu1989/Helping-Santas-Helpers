@@ -211,7 +211,6 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  StartTime = convert_to_chardate(submissions[,3]), 
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 
-write.csv(submissions_output, 'toys_submission_naive.csv', row.names = FALSE)
-write.csv(data.frame(toys, stringsAsFactors = F), 'toys.csv', row.names = FALSE)
+write.csv(submissions_output, 'toys_submission_classification.csv', row.names = FALSE)
 
 model_score <- convert_to_minute(submissions_output[nrow(submissions_output),3]) * log(1+NUM_ELVES)
