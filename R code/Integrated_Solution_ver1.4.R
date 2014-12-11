@@ -5,14 +5,22 @@
 # dt: required training time to restore
 # di: duration
 assign_elf <- function(myelves, di, c_toy_size) {
+    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 2
+    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 1
+    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 4
+    if(sum(myelves[,'score']==c_toy_size)<1) c_toy_size <- 5
     myelves <- myelves[myelves[,'score']==c_toy_size,]
     
-    a <- myelves[,'current_rating']
-    myelves[,'score'] <- 60 * (4*a -1) / (4 * log(1.02)) # >=da
-    myelves[di < -1440*log(4*a)/(log(1.02)+log(0.9)),'score'] <- a[di < -1440*log(4*a)/(log(1.02)+log(0.9))] * (1.02^(10 * di / 24 * a[di < -1440*log(4*a)/(log(1.02)+log(0.9))])) * (0.9^(14 * di / 24 * a[di < -1440*log(4*a)/(log(1.02)+log(0.9))])) * 60 * exp(-di*(10*log(1.02) + 14*log(0.9))/(a[di < -1440*log(4*a)/(log(1.02)+log(0.9))] * 1440)-1) # [a * 600, da)
-    myelves[di < a * 600 ,'score'] <- 0 # < 600 * a
-    assigned_elf <-as.integer(myelves[order(myelves[,'score'], myelves[,'next_available_time']) ,'elf_id'][1])
-    return(assigned_elf)
+    if(length(myelves)==4){
+        return(as.integer(myelves['elf_id']))
+    }else{
+        a <- myelves[,'current_rating']
+        myelves[,'score'] <- 60 * (4*a -1) / (4 * log(1.02)) # >=da
+        myelves[di < -1440*log(4*a)/(log(1.02)+log(0.9)),'score'] <- a[di < -1440*log(4*a)/(log(1.02)+log(0.9))] * (1.02^(10 * di / 24 * a[di < -1440*log(4*a)/(log(1.02)+log(0.9))])) * (0.9^(14 * di / 24 * a[di < -1440*log(4*a)/(log(1.02)+log(0.9))])) * 60 * exp(-di*(10*log(1.02) + 14*log(0.9))/(a[di < -1440*log(4*a)/(log(1.02)+log(0.9))] * 1440)-1) # [a * 600, da)
+        myelves[di < a * 600 ,'score'] <- 0 # < 600 * a
+        assigned_elf <-as.integer(myelves[order(myelves[,'score'], myelves[,'next_available_time']) ,'elf_id'][1])
+        return(assigned_elf)
+    }
 }
 
 #################
@@ -31,10 +39,10 @@ solution_sortedElf <- function(myToys, myelves){
         myelves[myelves[,'current_rating']<train_elf,'score'] <- 2
         myelves[myelves[,'current_rating']<retrain_elf,'score'] <- 1
         
-        c_toy_id <- myToys[toy,'ToyId']
-        c_toy_arrival <- myToys[toy, 'Arrival_time'] 
-        c_toy_duration <- myToys[toy,'Duration']
-        c_toy_size <- myToys[toy,'Size']
+        c_toy_id <- myToys[current_toy,'ToyId']
+        c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
+        c_toy_duration <- myToys[current_toy,'Duration']
+        c_toy_size <- myToys[current_toy,'Size']
             
         next_elf <- assign_elf(myelves, c_toy_duration, c_toy_size)
         
@@ -50,9 +58,9 @@ solution_sortedElf <- function(myToys, myelves){
         
         myelves[next_elf, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
         
-        outcomes[toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
+        outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
         
-        if(toy %% 100000 == 0) cat('\nCompleted', toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
+        if(current_toy %% 100000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
                                    format(Sys.time(),format = '%Y-%m-%d %H:%M:%S'))    
     }
     cat('\nCompleted 10 mil toys at', convert_to_chardate(c_elf_start_time)) 
@@ -89,7 +97,7 @@ toys <- toys[order(toys[,'Exhaustion'], toys[,'Arrival_time']),]
 
 retrain_elf <- 1; train_elf <- 2.5; overwork_elf <- 3.8
 
-submissions <- solution_sortedElf(toys[1:100,], myelves)
+submissions <- solution_sortedElf(toys, myelves)
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
                                  ElfId = as.integer(submissions[,2]), 
                                  StartTime = convert_to_chardate(submissions[,3]), 
