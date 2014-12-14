@@ -29,3 +29,12 @@
 #     current_toy <- d$ToyId[1]
 #     return(current_toy)
 # }
+
+all toys arrival time => next 9.00 
+if(elf_rate == 4.0){
+    exhausation
+    
+}else{
+    earliest
+}
+

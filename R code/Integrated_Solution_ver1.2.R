@@ -66,7 +66,7 @@ setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
-source('Functions.R')
+source('R code/Functions.R')
 NUM_ELVES <- 900; s_toy <- 100; l_toy <- 720; train_elf <- 0.5; overwork_elf <- 3.9
 
     toys <- data.matrix(transform(toys, Size = 0))
