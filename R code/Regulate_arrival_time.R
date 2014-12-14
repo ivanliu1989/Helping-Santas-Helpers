@@ -14,13 +14,14 @@ library(plyr)
 ### Transform ###
 reference_time <- as.POSIXct('2014 1 1 0 0', '%Y %m %d %H %M', tz = 'UTC')
 
-toys[,'Arrival_time'] <- convert_to_chardate(toys[,'Arrival_time'])
-toys[,'Arrival_time'] <- as.POSIXct(toys[,'Arrival_time'], '%Y %m %d %H %M', tz = 'UTC')
-toys[,'Date'] <- paste(year(toys[,'Arrival_time']), month(toys[,'Arrival_time']), day(toys[,'Arrival_time']))
-toys[,'Hour'] <- hour(toys[,'Arrival_time'])
+toys <- transform(toys, Arrival_time = convert_to_chardate(toys[,'Arrival_time']))
+toys <- transform(toys, Arrival_time = as.POSIXct(toys[,'Arrival_time'], '%Y %m %d %H %M', tz = 'UTC'))
+toys <- transform(toys, Date = paste(year(toys[,'Arrival_time']), month(toys[,'Arrival_time']), day(toys[,'Arrival_time'])))
+toys <- transform(toys, Hour = hour(toys[,'Arrival_time']))
 
-index <- toys[,'Hour'] < 9
-toys[index,'Time'] <- '9 0'
+toys[toys[,'Hour'] < 9, 'Time'] <- '9 0'
+
+toys[toys[,'Hour'] < 9, 'Time'] <- '9 0'
 
 index_2 <- toys[,'Duration'] > 600 
 toys[index_2, 'Date'] <- paste(year(toys[,'Arrival_time']), month(toys[,'Arrival_time']), day(toys[,'Arrival_time'])+1)
