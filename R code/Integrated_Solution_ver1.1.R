@@ -200,7 +200,7 @@ gc(); rm(list=ls())
 
 NUM_ELVES <- 900
 
-load('data/toys.RData')
+load('data/toys_regulated.RData')
 toys <- toys[order(toys[,2]+toys[,3], toys[,2]),]
 myelves <- create_elves(NUM_ELVES)
 submissions <- solution_sortedElf(toys, myelves)
