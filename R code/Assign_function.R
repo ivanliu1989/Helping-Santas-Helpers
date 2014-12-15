@@ -30,11 +30,29 @@
 #     return(current_toy)
 # }
 
-all toys arrival time => next 9.00 
-if(elf_rate == 4.0){
-    exhausation
-    
-}else{
-    earliest
+# all toys arrival time => next 9.00 
+# if(elf_rate == 4.0){
+#     exhausation
+#     
+# }else{
+#     earliest
+# }
+
+assign_toy <- function(myelves, myToys) {
+    if(sum(myelves[,'score'] == 3) > 0){
+        assigned_toy <-as.integer(myToys[myToys[,'Size']==3,'ToyId'][1])
+        return(assigned_toy)
+    }else if(sum(myelves[,'score'] == 2) > 0){
+        assigned_toy <-as.integer(myToys[myToys[,'Size']==2,'ToyId'][1])
+        return(assigned_toy)
+    }else{
+        assigned_toy <-as.integer(myToys[myToys[,'Size']==1,'ToyId'][1])
+        return(assigned_toy)
+    }
 }
 
+assign_elf <- function(myelves, di, c_toy_size) {
+    myelves <- myelves[myelves[,'score']==c_toy_size,]
+    assigned_elf <-as.integer(myelves[order(myelves[,'next_available_time']) ,'elf_id'][1])
+    return(assigned_elf)
+}
