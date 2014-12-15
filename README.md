@@ -74,6 +74,7 @@ fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
 #### R - results - Sorted Data
 1. Naive Benchmark Solution: 2534-05-14 09:33 | 2532-08-27 18:52 | 1856032068.34
 2. Classification : 2532-01-22 09:07 | 1853761875 | 1853964496.7 (1.2)
+3. Regulate Time + Classified : 2532-10-10 13:16 | 1856330395
 
 #### Leaderboard
 2369-12-27 14:32
