@@ -19,10 +19,17 @@ toys <- transform(toys, Arrival_time = as.POSIXct(toys[,'Arrival_time'], '%Y %m 
 toys <- transform(toys, Date = paste(year(toys[,'Arrival_time']), month(toys[,'Arrival_time']), day(toys[,'Arrival_time'])))
 toys <- transform(toys, Hour = hour(toys[,'Arrival_time']))
 
+toys <- transform(toys, Time = paste(hour(toys[,'Arrival_time']), minute(toys[,'Arrival_time'])))
 toys[toys[,'Hour'] < 9, 'Time'] <- '9 0'
 
-toys[toys[,'Hour'] < 9, 'Time'] <- '9 0'
+head(toys[toys[,'Duration'] > 600 & toys[,'Time'] != '9 0',])
+toys[,'Date'] <- ymd(toys[,'Date'])
 
-index_2 <- toys[,'Duration'] > 600 
-toys[index_2, 'Date'] <- paste(year(toys[,'Arrival_time']), month(toys[,'Arrival_time']), day(toys[,'Arrival_time'])+1)
-toys[index_2,'Time'] <- '9 0'
+toys[toys[,'Duration'] > 600 & toys[,'Time'] != '9 0', 'Date'] <- toys[toys[,'Duration'] > 600 & toys[,'Time'] != '9 0', 'Date'] + 24*3600
+toys[toys[,'Duration'] > 600 & toys[,'Time'] != '9 0', 'Time'] <- '9 0'
+
+toys <- transform(toys, Arrival_time = paste(year(toys[,'Date']), month(toys[,'Date']), day(toys[,'Date']), toys[,'Time']))
+toys <- transform(toys, Date=NULL);toys <- transform(toys, Hour=NULL);toys <- transform(toys, Time=NULL)
+toys <- transform(toys, Arrival_time = convert_to_minute(toys[,'Arrival_time']))
+
+save(toys, file='data/toys_regulated.RData')
