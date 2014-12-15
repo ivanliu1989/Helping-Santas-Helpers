@@ -75,7 +75,7 @@ NUM_ELVES <- 900; s_toy <- 100; l_toy <- 720; train_elf <- 0.5; overwork_elf <- 
     toys[which(toys[,'Duration']>l_toy),'Size'] <- 3 # Large 23.2%
     save(toys, file='data/toys_classified.RData')
 
-load('data/toys_classified.RData')
+load('data/toys_regulated.RData')
 toys <- toys[order(toys[,2]+toys[,3], toys[,2]),]
 
 # par(mfcol=c(1,1))
