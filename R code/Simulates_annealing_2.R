@@ -90,7 +90,7 @@ outcome_all <- list()
 for (index_num in index_range){
     
     ### Toys establishment ###
-    myToys <- data.matrix(toys_dat[index[index_num],])
+    myToys <- data.matrix(toys_dat[index[[index_num]],])
     myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),]
     schedule <- c(1:nrow(myToys))
     NUM_ELVES <- 1
@@ -101,7 +101,7 @@ for (index_num in index_range){
     N0 <- runif(C)*nrow(myToys) # initial point
     h <- 10 # used to modulate the step length.
     S <- 10 # current value times, step width
-    x0 <- xbest; fx0 <- solution_Elf(myToys, myelves, x0)
+    x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
     xbest <- x0; fbest <- fx0
     
     ### main loop ###
