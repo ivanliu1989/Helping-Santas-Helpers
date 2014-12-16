@@ -146,4 +146,11 @@ for (i in 1:900){
     myelves <- create_elves(NUM_ELVES)
     outcome_all[[i]] <- solution_Elf_outcome(myToys, myelves, sch)
 }
-
+outcome_all[[601]] <- solution_Elf_outcome(myToys, myelves, xbest)
+myToys <- data.matrix(toys_dat[index[[601]],])
+outcome_all_in_one <- outcome_all[[1]]
+for(i in 2:900){
+    outcome_all_in_one <- rbind(outcome_all_in_one, outcome_all[[i]])
+}
+dim(outcome_all_in_one)
+outcome_all[[4]]
