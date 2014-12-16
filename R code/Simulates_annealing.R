@@ -43,6 +43,7 @@ load('data/toys.RData')
 ### Calculation ###
 ###################
 require(caret)
+set.seed(8888)
 toys_dat <- data.frame(toys)
 index <- createDataPartition(toys_dat$Duration, p = 1/900, list = F)
 myToys <- data.matrix(toys_dat[index,])
@@ -93,7 +94,7 @@ S <- 5 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 xcurrent <- x0; fcurrent <- fx0
-T0max <- 0.9*fx0 # initial temperature value
+T0max <- 1*fx0 # initial temperature value
 
 ### main loop ###
 for (c in 1:C){ # multiple cooling chain
@@ -112,13 +113,14 @@ for (c in 1:C){ # multiple cooling chain
             if(delta<0){
                 xcurrent <- x1; fcurrent <- fx1 # select better one between fx1, fcurrent and save it into fx1
                 cat(paste('\n -- Find Improvement:',delta, '!!!'))
-            }else{
-                proba <- runif(1)
-                test <- exp(-delta/temperature)
-                if(proba<test){
-                    xcurrent <- x1; fcurrent <- fx1
-                }
             }
+#             else{
+#                 proba <- runif(1)
+#                 test <- exp(-delta/temperature)
+#                 if(proba<test){
+#                     xcurrent <- x1; fcurrent <- fx1
+#                 }
+#             }
             if (fcurrent<fbest){
                 xbest <- xcurrent; fbest <- fcurrent
                 cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
@@ -129,3 +131,4 @@ for (c in 1:C){ # multiple cooling chain
     }
 }
 # C:50 | h:10 | S:5 => 50*10*2*5 => 5000
+# 278659423
