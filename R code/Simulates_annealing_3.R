@@ -11,8 +11,8 @@ load('R code/benchmark_schedule.RData')
 
 ### f(x) ###
 solution_Elf <- function(myToys, myelves, schedule){
-    outcomes <- matrix(0, nrow = nrow(myToys), ncol = 5, 
-                       dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
+    outcomes <- matrix(0, nrow = nrow(myToys), ncol = 4, 
+                       dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))
     myToys <- myToys[schedule[,'ToyId'],]
     for(current_toy in 1:nrow(myToys)){
         
@@ -26,10 +26,12 @@ solution_Elf <- function(myToys, myelves, schedule){
         
         if(c_elf_start_time < c_toy_arrival) c_elf_start_time <- c_toy_arrival  
         work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
-        myelves[, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
-        myelves[, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
+        myelves[c_elf_id, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
+        myelves[c_elf_id, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
         
-        outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
+        outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration)
+        if(current_toy %% 1000000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
+                                           format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
     }
     return((outcomes[nrow(outcomes), 3]+outcomes[nrow(outcomes), 4])*log(901))
 }
@@ -51,10 +53,12 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
         
         if(c_elf_start_time < c_toy_arrival) c_elf_start_time <- c_toy_arrival  
         work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
-        myelves[, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
-        myelves[, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
+        myelves[c_elf_id, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
+        myelves[c_elf_id, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
         
         outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
+        if(current_toy %% 100000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
+                                           format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
     }
     return(outcomes)
 }
