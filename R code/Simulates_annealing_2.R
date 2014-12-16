@@ -140,9 +140,10 @@ save(x_all,f_all,outcome_all, file='R_SA.RData')
 ### Test Validation ###
 for (i in 1:900){
     outcome_all <- list()
-    myToys <- data.matrix(toys_dat[index[i],])
+    myToys <- data.matrix(toys_dat[index[[i]],])
+    sch <- c(1:nrow(myToys))
     NUM_ELVES <- 1
     myelves <- create_elves(NUM_ELVES)
-    outcome_all[[i]] <- solution_Elf_outcome(myToys, myelves, xbest)
+    outcome_all[[i]] <- solution_Elf_outcome(myToys, myelves, sch)
 }
 
