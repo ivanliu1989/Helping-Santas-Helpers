@@ -70,9 +70,10 @@ for (c in 1:C){
     for (s in 1:S){ 
         cat(paste('\n - Step:',s))
         Np <- (1+h+s/10) 
-        for (np in max((Ns-Np),1):min((Ns+Np),toy_row)){ 
-            partition_1 <- min((np/length(max((Ns-Np),1):min((Ns+Np),toy_row))), toy_row) 
-            partition_2 <- max(((np-1)/length(max((Ns-Np),1):min((Ns+Np),toy_row)) + 1), np)
+        num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
+        for (np in 1:num){ 
+            partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
+            partition_2 <- min((np/num)*toy_row, toy_row)
             x1 <- xbest
             x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
             
