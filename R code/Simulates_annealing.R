@@ -132,3 +132,18 @@ for (c in 1:C){ # multiple cooling chain
 }
 # C:50 | h:10 | S:5 => 50*10*2*5 => 5000
 # 278659423
+# 1290000000
+
+# s ← s0; e ← E(s)                                  // Initial state, energy.
+# sbest ← s; ebest ← e                              // Initial "best" solution
+# k ← 0                                             // Energy evaluation count.
+# while k < kmax and e > emax                       // While time left & not good enough:
+#     T ← temperature(k/kmax)                         // Temperature calculation.
+# snew ← neighbour(s)                             // Pick some neighbour.
+# enew ← E(snew)                                  // Compute its energy.
+# if P(e, enew, T) > random() then                // Should we move to it?
+# s ← snew; e ← enew                            // Yes, change state.
+# if enew < ebest then                            // Is this a new best?
+# sbest ← snew; ebest ← enew                    // Save 'new neighbour' to 'best found'.
+# k ← k + 1                                       // One more evaluation done
+# return sbest                                      // Return the best solution found.
