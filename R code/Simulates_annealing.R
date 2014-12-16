@@ -47,7 +47,7 @@ set.seed(8888)
 toys_dat <- data.frame(toys)
 index <- createFolds(toys_dat$Duration, k = 900, list = T)
 save(index, file='data/900_Folds.RData')
-myToys <- data.matrix(toys_dat[index$Fold001,])
+myToys <- data.matrix(toys_dat[index$Fold601,])
 myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),]
 schedule <- c(1:nrow(myToys))
 NUM_ELVES <- 1
@@ -87,11 +87,11 @@ solution_Elf <- function(myToys, myelves, schedule){
 }
 
 ### parameters ###
-C <- 10 # multiple cooling chain
+C <- 50 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
-h <- 10 # used to modulate the step length.
+h <- 2 # used to modulate the step length.
 alpha <- .2 # limited to a proportion of ~20% of fx0 in the first step
-S <- 10 # current value times, step width
+S <- 2 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 xcurrent <- x0; fcurrent <- fx0
