@@ -117,6 +117,7 @@ for (index_num in index_range){
             cat(paste('\n - Step:',s))
             Np <- (1+h+s/10) 
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
+            bk <-0
             for (np in 1:num){ 
                 partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
                 partition_2 <- min((np/num)*toy_row, toy_row)
@@ -129,7 +130,11 @@ for (index_num in index_range){
                     xbest <- x1; fbest <- fx1
                     cat(paste('\n -- Find Improvement:',delta, '!!!'))
                     cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
+                }else{
+                    bk <- bk + 1
+                    if (bk > 3) break
                 }
+                
             }
         }
     }
