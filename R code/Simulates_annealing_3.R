@@ -30,7 +30,7 @@ solution_Elf <- function(myToys, myelves, schedule){
         myelves[c_elf_id, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
         
         outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration)
-        if(current_toy %% 1000000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
+        if(current_toy %% 2000000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
                                            format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
     }
     return((outcomes[nrow(outcomes), 3]+outcomes[nrow(outcomes), 4])*log(901))
@@ -75,10 +75,10 @@ NUM_ELVES <- 900
 myelves <- create_elves(NUM_ELVES)
 
 ### parameters ###
-C <- 10 # multiple cooling chain
+C <- 3 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
-h <- 10 # used to modulate the step length.
-S <- 10 # current value times, step width
+h <- 5 # used to modulate the step length.
+S <- 5 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 
@@ -97,7 +97,7 @@ for (c in 1:C){
             partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
             partition_2 <- min((np/num)*toy_row, toy_row)
             x1 <- xbest
-            x1[partition_1:partition_2, 'toyID'] <- sample(x1[partition_1:partition_2, 'toyID']) ## reallocate Toys to a random chosen group of Elves
+            x1[partition_1:partition_2, 'ToyId'] <- sample(x1[partition_1:partition_2, 'ToyId']) ## reallocate Toys to a random chosen group of Elves
             
             fx1 <- solution_Elf(myToys, myelves, x1)
             delta <- fx1-fbest
