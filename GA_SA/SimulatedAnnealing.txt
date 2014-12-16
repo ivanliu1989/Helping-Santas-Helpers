@@ -1,0 +1,205 @@
+Imports System.IO
+
+Partial Class SimAnnealing
+    Inherits System.Web.UI.Page
+
+    Dim rand As Random = New Random
+    Dim filename As String = Server.MapPath("tsp.txt")
+    Dim dimension As Integer = 15
+    Dim data As Double(,)
+    Dim incumbent As String
+    Dim incDist As Integer
+
+    Protected Sub Page_Load(ByVal sender As Object, ByVal e As System.EventArgs) Handles Me.Load
+
+    End Sub
+
+    Protected Sub btn_start_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btn_start.Click
+        computeData()
+
+        Dim i As Integer
+        Dim curr() As Integer = New Integer(14) {}
+        setCurrent(curr)
+        incumbent = recoverSolution(curr)
+        incDist = computeDistance(curr)
+        Dim nxt() As Integer = New Integer(14) {}
+        For i = 0 To curr.Length - 1
+            nxt(i) = New Integer
+        Next
+        Dim iteration As Integer = -1
+        Dim proba As Double
+        Dim alpha As Double = txt_alpha.Text
+        Dim temperature As Double = txt_temp.Text
+        Dim epsilon As Double = txt_epsilon.Text
+        Dim delta As Double
+        Dim distance As Double = computeDistance(curr)
+        Dim c1 As LineChartAbs = New LineChartAbs(550, 550, Page)
+        Dim route As String
+
+        Do While (temperature > epsilon)
+            iteration = iteration + 1
+            computeNext(curr, nxt)
+            delta = computeDistance(nxt) - distance
+            If (delta < 0) Then
+                assign(curr, nxt)
+                distance = distance + delta
+            Else
+                proba = rand.NextDouble
+                Dim test As Double = Math.Exp(-delta / temperature)
+                If (proba < Math.Exp(-delta / temperature)) Then
+                    assign(curr, nxt)
+                    distance = distance + delta
+                End If
+            End If
+
+            'Keep track of best solution
+            If (computeDistance(curr) < incDist) Then
+                incumbent = recoverSolution(curr)
+                incDist = computeDistance(curr)
+            End If
+
+            temperature = temperature * alpha
+            If ((iteration Mod 200) = 0) Then
+                'Add every 200th value to the graph
+                c1.AddValue(iteration, distance, "", "")
+                c1.AddValue2(iteration, incDist, "", "")
+            End If
+
+        Loop
+        c1.Title = "      Traveling Salesman Problem Using Simulated Annealing      "
+
+        c1.Xorigin = 0
+        c1.ScaleX = iteration
+        c1.Xdivs = 50
+
+        c1.Yorigin = 0
+        c1.ScaleY = 100
+        c1.Ydivs = 50
+
+        route = recoverSolution(curr)
+
+        c1.Draw("The best route is " & incumbent & ", with a distance of " & incDist & ".", 450)        'lbl_solution.Text = "The best distance is " & distance & "."
+
+    End Sub
+
+    Private Sub assign(ByRef c() As Integer, ByRef n() As Integer)
+        Dim i As Integer
+        For i = 0 To c.Length - 1
+            c(i) = n(i)
+        Next
+    End Sub
+
+    Private Sub computeNext(ByRef c() As Integer, ByRef n() As Integer)
+        Dim i, i1, i2, aux As Integer
+        For i = 0 To c.Length - 1
+            n(i) = c(i)
+        Next
+        i1 = rand.Next(14) + 1
+        i2 = rand.Next(14) + 1
+        aux = n(i1)
+        n(i1) = n(i2)
+        n(i2) = aux
+    End Sub
+
+    Private Sub setCurrent(ByRef c() As Integer)
+        Dim i, temp As Integer
+        Dim isSet As BitArray = New BitArray(15)
+
+        For i = 0 To c.Length - 1
+            temp = rand.Next(0, 15)
+            Do While (isSet(temp))
+                temp = rand.Next(0, 15)
+            Loop
+            c(i) = temp
+            isSet(temp) = True
+        Next
+
+    End Sub
+
+    Private Function recoverSolution(ByVal c() As Integer) As String
+        Dim route As String = ""
+        Dim last As String
+        Dim i, caseInt As Integer
+        For i = 0 To c.Length - 1
+            caseInt = c(i)
+            Select Case caseInt
+                Case 0
+                    route = route + "A"
+                Case 1
+                    route = route + "B"
+                Case 2
+                    route = route + "C"
+                Case 3
+                    route = route + "D"
+                Case 4
+                    route = route + "E"
+                Case 5
+                    route = route + "F"
+                Case 6
+                    route = route + "G"
+                Case 7
+                    route = route + "H"
+                Case 8
+                    route = route + "I"
+                Case 9
+                    route = route + "J"
+                Case 10
+                    route = route + "K"
+                Case 11
+                    route = route + "L"
+                Case 12
+                    route = route + "M"
+                Case 13
+                    route = route + "N"
+                Case 14
+                    route = route + "O"
+            End Select
+        Next
+        last = route.Substring(0, 1)
+        route = route + last
+        Return route
+    End Function
+    Public Function computeDistance(ByRef t() As Integer) As Integer
+        Dim distance As Integer
+        Dim str As String
+        Dim i As Integer
+
+        For i = 0 To (dimension - 2)
+            str = t(i)
+            str = t(i + 1)
+            str = Convert.ToInt32(data(t(i), t(i + 1)))
+            distance = distance + Convert.ToInt32(data(t(i), t(i + 1)))
+        Next
+
+        distance = distance + Convert.ToInt32(data(t(dimension - 1), t(0)))
+
+        Return distance
+    End Function
+
+    Public Function getData() As Double(,)
+        Return data
+    End Function
+
+    Public Sub computeData()
+        Dim line As String
+        Dim i, j As Integer
+        data = New Double(dimension, dimension) {}
+
+        Try
+            Dim objStreamReader As StreamReader
+            objStreamReader = File.OpenText(filename)
+
+            For i = 0 To dimension - 1
+                line = objStreamReader.ReadLine
+                Dim st As String() = line.Split(" ")
+                For j = 0 To dimension - 1
+                    data(i, j) = Double.Parse(st(j))
+                Next
+            Next
+
+        Catch ex As Exception
+            Console.WriteLine(ex.ToString)
+        End Try
+
+    End Sub
+End Class

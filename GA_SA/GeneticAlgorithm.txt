@@ -1,0 +1,364 @@
+Imports System.IO
+
+Partial Class GeneticAlg
+    Inherits System.Web.UI.Page
+
+    Dim incumbent As String
+    Dim incFit As Integer = 0
+    Dim fitAvg As Double = 0
+    Dim lowFit As Double = 0
+    Dim iteration As Integer = 0
+    Dim count As Integer = 0
+    'to increase or decrease problem size, change the index in this
+    'array and search ProblemSize for more changes
+    Dim assignArray As Integer()() = New Integer(12)() {}
+    Dim c1 As LineChartAbs = New LineChartAbs(550, 550, Page)
+
+
+    Protected Sub btn_start_Click(ByVal sender As Object, ByVal e As System.EventArgs) Handles btn_start.Click
+        
+        Dim size As Integer = txt_pop.Text
+        Dim mutation As Double = txt_mut.Text
+        Dim population As String() = New String(size - 1) {}
+        'ProblemSize: add values here
+        assignArray(0) = New Integer() {34, 31, 20, 27, 24, 24, 18, 33, 35, 19} ', 21, 27} 'A
+        assignArray(1) = New Integer() {14, 14, 22, 34, 26, 19, 22, 29, 22, 19} ', 22, 30} 'B
+        assignArray(2) = New Integer() {22, 16, 21, 27, 35, 25, 30, 22, 23, 23} ', 27, 19} 'C
+        assignArray(3) = New Integer() {17, 21, 24, 16, 31, 22, 20, 27, 26, 17} ', 26, 26} 'D
+        assignArray(4) = New Integer() {17, 29, 22, 31, 18, 19, 26, 24, 25, 14} ', 25, 24} 'E
+        assignArray(5) = New Integer() {26, 29, 37, 34, 37, 20, 21, 25, 27, 27} ', 33, 28} 'F
+        assignArray(6) = New Integer() {30, 28, 37, 28, 29, 23, 19, 33, 30, 21} ', 28, 19} 'G
+        assignArray(7) = New Integer() {28, 21, 30, 24, 35, 20, 24, 24, 32, 24} ', 20, 23} 'H
+        assignArray(8) = New Integer() {19, 18, 19, 28, 28, 27, 26, 32, 23, 22} ', 34, 25} 'I
+        assignArray(9) = New Integer() {30, 22, 29, 19, 30, 29, 29, 21, 20, 18} ', 25, 19} 'J
+        assignArray(10) = New Integer() {29, 25, 35, 29, 27, 18, 30, 28, 19, 23} ', 31, 34} 'K
+        assignArray(11) = New Integer() {15, 19, 19, 33, 22, 24, 25, 31, 33, 21} ', 20, 32} 'L
+        assignArray(12) = New Integer() {27, 32, 27, 29, 29, 21, 19, 25, 20, 27} ', 29, 25} 'M
+
+        createPopulation(size, population)
+
+        While (Not isDone(count))
+            createMatingPool(size, population)
+            doCrossover(size, population)
+            doMutation(size, mutation, population)
+            iteration = iteration + 1
+            count = count + 1
+        End While
+        c1.AddValue(iteration, incFit, "", "")
+        c1.AddValue2(iteration, fitAvg, "", "")
+        c1.AddValue3(iteration, lowFit, "", "")
+
+        c1.Title = "      Assignment Problem Using the Genetic Algorithm      "
+
+        c1.Xorigin = 0
+        c1.ScaleX = iteration
+        c1.Xdivs = 50
+
+        c1.Yorigin = 0
+        c1.ScaleY = 350
+        c1.Ydivs = 50
+
+        c1.Draw("The solution is " & incumbent & ", with a score of " & incFit & ".", 400)
+    End Sub
+
+    Private Sub createPopulation(ByVal size As Integer, ByRef population() As String)
+        Dim caseInt, i, j As Integer
+        Dim randInt As Random = New Random
+        'Create random population of size indicated by user
+        'Infeasible solutions allowed
+        For i = 0 To size - 1
+            population(i) = New String("")
+            For j = 0 To assignArray(0).Length - 1
+                caseInt = randInt.Next() Mod assignArray.Length
+                'ProblemSize: if increasing number of people, add case to this list
+                Select Case caseInt
+                    Case 0
+                        population(i) = population(i) + "A"
+                    Case 1
+                        population(i) = population(i) + "B"
+                    Case 2
+                        population(i) = population(i) + "C"
+                    Case 3
+                        population(i) = population(i) + "D"
+                    Case 4
+                        population(i) = population(i) + "E"
+                    Case 5
+                        population(i) = population(i) + "F"
+                    Case 6
+                        population(i) = population(i) + "G"
+                    Case 7
+                        population(i) = population(i) + "H"
+                    Case 8
+                        population(i) = population(i) + "I"
+                    Case 9
+                        population(i) = population(i) + "J"
+                    Case 10
+                        population(i) = population(i) + "K"
+                    Case 11
+                        population(i) = population(i) + "L"
+                    Case 12
+                        population(i) = population(i) + "M"
+                End Select
+            Next
+        Next
+    End Sub
+
+    Private Sub createMatingPool(ByVal size As Integer, ByRef population() As String)
+        Dim matingPool As String() = New String(size - 1) {}
+        Dim roulette As Double() = New Double(size - 1) {}
+        Dim i, j As Integer
+        Dim fitness As Integer = 0
+        Dim fitArray As Integer() = New Integer(size - 1) {}
+        Dim tempfit As Integer = 0
+        Dim lowestfit As Integer = 999
+        Dim spin As Random = New Random
+        Dim value As Double
+
+        For i = 0 To size - 1
+            tempfit = CalcFit(population(i))
+            If (tempfit < lowestfit) Then
+                lowestfit = tempfit
+            End If
+            fitArray(i) = tempfit
+            fitness = fitness + tempfit
+        Next
+
+        For i = 0 To size - 1
+            If i = 0 Then
+                roulette(i) = fitArray(i) / fitness
+            Else
+                roulette(i) = roulette(i - 1) + fitArray(i) / fitness
+            End If
+        Next
+        roulette(size - 1) = 1
+
+        If (lowestfit > lowFit) Then
+            c1.AddValue3(iteration, lowFit, "", "")
+            lowFit = lowestfit
+            count = txt_iter.Text / 2
+            c1.AddValue3(iteration, lowFit, "", "")
+        End If
+
+        If ((fitness / size) > fitAvg) Then
+            c1.AddValue2(iteration, fitAvg, "", "")
+            count = txt_iter.Text / 2
+            fitAvg = (fitness / size)
+            c1.AddValue2(iteration, fitAvg, "", "")
+        End If
+
+        For j = 0 To size - 1
+            i = 0
+            value = spin.NextDouble
+            Do Until (value <= roulette(i))
+                i = i + 1
+            Loop
+            matingPool(j) = New String("")
+            matingPool(j) = String.Copy(population(i))
+        Next
+
+    End Sub
+
+    Private Sub doCrossover(ByVal size As Integer, ByRef population() As String)
+        Dim cross1, cross2, temp As String
+        Dim i As Integer = 0
+        Dim cut As Integer
+        Dim rand As Random = New Random
+
+        Do Until i = size
+            cross1 = population(i)
+            cross2 = population(i + 1)
+            cut = rand.Next Mod assignArray(0).Length
+            temp = cross1.Substring(0, cut)
+            cross1 = cross2.Substring(0, cut) + cross1.Substring(cut)
+            cross2 = temp + cross2.Substring(cut)
+            population(i) = cross1
+            population(i + 1) = cross2
+            i = i + 2
+        Loop
+
+    End Sub
+
+    Private Sub doMutation(ByVal size As Integer, ByVal rate As Double, ByRef population() As String)
+        Dim i, j As Integer
+        Dim mutation As Random = New Random
+        Dim gene As Integer
+
+        For i = 0 To size - 1
+            For j = 0 To assignArray(0).Length - 1
+                If ((mutation.Next Mod (100 / rate)) = 0) Then
+                    gene = mutation.Next Mod assignArray.Length
+                    'ProblemSize: if increasing number of people, add case to this list
+                    Select Case gene
+                        Case 0
+                            population(i) = population(i).Substring(0, j) + "A" + population(i).Substring(j + 1)
+                        Case 1
+                            population(i) = population(i).Substring(0, j) + "B" + population(i).Substring(j + 1)
+                        Case 2
+                            population(i) = population(i).Substring(0, j) + "C" + population(i).Substring(j + 1)
+                        Case 3
+                            population(i) = population(i).Substring(0, j) + "D" + population(i).Substring(j + 1)
+                        Case 4
+                            population(i) = population(i).Substring(0, j) + "E" + population(i).Substring(j + 1)
+                        Case 5
+                            population(i) = population(i).Substring(0, j) + "F" + population(i).Substring(j + 1)
+                        Case 6
+                            population(i) = population(i).Substring(0, j) + "G" + population(i).Substring(j + 1)
+                        Case 7
+                            population(i) = population(i).Substring(0, j) + "H" + population(i).Substring(j + 1)
+                        Case 8
+                            population(i) = population(i).Substring(0, j) + "I" + population(i).Substring(j + 1)
+                        Case 9
+                            population(i) = population(i).Substring(0, j) + "J" + population(i).Substring(j + 1)
+                        Case 10
+                            population(i) = population(i).Substring(0, j) + "K" + population(i).Substring(j + 1)
+                        Case 11
+                            population(i) = population(i).Substring(0, j) + "L" + population(i).Substring(j + 1)
+                        Case 12
+                            population(i) = population(i).Substring(0, j) + "M" + population(i).Substring(j + 1)
+
+                    End Select
+
+                End If
+            Next
+        Next
+    End Sub
+
+    Private Function isDone(ByVal i As Integer) As Boolean
+        If (i >= txt_iter.Text) And incumbent <> "" Then
+            Return True
+        Else
+            Return False
+        End If
+
+    End Function
+    Private Function CalcFit(ByVal individual As String) As Integer
+        Dim fitness As Integer = 0
+        Dim bits As BitArray = New BitArray(assignArray.Length)
+        Dim i As Integer
+        Dim test As String
+        Dim isFeasible As Boolean = True
+
+        For i = 0 To assignArray(0).Length - 1
+            test = individual.Substring(i, 1)
+            'ProblemSize: if increasing the number of people, add case to this list
+            Select Case test
+                Case "A"
+                    If (bits(0)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(0) = True
+                    End If
+                    fitness = fitness + assignArray(0)(i)
+                Case "B"
+                    If (bits(1)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(1) = True
+                    End If
+                    fitness = fitness + assignArray(1)(i)
+                Case "C"
+                    If (bits(2)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(2) = True
+                    End If
+                    fitness = fitness + assignArray(2)(i)
+                Case "D"
+                    If (bits(3)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(3) = True
+                    End If
+                    fitness = fitness + assignArray(3)(i)
+                Case "E"
+                    If (bits(4)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(4) = True
+                    End If
+                    fitness = fitness + assignArray(4)(i)
+                Case "F"
+                    If (bits(5)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(5) = True
+                    End If
+                    fitness = fitness + assignArray(5)(i)
+                Case "G"
+                    If (bits(6)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(6) = True
+                    End If
+                    fitness = fitness + assignArray(6)(i)
+                Case "H"
+                    If (bits(7)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(7) = True
+                    End If
+                    fitness = fitness + assignArray(7)(i)
+                Case "I"
+                    If (bits(8)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(8) = True
+                    End If
+                    fitness = fitness + assignArray(8)(i)
+                Case "J"
+                    If (bits(9)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(9) = True
+                    End If
+                    fitness = fitness + assignArray(9)(i)
+                Case "K"
+                    If (bits(10)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(10) = True
+                    End If
+                    fitness = fitness + assignArray(10)(i)
+                Case "L"
+                    If (bits(11)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(11) = True
+                    End If
+                    fitness = fitness + assignArray(11)(i)
+                Case "M"
+                    If (bits(12)) Then
+                        fitness = fitness - 10
+                        isFeasible = False
+                    Else
+                        bits(12) = True
+                    End If
+                    fitness = fitness + assignArray(12)(i)
+            End Select
+        Next
+        If (isFeasible) Then
+            If (fitness > incFit) Then
+                c1.AddValue(iteration, incFit, "", "")
+                count = 0
+                incumbent = individual
+                incFit = fitness
+                c1.AddValue(iteration, incFit, "", "")
+            End If
+        Else
+            fitness = fitness - 20
+        End If
+        Return fitness
+    End Function
+End Class

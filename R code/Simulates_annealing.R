@@ -55,7 +55,7 @@ solution_Elf <- function(myToys, myelves, schedule){
     # cat(format(Sys.time(),format = '%Y-%m-%d %H:%M:%S'))
     outcomes <- matrix(0, nrow = nrow(myToys), ncol = 5, 
                        dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
-    
+    myToys <- myToys[schedule,]
     for(current_toy in 1:nrow(myToys)){
         
         c_toy_id <- myToys[current_toy,'ToyId']
@@ -87,12 +87,12 @@ solution_Elf <- function(myToys, myelves, schedule){
 C <- 50 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
 h <- 5 # used to modulate the step length.
-# T0max <- 0 # initial temperature value
-# alpha <- .2 # limited to a proportion of ~20% of fx0 in the first step
+alpha <- .2 # limited to a proportion of ~20% of fx0 in the first step
 S <- 5 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 xcurrent <- x0; fcurrent <- fx0
+T0max <- 0.8*fx0 # initial temperature value
 
 ### main loop ###
 cat(paste('Initial Score:',fbest))
@@ -121,30 +121,34 @@ for (c in 1:C){ # multiple cooling chain
 
 ### main loop ###
 for (c in 1:C){ # multiple cooling chain
-    # T <- T0max
-    Ns <- xbest[N0]
-    cat(paste('Chain:',c, '; Initial point:', Ns))
+    temperature <- T0max
+    Ns <- xbest[N0[c]]
+    cat(paste('\nChain:',c, '; Initial point:', Ns))
     for (s in 1:S){ 
-        cat(paste(' - Step:',s))
+        cat(paste('\n - Step:',s))
         Np <- (1+h+s/10) # different initial solution
-        for (np in ifelse((Ns-Np)<0,1,(Ns-Np)):(Ns+Np)){ # Np = initail point range
+        for (np in max((Ns-Np),1):min((Ns+Np),nrow(myToys))){ # Np = initail point range
             x1 <- xcurrent
             x1[np] <- xcurrent[Ns] # initial point <> range point
             x1[Ns] <- xcurrent[np]
             fx1 <- solution_Elf(myToys, myelves, x1) # x1, fx1 - updated schedule and time
-            delta=fx1-fcurrent # difference
+            delta <- fx1-fcurrent # difference
+            cat(paste('\n -- Delta:',delta))
             if(delta<0){
                 xcurrent <- x1; fcurrent <- fx1 # select better one between fx1, fcurrent and save it into fx1
+            }else{
+                proba <- runif(1)
+                test <- exp(-delta/temperature)
+                if(proba<test){
+                    xcurrent <- x1; fcurrent <- fx1
+                }
             }
             if (fcurrent<fbest){
                 xbest <- xcurrent; fbest <- fcurrent
-                cat(paste(' -- Point:',np,'; Score:',fbest))
+                cat(paste('\n -- Point:',np,'; Score:',fbest))
             }
-            # if (fbest == CP) break
-            #           else if (exp(-delta/T)>xrandom){
-            #               x1 <- xcurrent; fx1 <- fcurrent 
-            #           }
         }
-        # T <- alpha * T
+        temperature <- alpha * temperature
+        cat(paste('\n -- Temperature:',temperature))
     }
 }
