@@ -152,3 +152,4 @@ for (c in 1:C){ # multiple cooling chain
         cat(paste('\n -- Temperature:',temperature))
     }
 }
+# C:50 | h:5 | S:5 => 50*5*2*5 => 2500
