@@ -46,6 +46,7 @@ require(caret)
 toys_dat <- data.frame(toys)
 index <- createDataPartition(toys_dat$Duration, p = 1/900, list = F)
 myToys <- data.matrix(toys_dat[index,])
+myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),]
 schedule <- c(1:nrow(myToys))
 NUM_ELVES <- 1
 myelves <- create_elves(NUM_ELVES)
@@ -86,13 +87,13 @@ solution_Elf <- function(myToys, myelves, schedule){
 ### parameters ###
 C <- 50 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
-h <- 5 # used to modulate the step length.
+h <- 10 # used to modulate the step length.
 alpha <- .2 # limited to a proportion of ~20% of fx0 in the first step
 S <- 5 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 xcurrent <- x0; fcurrent <- fx0
-T0max <- 0.8*fx0 # initial temperature value
+T0max <- 0.9*fx0 # initial temperature value
 
 ### main loop ###
 cat(paste('Initial Score:',fbest))
