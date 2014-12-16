@@ -13,14 +13,14 @@ load('R code/benchmark_schedule.RData')
 solution_Elf <- function(myToys, myelves, schedule){
     outcomes <- matrix(0, nrow = nrow(myToys), ncol = 5, 
                        dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
-    myToys <- myToys[schedule[,'ToysID'],]
+    myToys <- myToys[schedule[,'ToyId'],]
     for(current_toy in 1:nrow(myToys)){
         
         c_toy_id <- myToys[current_toy,'ToyId']
         c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
         c_toy_duration <- myToys[current_toy,'Duration']
         
-        c_elf_id <- schedule[current_toy, 'elf_id']
+        c_elf_id <- schedule[current_toy, 'ElfId']
         c_elf_start_time <- myelves[c_elf_id, 'next_available_time']
         c_elf_rating <- myelves[c_elf_id, 'current_rating']
         
@@ -63,9 +63,6 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 #########################
 ### Optimization Body ###
 #########################
-x_all <- list()
-f_all <- matrix()
-outcome_all <- list()
 
 ### Toys establishment ###
 myToys <- toys; rm(toys)
