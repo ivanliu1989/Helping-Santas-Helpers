@@ -92,7 +92,11 @@ for (index_num in index_range){
     ### Toys establishment ###
     myToys <- data.matrix(toys_dat[index[[index_num]],])
     myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),]
-    schedule <- c(1:nrow(myToys))
+    if(nrow(myToys)==length(xbest)){
+        schedule <- xbest
+    }else{
+        schedule <- c(1:nrow(myToys))
+    }
     NUM_ELVES <- 1
     myelves <- create_elves(NUM_ELVES)
     
