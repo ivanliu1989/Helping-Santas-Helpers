@@ -42,8 +42,11 @@ load('data/toys.RData')
 ###################
 ### Calculation ###
 ###################
-myToys <- toys[1:(10000000/900),]
-schedule <- c(1:(10000000/900))
+require(caret)
+toys_dat <- data.frame(toys)
+index <- createDataPartition(toys_dat$Duration, p = 1/900, list = F)
+myToys <- data.matrix(toys_dat[index,])
+schedule <- c(1:nrow(myToys))
 NUM_ELVES <- 1
 myelves <- create_elves(NUM_ELVES)
 
@@ -92,13 +95,14 @@ xbest <- x0; fbest <- fx0
 xcurrent <- x0; fcurrent <- fx0
 
 ### main loop ###
+cat(paste('Initial Score:',fbest))
 for (c in 1:C){ # multiple cooling chain
     Ns <- xbest[N0[c]]
-    cat(paste('Chain:',c, '; Initial point:', Ns))
+    cat(paste('\nChain:',c, '; Initial point:', Ns))
     for (s in 1:S){ 
-        cat(paste(' - Step:',s))
+        cat(paste('\n - Step:',s))
         Np <- (1+h+s/10) # different initial solution
-        for (np in ifelse((Ns-Np)<0,1,(Ns-Np)):(Ns+Np)){ # Np = initail point range
+        for (np in max((Ns-Np),1):min((Ns+Np),nrow(myToys))){ # Np = initail point range
             x1 <- xcurrent
             x1[np] <- xcurrent[Ns] # initial point <> range point
             x1[Ns] <- xcurrent[np]
@@ -109,7 +113,7 @@ for (c in 1:C){ # multiple cooling chain
             }
             if (fcurrent<fbest){
                 xbest <- xcurrent; fbest <- fcurrent
-                cat(paste(' -- Point:',np,'; Score:',fbest))
+                cat(paste('\n -- Point:',np,'; Score:',fbest))
             }
         }
     }
