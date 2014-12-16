@@ -96,35 +96,10 @@ xcurrent <- x0; fcurrent <- fx0
 T0max <- 0.9*fx0 # initial temperature value
 
 ### main loop ###
-cat(paste('Initial Score:',fbest))
-for (c in 1:C){ # multiple cooling chain
-    Ns <- xbest[N0[c]]
-    cat(paste('\nChain:',c, '; Initial point:', Ns))
-    for (s in 1:S){ 
-        cat(paste('\n - Step:',s))
-        Np <- (1+h+s/10) # different initial solution
-        for (np in max((Ns-Np),1):min((Ns+Np),nrow(myToys))){ # Np = initail point range
-            x1 <- xcurrent
-            x1[np] <- xcurrent[Ns] # initial point <> range point
-            x1[Ns] <- xcurrent[np]
-            fx1 <- solution_Elf(myToys, myelves, x1) # x1, fx1 - updated schedule and time
-            delta=fx1-fcurrent # difference
-            if(delta<0){
-                xcurrent <- x1; fcurrent <- fx1 # select better one between fx1, fcurrent and save it into fx1
-            }
-            if (fcurrent<fbest){
-                xbest <- xcurrent; fbest <- fcurrent
-                cat(paste('\n -- Point:',np,'; Score:',fbest))
-            }
-        }
-    }
-}
-
-### main loop ###
 for (c in 1:C){ # multiple cooling chain
     temperature <- T0max
     Ns <- xbest[N0[c]]
-    cat(paste('\nChain:',c, '; Initial point:', Ns))
+    cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', fbest))
     for (s in 1:S){ 
         cat(paste('\n - Step:',s))
         Np <- (1+h+s/10) # different initial solution
@@ -134,9 +109,9 @@ for (c in 1:C){ # multiple cooling chain
             x1[Ns] <- xcurrent[np]
             fx1 <- solution_Elf(myToys, myelves, x1) # x1, fx1 - updated schedule and time
             delta <- fx1-fcurrent # difference
-            cat(paste('\n -- Delta:',delta))
             if(delta<0){
                 xcurrent <- x1; fcurrent <- fx1 # select better one between fx1, fcurrent and save it into fx1
+                cat(paste('\n -- Find Improvement:',delta, '!!!'))
             }else{
                 proba <- runif(1)
                 test <- exp(-delta/temperature)
@@ -146,11 +121,11 @@ for (c in 1:C){ # multiple cooling chain
             }
             if (fcurrent<fbest){
                 xbest <- xcurrent; fbest <- fcurrent
-                cat(paste('\n -- Point:',np,'; Score:',fbest))
+                cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
             }
         }
         temperature <- alpha * temperature
         cat(paste('\n -- Temperature:',temperature))
     }
 }
-# C:50 | h:5 | S:5 => 50*5*2*5 => 2500
+# C:50 | h:10 | S:5 => 50*10*2*5 => 5000
