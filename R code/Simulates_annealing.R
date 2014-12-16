@@ -92,7 +92,7 @@ N0 <- runif(C)*nrow(myToys) # initial point
 h <- 2 # used to modulate the step length.
 alpha <- .2 # limited to a proportion of ~20% of fx0 in the first step
 S <- 2 # current value times, step width
-x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
+x0 <- xbest; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 xcurrent <- x0; fcurrent <- fx0
 T0max <- 1*fx0 # initial temperature value
@@ -106,22 +106,27 @@ for (c in 1:C){ # multiple cooling chain
         cat(paste('\n - Step:',s))
         Np <- (1+h+s/10) # different initial solution
         for (np in max((Ns-Np),1):min((Ns+Np),nrow(myToys))){ # Np = initail point range
+            partition_1 <- np/length(max((Ns-Np),1):min((Ns+Np),nrow(myToys)))
+            partition_2 <- (np-1)/length(max((Ns-Np),1):min((Ns+Np),nrow(myToys))) + 1
             x1 <- xcurrent
-            x1[np] <- xcurrent[Ns] # initial point <> range point
-            x1[Ns] <- xcurrent[np]
+            x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
+            
+#             x1 <- xcurrent
+#             x1[np] <- xcurrent[Ns] # initial point <> range point
+#             x1[Ns] <- xcurrent[np]
             fx1 <- solution_Elf(myToys, myelves, x1) # x1, fx1 - updated schedule and time
             delta <- fx1-fcurrent # difference
             if(delta<0){
                 xcurrent <- x1; fcurrent <- fx1 # select better one between fx1, fcurrent and save it into fx1
                 cat(paste('\n -- Find Improvement:',delta, '!!!'))
             }
-            else{
-                proba <- runif(1)
-                test <- exp(-delta/temperature)
-                if(proba<test){
-                    xcurrent <- x1; fcurrent <- fx1
-                }
-            }
+#             else{
+#                 proba <- runif(1)
+#                 test <- exp(-delta/temperature)
+#                 if(proba<test){
+#                     xcurrent <- x1; fcurrent <- fx1
+#                 }
+#             }
             if (fcurrent<fbest){
                 xbest <- xcurrent; fbest <- fcurrent
                 cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
@@ -133,7 +138,11 @@ for (c in 1:C){ # multiple cooling chain
 }
 # C:50 | h:10 | S:5 => 50*10*2*5 => 5000
 # 278659423
-# 1290000000
+# 271778167
+# 267142421
+x_267142421_601 <- xbest
+save(x_267142421_601, file='x_267142421_601.RData')
+# 201366788 optimal
 
 # s ← s0; e ← E(s)                                  // Initial state, energy.
 # sbest ← s; ebest ← e                              // Initial "best" solution
