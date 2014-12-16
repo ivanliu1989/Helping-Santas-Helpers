@@ -45,8 +45,9 @@ load('data/toys.RData')
 require(caret)
 set.seed(8888)
 toys_dat <- data.frame(toys)
-index <- createDataPartition(toys_dat$Duration, p = 1/900, list = F)
-myToys <- data.matrix(toys_dat[index,])
+index <- createFolds(toys_dat$Duration, k = 900, list = T)
+save(index, file='data/900_Folds.RData')
+myToys <- data.matrix(toys_dat[index$Fold001,])
 myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),]
 schedule <- c(1:nrow(myToys))
 NUM_ELVES <- 1
@@ -86,11 +87,11 @@ solution_Elf <- function(myToys, myelves, schedule){
 }
 
 ### parameters ###
-C <- 50 # multiple cooling chain
+C <- 10 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
 h <- 10 # used to modulate the step length.
 alpha <- .2 # limited to a proportion of ~20% of fx0 in the first step
-S <- 5 # current value times, step width
+S <- 10 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 xcurrent <- x0; fcurrent <- fx0
@@ -114,13 +115,13 @@ for (c in 1:C){ # multiple cooling chain
                 xcurrent <- x1; fcurrent <- fx1 # select better one between fx1, fcurrent and save it into fx1
                 cat(paste('\n -- Find Improvement:',delta, '!!!'))
             }
-#             else{
-#                 proba <- runif(1)
-#                 test <- exp(-delta/temperature)
-#                 if(proba<test){
-#                     xcurrent <- x1; fcurrent <- fx1
-#                 }
-#             }
+            else{
+                proba <- runif(1)
+                test <- exp(-delta/temperature)
+                if(proba<test){
+                    xcurrent <- x1; fcurrent <- fx1
+                }
+            }
             if (fcurrent<fbest){
                 xbest <- xcurrent; fbest <- fcurrent
                 cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
