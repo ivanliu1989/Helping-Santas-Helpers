@@ -86,6 +86,7 @@ solution_Elf_outcome <- function(myToys, myelves, schedule){
 index_range <- 1:50
 x_all <- list()
 f_all <- matrix()
+outcome_all <- list()
 for (index_num in index_range){
     
     ### Toys establishment ###
@@ -132,14 +133,16 @@ for (index_num in index_range){
     ### Record ###
     x_all[[index_num]] <- xbest
     f_all[index_num] <- fbest
+    outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
 }
+save(x_all,f_all,outcome_all, file='R_SA.RData')
 
-save(x_all[[1]],f_all[1], file='264855724_601.RData')
-
-
-
-
-x_265800795_601 <- xbest
-save(x_265800795_601, file='R_results/x_265800795_601.RData')
-# 201366788 optimal
+### Test Validation ###
+for (i in 1:900){
+    outcome_all <- list()
+    myToys <- data.matrix(toys_dat[index[i],])
+    NUM_ELVES <- 1
+    myelves <- create_elves(NUM_ELVES)
+    outcome_all[[i]] <- solution_Elf_outcome(myToys, myelves, xbest)
+}
 
