@@ -1,3 +1,5 @@
+library(compiler)
+enableJIT(3)
 #############
 ### Setup ###
 #############
@@ -7,7 +9,7 @@ setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
 load('data/toys.RData')
-load('R code/benchmark_schedule.RData')
+load('R_results/submit_1866324812.RData')
 
 #################
 ### Functions ###
@@ -70,8 +72,9 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 ### Optimization Body ###
 #########################
 ### Toys establishment ###
+set.seed(8888)
 myToys <- toys; rm(toys)
-schedule <- benchmark_schedule ## last optimal solution xbest(toyID, elfID)
+schedule <- xbest ## last optimal solution xbest(toyID, elfID)
 NUM_ELVES <- 900
 myelves <- create_elves(NUM_ELVES)
 
@@ -122,15 +125,15 @@ for (c in 1:C){
 ### Submission ###
 ##################
 save(xbest, file='R_results/submit_1866324812.RData')
-submit_best <- solution_Elf_submit(myToys, myelves, xbest)
+submit_best_2 <- solution_Elf_submit(myToys, myelves, xbest)
 write.csv(submit_best, 'toys_submission_1866324812.csv', row.names = FALSE)
 
 ################
 ### Speed up ###
 ################
 library(compiler)
-enableJIT(3)
-c_soultion_Elf <- cmpfun(solution_Elf)
+enableJIT(1)
+c_soultion_Elf <- cmpfun(solution_Elf_submit)
 
 library(Rcpp)
 cppFunction()
