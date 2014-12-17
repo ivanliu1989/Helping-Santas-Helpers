@@ -101,7 +101,6 @@ for (c in 1:C){
         for (np in 1:num){ 
             partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
             partition_2 <- min((np/num)*toy_row, toy_row) 
-            partition <- cbind(partition, c(partition_1,partition_2))
             x1 <- xbest
             x1[partition_1:partition_2, 'ToyId'] <- sample(x1[partition_1:partition_2, 'ToyId']) ## reallocate Toys to a random chosen group of Elves
             
