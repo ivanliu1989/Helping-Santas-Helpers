@@ -117,6 +117,8 @@ for (c in 1:C){
     }
 }
 
+save(xbest, file='submit_1870400568.RData')
+
 ### Speed up ###
 library(compiler)
 enableJIT(1)
