@@ -84,7 +84,7 @@ C <- 5 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
 h <- 50 # used to modulate the step length.
 S <- 1 # current value times, step width
-x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
+x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0) # 1853964497
 xbest <- x0; fbest <- fx0
 
 ### main loop ###
