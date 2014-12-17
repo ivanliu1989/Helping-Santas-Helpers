@@ -1,3 +1,10 @@
+require(Rcpp)
+require(microbenchmark)
+microbenchmark(
+    isSanctionedTime(123),
+    is_sanctioned_time(123)
+)
+
 update_next_available_minute <- function(start_minute, work_duration) {
     sanctioned_breakdown <- get_sanctioned_breakdown(start_minute, work_duration)
     sanc_time <- sanctioned_breakdown[1]
@@ -24,54 +31,61 @@ update_productivity <- function(start_minute, work_duration, current_rating) {
 }
 
 ###################################################################################################################################################
-bool is_sanctioned_time(int minute) {
-    return ((minute - 540) % MID) < 600;
-}
-
-std::tuple<int, int> get_sanctioned_breakdown(int startMinute, int duration) {
-    int S = 0;
-    int U = 0;
+RCPP_MODULE(yada){
     
-    int full_days = duration / MID;
-    S = full_days * (10*60);
-    U = full_days * (14*60);
-    int remainder = startMinute + full_days * MID;
-    for (int i = remainder; i < (startMinute+duration); ++i) {
+} 
+cppFunction('bool isSanctionedTime(int minute) {
+        return ((minute - 540) % (60*24)) < 600;
+    }')
+
+cppFunction('NumericVector getSanctionedBreakdown(int startMinute, int duration) {
+        NumericVector out(2);
+        int S = 0;
+        int U = 0;
+        int full_days = duration / (60*24);
+        S = full_days * (10*60);
+        U = full_days * (14*60);
+        int remainder = startMinute + full_days * (60*24);
+        for (int i = remainder; i < (startMinute+duration); ++i) {
         if (isSanctionedTime(i)) S += 1;
         else U += 1;
-    }
-    return std::tuple<int, int>(S, U);
+        }
+        out[1] = S; out[2] = U;
+        return out;
+    }')
+
+
+int incrementToNextFence(int minute) {
+    int day = (minute / (MID));
+    int dayM = day * (MID);
+    if (minute > (dayM + 60*18 + 59))        
+        return dayM + (MID) + 60*9;
+    else if (minute < (dayM + 60*9))
+        return dayM + 60*9;
+    else
+        return dayM + 60*19 ;
 }
 
-next_sanctioned_minute <- function(minute) {
-    if(is_sanctioned_time(minute) && is_sanctioned_time(minute + 1)) {
-        next_min <- minute + 1
-    } else {
-        num_days <- as.integer(minute / minutes_in_24h)
-        am_or_pm <- as.integer(((minute %% minutes_in_24h)/day_start)) 
-        next_min <- day_start + (num_days + am_or_pm / 2) * minutes_in_24h
+int applyRestingPeriod(int current, int unsanctioned) {
+    if (unsanctioned == 0) {
+        if (isSanctionedTime(current)) return current;
+        else return incrementToNextFence(current);
     }
-    return(next_min)
+    int num_days_since_jan1 = current / (60 * 24);
+    int rest_time = unsanctioned;
+    int rest_time_in_working_days = rest_time / 600;
+    int rest_time_remaining_minutes = rest_time % 600;
+    int local_start = current % (60 * 24);
+    if (local_start < 540) local_start = 540;
+    else if (local_start > 1140) {
+        num_days_since_jan1 += 1;
+        local_start = 540;
+    }
+    if (local_start + rest_time_remaining_minutes > 1140) {
+        num_days_since_jan1 += 1;
+        rest_time_remaining_minutes -= (1140 - local_start);
+        local_start = 540;
+    }
+    int total_days = num_days_since_jan1 + rest_time_in_working_days;
+    return total_days * (60*24) + local_start + rest_time_remaining_minutes;
 }
-
-apply_resting_period <- function(start, num_unsanctioned){
-    num_days_since_jan1 <- as.integer(start / minutes_in_24h)
-    rest_time <- num_unsanctioned
-    rest_time_in_working_days <- as.integer(rest_time / (60 * hours_per_day))
-    rest_time_remaining_minutes <- rest_time %% (60 * hours_per_day)
-    local_start <- start %% minutes_in_24h
-    if(local_start < day_start){
-        local_start <- day_start
-    }else if(local_start > day_end){
-        num_days_since_jan1 <- num_days_since_jan1 + 1
-        local_start <- day_start
-    }
-    if((local_start + rest_time_remaining_minutes) > day_end){
-        rest_time_in_working_days <- rest_time_in_working_days + 1
-        rest_time_remaining_minutes <- rest_time_remaining_minutes - (day_end - local_start)
-        local_start <- day_start
-    }
-    total_days <- num_days_since_jan1 + rest_time_in_working_days
-    return (total_days * minutes_in_24h + local_start + rest_time_remaining_minutes)
-}
-

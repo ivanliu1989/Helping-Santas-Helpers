@@ -1,5 +1,5 @@
 library(compiler)
-enableJIT(3)
+enableJIT(0)
 #############
 ### Setup ###
 #############
