@@ -73,7 +73,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 ### Optimization Body ###
 #########################
 ### Toys establishment ###
-set.seed(8888)
+set.seed(888)
 myToys <- toys; rm(toys)
 schedule <- xbest ## last optimal solution xbest(toyID, elfID)
 NUM_ELVES <- 900
@@ -83,7 +83,7 @@ myelves <- create_elves(NUM_ELVES)
 C <- 3 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
 h <- 5 # used to modulate the step length.
-S <- 1 # current value times, step width
+S <- 5 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 
