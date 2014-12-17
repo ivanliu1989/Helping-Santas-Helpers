@@ -116,5 +116,14 @@ for (c in 1:C){
         if (bk_s > 3) break
     }
 }
-    
 
+### Speed up ###
+library(compiler)
+enableJIT(1)
+c_soultion_Elf <- cmpfun(solution_Elf)
+
+Rprof("out.out")
+for (i in 1:1000) pos = rw2s1(1000)
+Rprof(NULL)
+summaryRprof("out.out")
+# Extra parentheses
