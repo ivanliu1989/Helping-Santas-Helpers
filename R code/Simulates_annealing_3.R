@@ -125,8 +125,14 @@ for (c in 1:C){
 ### Submission ###
 ##################
 save(xbest, file='R_results/submit_1866324812.RData')
-submit_best_2 <- solution_Elf_submit(myToys, myelves, xbest)
-write.csv(submit_best, 'toys_submission_1866324812.csv', row.names = FALSE)
+submit_best <- solution_Elf_submit(myToys, myelves, xbest)
+submit_best <- read.csv('toys_submission_1866324812.csv', stringsAsFactors=F)
+submissions_output <- data.frame(ToyId = as.integer(submit_best[,1]), 
+                                 ElfId = as.integer(submit_best[,2]), 
+                                 StartTime = convert_to_chardate(submit_best[,3]), 
+                                 Duration = as.integer(submit_best[,4]), stringsAsFactors = FALSE)
+
+write.csv(submissions_output, 'toys_submission_1866324812.csv', row.names = FALSE)
 
 ################
 ### Speed up ###
