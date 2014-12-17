@@ -86,3 +86,4 @@ fixed sansationed solution: Score - 1862020962.7 | Time - 3485.48336697<br>
 4. Rebuild work schedule
 
 http://optlab-server.sce.carleton.ca/POAnimations/Default.aspx
+http://adv-r.had.co.nz/Rcpp.html

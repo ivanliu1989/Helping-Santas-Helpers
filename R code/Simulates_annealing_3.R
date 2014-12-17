@@ -9,6 +9,9 @@ source('R code/Functions.R')
 load('data/toys.RData')
 load('R code/benchmark_schedule.RData')
 
+#################
+### Functions ###
+#################
 ### f(x) ###
 solution_Elf <- function(myToys, myelves, schedule){
     outcomes <- matrix(0, nrow = nrow(myToys), ncol = 4, 
@@ -63,11 +66,9 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
     return(outcomes)
 }
 
-
 #########################
 ### Optimization Body ###
 #########################
-
 ### Toys establishment ###
 myToys <- toys; rm(toys)
 schedule <- benchmark_schedule ## last optimal solution xbest(toyID, elfID)
@@ -117,14 +118,22 @@ for (c in 1:C){
     }
 }
 
+##################
+### Submission ###
+##################
 save(xbest, file='R_results/submit_1866324812.RData')
 submit_best <- solution_Elf_submit(myToys, myelves, xbest)
 write.csv(submit_best, 'toys_submission_1866324812.csv', row.names = FALSE)
 
+################
 ### Speed up ###
+################
 library(compiler)
-enableJIT(1)
+enableJIT(3)
 c_soultion_Elf <- cmpfun(solution_Elf)
+
+library(Rcpp)
+cppFunction()
 
 Rprof("out.out")
 for (i in 1:1000) pos = rw2s1(1000)
