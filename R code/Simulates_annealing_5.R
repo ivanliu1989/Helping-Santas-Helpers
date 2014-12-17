@@ -76,7 +76,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 #########################
 
 ### main loop ###
-index_range <- 1:50
+index_range <- 1:10
 x_all <- list()
 f_all <- matrix()
 outcome_all <- list()
@@ -101,31 +101,34 @@ for (index_num in index_range){
     x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
     xbest <- x0; fbest <- fx0
     
+    
     for (c in 1:C){ 
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', fbest))
         for (s in 1:S){ 
-            cat(paste('\n - Step:',s))
-            Np <- (1+h+s/10) 
-            num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
-            bk <-0
-            for (np in 1:num){ 
-                partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
-                partition_2 <- min((np/num)*toy_row, toy_row)
-                x1 <- xbest
-                x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
-                
-                fx1 <- solution_Elf(myToys, myelves, x1)
-                delta <- fx1-fbest
-                if(delta<0){
-                    xbest <- x1; fbest <- fx1
-                    cat(paste('\n -- Find Improvement:',delta, '!!!'))
-                    cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
-                }else{
-                    cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
-    #                 bk <- bk + 1
-    #                 if (bk > 3) break
+            while(fbest > 1850000000){
+                cat(paste('\n - Step:',s))
+                Np <- (1+h+s/10) 
+                num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
+                bk <-0
+                for (np in 1:num){ 
+                    partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
+                    partition_2 <- min((np/num)*toy_row, toy_row)
+                    x1 <- xbest
+                    x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
+                    
+                    fx1 <- solution_Elf(myToys, myelves, x1)
+                    delta <- fx1-fbest
+                    if(delta<0){
+                        xbest <- x1; fbest <- fx1
+                        cat(paste('\n -- Find Improvement:',delta, '!!!'))
+                        cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
+                    }else{
+    #                     cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
+        #                 bk <- bk + 1
+        #                 if (bk > 3) break
+                    }
                 }
             }
         }
@@ -133,6 +136,7 @@ for (index_num in index_range){
     ### Record ###
     x_all[[index_num]] <- xbest
     f_all[index_num] <- fbest
-    outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
+#     outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
 }
+save(fbest, xbest, file='elf_1.RData')
 save(x_all,f_all,outcome_all, file='R_SA.RData')
