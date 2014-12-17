@@ -82,9 +82,9 @@ myelves <- create_elves(NUM_ELVES)
 ### parameters ###
 C <- 5 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
-h <- 10 # used to modulate the step length.
-S <- 10 # current value times, step width
-x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
+h <- 5 # used to modulate the step length.
+S <- 1 # current value times, step width
+x0 <- schedule; fx0 <- fbest # solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 
 ### main loop ###
@@ -110,15 +110,15 @@ for (c in 1:C){
                 xbest <- x1; fbest <- fx1
                 cat(paste('\n -- Find Improvement:',delta, '!!!'))
                 cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
-            }else{
-                bk <- bk + 1
-                if (bk > 3){
-                    bk_s <- bk_s + 1
-                    break
-                } 
+#             }else{
+#                 bk <- bk + 1
+#                 if (bk > 3){
+#                     bk_s <- bk_s + 1
+#                     break
+#                 } 
             }   
         }
-        if (bk_s > 3) break
+#         if (bk_s > 3) break
     }
 }
 
