@@ -37,7 +37,7 @@ solution_Elf <- function(myToys, myelves, schedule){
         
         outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration)
         if(current_toy %% 2000000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
-                                           format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
+                                            format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
     }
     return((outcomes[which.max(outcomes[,3]),3]+outcomes[which.max(outcomes[,3]), 4])*log(901))
 }
@@ -103,7 +103,7 @@ for (c in 1:C){
             partition_2 <- min((np/num)*toy_row, toy_row) 
             x1 <- xbest
             x1[partition_1:partition_2, 'ToyId'] <- sample(x1[partition_1:partition_2, 'ToyId']) ## reallocate Toys to a random chosen group of Elves
-            
+            x1[partition_1:partition_2, 'ElfId'] <- sample(x1[partition_1:partition_2, 'ElfId'])
             fx1 <- solution_Elf(myToys, myelves, x1)
             delta <- fx1-fbest
             if(delta<0){
@@ -126,7 +126,7 @@ for (c in 1:C){
 for (c in 1:C){ 
     x1 <- xbest
     x1[,'ToyId'] <- sample(x1[,'ToyId']) ## reallocate Toys to a random chosen group of Elves
-            
+    
     fx1 <- solution_Elf(myToys, myelves, x1)
     delta <- fx1-fbest
     if(delta<0){
@@ -135,7 +135,7 @@ for (c in 1:C){
         cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
     }
 }
-       
+
 
 ##################
 ### Submission ###
@@ -148,19 +148,3 @@ submissions_output <- data.frame(ToyId = as.integer(submit_best[,1]),
                                  Duration = as.integer(submit_best[,4]), stringsAsFactors = FALSE)
 (submit_best[which.max(submit_best[,3]),3]+submit_best[which.max(submit_best[,3]), 4])*log(901)
 write.csv(submissions_output, 'toys_submission_1865922691.csv', row.names = FALSE)
-
-################
-### Speed up ###
-################
-library(compiler)
-enableJIT(1)
-c_soultion_Elf <- cmpfun(solution_Elf_submit)
-
-library(Rcpp)
-cppFunction()
-
-Rprof("out.out")
-for (i in 1:1000) pos = rw2s1(1000)
-Rprof(NULL)
-summaryRprof("out.out")
-# Extra parentheses

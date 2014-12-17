@@ -42,9 +42,9 @@ solution_sortedElf <- function(myToys, myelves){
         
         work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
         
-        myelves[next_elf, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
+        myelves[next_elf, 'next_available_time'] <- updateNextAvailableMinute(c_elf_start_time, work_duration)
         
-        myelves[next_elf, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
+        myelves[next_elf, 'current_rating'] <- updateProductivity(c_elf_start_time, work_duration, c_elf_rating)
         
         outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
         
@@ -66,7 +66,7 @@ setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
-source('R code/Functions.R')
+load('data/toys.RData')
 NUM_ELVES <- 900; s_toy <- 100; l_toy <- 720; train_elf <- 0.5; overwork_elf <- 3.9
 
     toys <- data.matrix(transform(toys, Size = 0))
