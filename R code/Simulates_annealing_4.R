@@ -1,5 +1,5 @@
 library(compiler)
-enableJIT(0)
+enableJIT(3)
 #############
 ### Setup ###
 #############
@@ -10,7 +10,7 @@ gc(); rm(list=ls())
 source('R code/Functions.R')
 source('R code/c_Functions.r')
 load('data/toys.RData')
-load('R_results/submit_1866324812.RData')
+load('R_results/baseSchedule.RData')
 
 #################
 ### Functions ###
@@ -73,7 +73,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 ### Optimization Body ###
 #########################
 ### Toys establishment ###
-set.seed(1888)
+set.seed(123)
 myToys <- toys; rm(toys)
 schedule <- xbest ## last optimal solution xbest(toyID, elfID)
 NUM_ELVES <- 900
@@ -84,7 +84,7 @@ C <- 5 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
 h <- 5 # used to modulate the step length.
 S <- 1 # current value times, step width
-x0 <- schedule; fx0 <- fbest # solution_Elf(myToys, myelves, x0)
+x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 
 ### main loop ###
