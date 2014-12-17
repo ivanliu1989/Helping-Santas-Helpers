@@ -80,10 +80,10 @@ NUM_ELVES <- 900
 myelves <- create_elves(NUM_ELVES)
 
 ### parameters ###
-C <- 3 # multiple cooling chain
+C <- 5 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
-h <- 5 # used to modulate the step length.
-S <- 5 # current value times, step width
+h <- 8 # used to modulate the step length.
+S <- 8 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 
