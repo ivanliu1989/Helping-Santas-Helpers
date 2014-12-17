@@ -38,7 +38,7 @@ solution_Elf <- function(myToys, myelves, schedule){
         if(current_toy %% 2000000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
                                            format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
     }
-    return((outcomes[nrow(outcomes), 3]+outcomes[nrow(outcomes), 4])*log(901))
+    return((which.max(outcomes[,3])+outcomes[which.max(outcomes[,3]), 4])*log(901))
 }
 
 ### Submit ###
@@ -82,7 +82,7 @@ myelves <- create_elves(NUM_ELVES)
 C <- 3 # multiple cooling chain
 N0 <- runif(C)*nrow(myToys) # initial point
 h <- 5 # used to modulate the step length.
-S <- 5 # current value times, step width
+S <- 1 # current value times, step width
 x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
 xbest <- x0; fbest <- fx0
 
@@ -99,7 +99,8 @@ for (c in 1:C){
         bk <-0
         for (np in 1:num){ 
             partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
-            partition_2 <- min((np/num)*toy_row, toy_row)
+            partition_2 <- min((np/num)*toy_row, toy_row) 
+            partition <- cbind(partition, c(partition_1,partition_2))
             x1 <- xbest
             x1[partition_1:partition_2, 'ToyId'] <- sample(x1[partition_1:partition_2, 'ToyId']) ## reallocate Toys to a random chosen group of Elves
             
@@ -121,18 +122,32 @@ for (c in 1:C){
     }
 }
 
+### simple loop ###
+for (c in 1:C){ 
+    x1 <- xbest
+    x1[,'ToyId'] <- sample(x1[,'ToyId']) ## reallocate Toys to a random chosen group of Elves
+            
+    fx1 <- solution_Elf(myToys, myelves, x1)
+    delta <- fx1-fbest
+    if(delta<0){
+        xbest <- x1; fbest <- fx1
+        cat(paste('\n -- Find Improvement:',delta, '!!!'))
+        cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
+    }
+}
+       
+
 ##################
 ### Submission ###
 ##################
 save(xbest, file='R_results/submit_1866324812.RData')
 submit_best <- solution_Elf_submit(myToys, myelves, xbest)
-submit_best <- read.csv('toys_submission_1866324812.csv', stringsAsFactors=F)
 submissions_output <- data.frame(ToyId = as.integer(submit_best[,1]), 
                                  ElfId = as.integer(submit_best[,2]), 
                                  StartTime = convert_to_chardate(submit_best[,3]), 
                                  Duration = as.integer(submit_best[,4]), stringsAsFactors = FALSE)
-
-write.csv(submissions_output, 'toys_submission_1866324812.csv', row.names = FALSE)
+(submit_best[which.max(submit_best[,3]),3]+submit_best[which.max(submit_best[,3]), 4])*log(901)
+write.csv(submissions_output, 'toys_submission_1865922691.csv', row.names = FALSE)
 
 ################
 ### Speed up ###
