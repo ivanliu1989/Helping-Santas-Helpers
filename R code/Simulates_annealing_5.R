@@ -94,10 +94,10 @@ for (index_num in index_range){
     myelves <- create_elves(NUM_ELVES)
     
     ### parameters ###
-    C <- 20 # multiple cooling chain
+    C <- 10 # multiple cooling chain
     N0 <- runif(C)*nrow(myToys) # initial point
-    h <- 20 # used to modulate the step length.
-    S <- 2 # current value times, step width
+    h <- 10 # used to modulate the step length.
+    S <- 5 # current value times, step width
     x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
     xbest <- x0; fbest <- fx0
     
@@ -106,16 +106,15 @@ for (index_num in index_range){
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', fbest))
-        while(fbest > 1800000000){
-            for (s in 1:S){ 
-            
+        while(fbest > 1810000000){
+            for (s in 1:S){   
                 cat(paste('\n - Step:',s))
                 Np <- (1+h+s/10) 
                 num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
                 bk <-0
                 for (np in 1:num){ 
                     partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
-                    partition_2 <- min((np/num)*toy_row, toy_row)
+                    partition_2 <- min((np/num)*toy_row, toy_row) 
                     x1 <- xbest
                     x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
                     
@@ -126,7 +125,7 @@ for (index_num in index_range){
                         cat(paste('\n -- Find Improvement:',delta, '!!!'))
                         cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
                     }else{
-    #                     cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
+                        cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
 #                         bk <- bk + 1
 #                         if (bk > 3) break
                     }
