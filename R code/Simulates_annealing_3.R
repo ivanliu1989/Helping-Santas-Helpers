@@ -8,6 +8,7 @@ setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Sant
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
+source('R code/c_Functions.r')
 load('data/toys.RData')
 load('R_results/submit_1866324812.RData')
 
@@ -31,8 +32,8 @@ solution_Elf <- function(myToys, myelves, schedule){
         
         if(c_elf_start_time < c_toy_arrival) c_elf_start_time <- c_toy_arrival  
         work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
-        myelves[c_elf_id, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
-        myelves[c_elf_id, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
+        myelves[c_elf_id, 'next_available_time'] <- updateNextAvailableMinute(c_elf_start_time, work_duration)
+        myelves[c_elf_id, 'current_rating'] <- updateProductivity(c_elf_start_time, work_duration, c_elf_rating)
         
         outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration)
         if(current_toy %% 2000000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
