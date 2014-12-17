@@ -74,9 +74,9 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 #########################
 ### Optimization Body ###
 #########################
-
+load('elf_1.RData')
 ### main loop ###
-index_range <- 1:10
+index_range <- 101:200
 x_all <- list()
 f_all <- matrix()
 outcome_all <- list()
@@ -97,7 +97,7 @@ for (index_num in index_range){
     C <- 20 # multiple cooling chain
     N0 <- runif(C)*nrow(myToys) # initial point
     h <- 20 # used to modulate the step length.
-    S <- 5 # current value times, step width
+    S <- 2 # current value times, step width
     x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
     xbest <- x0; fbest <- fx0
     
@@ -106,8 +106,9 @@ for (index_num in index_range){
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', fbest))
-        for (s in 1:S){ 
-            while(fbest > 1850000000){
+        while(fbest > 1800000000){
+            for (s in 1:S){ 
+            
                 cat(paste('\n - Step:',s))
                 Np <- (1+h+s/10) 
                 num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
@@ -126,8 +127,8 @@ for (index_num in index_range){
                         cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
                     }else{
     #                     cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
-        #                 bk <- bk + 1
-        #                 if (bk > 3) break
+#                         bk <- bk + 1
+#                         if (bk > 3) break
                     }
                 }
             }
