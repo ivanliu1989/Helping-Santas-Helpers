@@ -117,7 +117,9 @@ for (c in 1:C){
     }
 }
 
-save(xbest, file='submit_1870400568.RData')
+save(xbest, file='R_results/submit_1866324812.RData')
+submit_best <- solution_Elf_submit(myToys, myelves, xbest)
+write.csv(submit_best, 'toys_submission_1866324812.csv', row.names = FALSE)
 
 ### Speed up ###
 library(compiler)
