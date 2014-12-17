@@ -48,21 +48,21 @@ solution_Elf <- function(myToys, myelves, schedule){
 solution_Elf_submit <- function(myToys, myelves, schedule){
     outcomes <- matrix(0, nrow = nrow(myToys), ncol = 5, 
                        dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
-    myToys <- myToys[schedule[,'ToyId'],]
+    myToys <- myToys[schedule,]
     for(current_toy in 1:nrow(myToys)){
         
         c_toy_id <- myToys[current_toy,'ToyId']
         c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
         c_toy_duration <- myToys[current_toy,'Duration']
         
-        c_elf_id <- schedule[current_toy, 'ElfId']
-        c_elf_start_time <- myelves[c_elf_id, 'next_available_time']
-        c_elf_rating <- myelves[c_elf_id, 'current_rating']
+        c_elf_id <- myelves[, 'elf_id']
+        c_elf_start_time <- myelves[, 'next_available_time']
+        c_elf_rating <- myelves[, 'current_rating']
         
         if(c_elf_start_time < c_toy_arrival) c_elf_start_time <- c_toy_arrival  
         work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
-        myelves[c_elf_id, 'next_available_time'] <- update_next_available_minute(c_elf_start_time, work_duration)
-        myelves[c_elf_id, 'current_rating'] <- update_productivity(c_elf_start_time, work_duration, c_elf_rating)
+        myelves[c_elf_id, 'next_available_time'] <- updateNextAvailableMinute(c_elf_start_time, work_duration)
+        myelves[c_elf_id, 'current_rating'] <- updateProductivity(c_elf_start_time, work_duration, c_elf_rating)
         
         outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
         if(current_toy %% 100000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
@@ -141,5 +141,5 @@ for (index_num in index_range){
 #     outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
 }
 
-save(fbest, xbest, file='elf_1.RData')
+save(fbest, xbest, file='elf_900.RData')
 save(x_all,f_all,outcome_all, file='R_SA.RData')
