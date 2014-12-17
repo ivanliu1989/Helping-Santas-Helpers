@@ -110,12 +110,13 @@ for (c in 1:C){
                 xbest <- x1; fbest <- fx1
                 cat(paste('\n -- Find Improvement:',delta, '!!!'))
                 cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest))
-#             }else{
+            }else{
+                cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
 #                 bk <- bk + 1
 #                 if (bk > 3){
 #                     bk_s <- bk_s + 1
 #                     break
-#                 } 
+                } 
             }   
         }
 #         if (bk_s > 3) break
