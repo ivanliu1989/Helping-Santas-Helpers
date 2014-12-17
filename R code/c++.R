@@ -24,22 +24,23 @@ update_productivity <- function(start_minute, work_duration, current_rating) {
 }
 
 ###################################################################################################################################################
-is_sanctioned_time <- function(minute) {
-    is_sanctioned <- ((minute - day_start) %% minutes_in_24h) < (hours_per_day * 60)
-    return(is_sanctioned)
+bool is_sanctioned_time(int minute) {
+    return ((minute - 540) % MID) < 600;
 }
 
-get_sanctioned_breakdown <- function(start_minute, work_duration) {
-    full_days <- as.integer(work_duration / minutes_in_24h)
-    sanctioned <- full_days * hours_per_day * 60
-    unsanctioned <- full_days * (24 - hours_per_day) * 60
-    remainder_start <- start_minute + full_days * minutes_in_24h
-    remainder_end <- start_minute + work_duration - 1 # to avoid off-by-one per R iterator
-    if(remainder_end >= remainder_start) {
-        sanctioned <- sanctioned + sum(is_sanctioned_time(remainder_start:remainder_end))
-        unsanctioned <- unsanctioned + sum(!is_sanctioned_time(remainder_start:remainder_end))
+std::tuple<int, int> get_sanctioned_breakdown(int startMinute, int duration) {
+    int S = 0;
+    int U = 0;
+    
+    int full_days = duration / MID;
+    S = full_days * (10*60);
+    U = full_days * (14*60);
+    int remainder = startMinute + full_days * MID;
+    for (int i = remainder; i < (startMinute+duration); ++i) {
+        if (isSanctionedTime(i)) S += 1;
+        else U += 1;
     }
-    return(c(sanctioned, unsanctioned))
+    return std::tuple<int, int>(S, U);
 }
 
 next_sanctioned_minute <- function(minute) {
@@ -73,3 +74,4 @@ apply_resting_period <- function(start, num_unsanctioned){
     total_days <- num_days_since_jan1 + rest_time_in_working_days
     return (total_days * minutes_in_24h + local_start + rest_time_remaining_minutes)
 }
+

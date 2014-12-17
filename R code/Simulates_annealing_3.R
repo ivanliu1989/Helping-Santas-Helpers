@@ -38,7 +38,7 @@ solution_Elf <- function(myToys, myelves, schedule){
         if(current_toy %% 2000000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
                                            format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
     }
-    return((which.max(outcomes[,3])+outcomes[which.max(outcomes[,3]), 4])*log(901))
+    return((outcomes[which.max(outcomes[,3]),3]+outcomes[which.max(outcomes[,3]), 4])*log(901))
 }
 
 ### Submit ###
