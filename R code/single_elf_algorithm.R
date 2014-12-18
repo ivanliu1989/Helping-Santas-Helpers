@@ -11,7 +11,7 @@ range <- 1:10
 submissions <- list()
 for(index_num in range){
     toys_dat <- data.frame(toys)
-    myToys <- data.matrix(toys_dat[index[[1]],])
+    myToys <- data.matrix(toys_dat[index[[index_num]],])
     
     NUM_ELVES <- 1
     myelves <- create_elves(NUM_ELVES)
