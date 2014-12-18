@@ -1,9 +1,8 @@
 #########################
 ### Schedule Strategy ###
 #########################
-assign_toy <- function(myelves, myToys) {
+source('R code/c_Assign.r');
 
-}
 #################
 ### Main Loop ###
 #################
