@@ -72,7 +72,7 @@ index_range <- 1:600 # 5pm-8am
 toys_dat <- data.frame(toys)
 C <- 20 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(1,10,100,1000) # current value times, step width
+S <- c(1,10,30,100,5000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
