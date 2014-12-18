@@ -105,7 +105,7 @@ for (index_num in index_range){
     for (c in 1:C){ 
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
-        cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', fbest))
+        cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
 #         while(fbest > 1800000000){
             for (s in 1:S){   
@@ -121,8 +121,8 @@ for (index_num in index_range){
                     delta <- fx1-fbest
                     if(delta<0){
                         xbest <- x1; fbest <- fx1
-                        cat(paste('\n -- Find Improvement:',delta, '!!!'))
-                        cat(paste('\n -- Find Global Improvement!!! Current Score:',fbest, 'bk:', bk))
+                        cat(paste('\n -- Find Improvement:',round(delta), '!!!'))
+                        cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest), 'bk:', bk))
                         bk <- 0
                     }else{
 #                         cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
