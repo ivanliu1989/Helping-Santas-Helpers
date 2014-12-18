@@ -6,7 +6,7 @@ setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Sant
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R'); source('R code/c_Functions.r')
-load('data/toys.RData'); load('data/900_Folds.RData'); load('simulated_annealing_1_300.RData')
+load('data/toys.RData'); load('data/900_Folds.RData'); load('simulated_annealing_301_600.RData')
 
 #################
 ### Functions ###
@@ -76,7 +76,7 @@ S <- c(1,10,30,100,3000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    n <- match(max(f_1_300[101:300]),f_1_300)
+    n <- match(max(f_all[301:600]),f_all)
     set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num))
@@ -85,7 +85,7 @@ for (index_num in index_range){
     ### Toys establishment ###
     myToys <- data.matrix(toys_dat[index[[n]],])
     myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),] # ??
-    schedule <- x_1_300[[n]]
+    schedule <- x_all[[n]]
     myelves <- create_elves(NUM_ELVES)
     
     ### parameters ###
@@ -133,14 +133,14 @@ for (index_num in index_range){
             }
         }
     }
-    x_1_300[[n]] <- xbest # Record
-    f_1_300[n] <- fbest
+    x_all[[n]] <- xbest # Record
+    f_all[n] <- fbest
     #     outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
     cat(paste('\n Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
 }
 
 save(fbest, xbest, file='elf_900.RData')
-save(x_1_300,f_1_300, file='/optimization_results/simulated_annealing_101_300.RData')
+save(x_all,f_all, file='/optimization_results/simulated_annealing_301_600.RData')
 
 
 
