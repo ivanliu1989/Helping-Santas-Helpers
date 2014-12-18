@@ -72,7 +72,7 @@ index_range <- 1:600 # 5pm-8am
 toys_dat <- data.frame(toys)
 C <- 20 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(1,10,30,100,5000) # current value times, step width
+S <- c(1,10,30,100,3000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -104,16 +104,21 @@ for (index_num in index_range){
             Np <- (1+h+s/10) 
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
             for (np in 1:num){ 
-                partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
-                partition_2 <- min((np/num)*toy_row, toy_row) 
-#                     partition_1 <- max((Ns-Np),1):min((Ns+Np),toy_row) ## New
-#                     partition_2 <- max((Nd-Np),1):min((Nd+Np),toy_row)
-                x1 <- xbest
-                x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
-#                     ori_partition <- sample(x1[partition_1]) ## New
-#                     des_partition <- sample(x1[partition_2])
-#                     x1[partition_1] <- des_partition
-#                     x1[partition_2] <- ori_partition
+                p <- runif(1)
+                if(p<=0.5){
+                    partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
+                    partition_2 <- min((np/num)*toy_row, toy_row) 
+                    x1 <- xbest
+                    x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
+                }else{
+                    partition_1 <- max((Ns-Np),1):min((Ns+Np),toy_row) ## New
+                    partition_2 <- max((Nd-Np),1):min((Nd+Np),toy_row)
+                    x1 <- xbest
+                    ori_partition <- sample(x1[partition_1]) ## New
+                    des_partition <- sample(x1[partition_2])
+                    x1[partition_1] <- des_partition
+                    x1[partition_2] <- ori_partition
+                }   
                 fx1 <- solution_Elf(myToys, myelves, x1)
                 delta <- fx1-fbest
                 if(delta<0){
