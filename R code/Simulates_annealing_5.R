@@ -76,11 +76,12 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 #########################
 load('elf_1.RData')
 ### main loop ###
-index_range <- 1:50
+index_range <- 5:100
 x_all <- list()
 f_all <- matrix()
 outcome_all <- list()
 for (index_num in index_range){
+    now <- Sys.time()
     cat(paste('\n\n Elf:',index_num))
     ### Toys establishment ###
     myToys <- data.matrix(toys_dat[index[[index_num]],])
@@ -105,8 +106,8 @@ for (index_num in index_range){
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', fbest))
-#         bk <-0
-        while(fbest > 1800000000){
+        bk <-0
+#         while(fbest > 1800000000){
             for (s in 1:S){   
                 cat(paste('\n - Step:',s, 'bk:', bk))
                 Np <- (1+h+s/10) 
@@ -116,7 +117,6 @@ for (index_num in index_range){
                     partition_2 <- min((np/num)*toy_row, toy_row) 
                     x1 <- xbest
                     x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
-                    
                     fx1 <- solution_Elf(myToys, myelves, x1)
                     delta <- fx1-fbest
                     if(delta<0){
@@ -126,18 +126,19 @@ for (index_num in index_range){
                         bk <- 0
                     }else{
 #                         cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
-#                         bk <- bk + 1
+                        bk <- bk + 1
 #                         if (bk > 3) break
                     }
+                    if (bk > 10) break
                 }
-#                 if (bk > 10) break
             }
-        }
+#         }
     }
     ### Record ###
     x_all[[index_num]] <- xbest
     f_all[index_num] <- fbest
 #     outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
+    cat(paste('\n Time used:',Sys.time() - now(), '!!!\n'))
 }
 
 save(fbest, xbest, file='elf_900.RData')
