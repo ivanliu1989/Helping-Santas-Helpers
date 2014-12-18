@@ -74,7 +74,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 ### Optimization Body ###
 #########################
 ### main loop ###
-index_range <- 1:10
+index_range <- 1:600 # 5pm-8am
 for (index_num in index_range){
     n <- match(max(f_all),f_all)
     set.seed(n)
