@@ -112,8 +112,9 @@ for (index_num in index_range){
 #                 if(p<=0.5){
                     partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
                     partition_2 <- min((np/num)*toy_row, toy_row) 
+                    rep_range <- as.integer(partition_1:partition_2)
                     x1 <- xbest
-                    x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
+                    x1[rep_range] <- sample(x1[rep_range])
 #                 }else{
 #                     partition_1 <- max((Ns-Np),1):min((Ns+Np),toy_row) ## New
 #                     partition_2 <- max((Nd-Np),1):min((Nd+Np),toy_row)
