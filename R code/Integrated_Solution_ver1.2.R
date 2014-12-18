@@ -91,6 +91,6 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 schedule <- data.matrix(submissions[,1:2])
 save(schedule, file='baseSchedule.RData')
-write.csv(submissions_output, 'toys_submission_classification_sort.csv', row.names = FALSE)
+write.csv(submissions_output, 'toys_submission_18_Dec.csv', row.names = FALSE)
 
-model_score <- convert_to_minute(submissions_output[nrow(submissions_output),3]) * log(1+NUM_ELVES)
+model_score <- (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(901)

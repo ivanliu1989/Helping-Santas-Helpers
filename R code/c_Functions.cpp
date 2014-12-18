@@ -71,6 +71,7 @@ int updateNextAvailableMinute(int start_minute, int work_duration){
 	return next_available_time;
 }
 
+// [[Rcpp::export]]
 double updateProductivity(int start_minute, int work_duration, double current_rating){
 	NumericVector out(2);
 	int S = 0;

@@ -1,4 +1,5 @@
 #include <Rcpp.h>
+#include <algorithm> // for std::sort
 using namespace Rcpp;
 
 // [[Rcpp::export]]
@@ -32,6 +33,22 @@ assign_elf <- function(myelves, c_toy_size) {
 int assignElf(NumericMatrix myelves, int c_toy_size){
 	int nrow = x.nrow(), ncol = x.ncol();
 	for(int i=0; i < nrow; i++){
-		
+		if(myelves[i][2]==c_toy_size)
+		break;	
 	}
+	if(i==nrow) c_toy_size = 2;
+
+	for(int i=0; i < nrow; i++){
+		if(myelves[i][2]==c_toy_size)
+		break;	
+	}
+	if(i==nrow) c_toy_size = 1;
+
+	for(int i=0; i < nrow; i++){
+		if(myelves[i][2]==c_toy_size)
+		break;	
+	}
+	if(i==nrow) c_toy_size = 3;
+
+	std::sort(&myelves[0][0], &myelves[0][0]+10*10);
 }
