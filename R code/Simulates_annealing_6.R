@@ -140,7 +140,7 @@ for (index_num in index_range){
 }
 
 save(fbest, xbest, file='elf_900.RData')
-save(x_1_300,f_1_300, file='simulated_annealing_1_300.RData')
+save(x_1_300,f_1_300, file='/optimization_results/simulated_annealing_101_300.RData')
 
 
 
