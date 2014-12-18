@@ -141,3 +141,12 @@ for (index_num in index_range){
 
 save(fbest, xbest, file='elf_900.RData')
 save(x_all,f_all, file='simulated_annealing_1_100.RData')
+
+
+
+
+
+
+
+
+

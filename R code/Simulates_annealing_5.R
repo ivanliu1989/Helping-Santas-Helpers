@@ -76,7 +76,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 #########################
 load('elf_1.RData')
 ### main loop ###
-index_range <- 120:300
+index_range <- 101:119
 x_all <- list()
 f_all <- matrix()
 outcome_all <- list()
@@ -142,4 +142,4 @@ for (index_num in index_range){
 }
 
 save(fbest, xbest, file='elf_900.RData')
-save(x_all,f_all, file='simulated_annealing_101_300.RData')
+save(x_all,f_all, file='simulated_annealing_101_119.RData')
