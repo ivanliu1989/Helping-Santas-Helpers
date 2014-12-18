@@ -76,7 +76,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 #########################
 load('elf_1.RData')
 ### main loop ###
-index_range <- 101:300
+index_range <- 120:300
 x_all <- list()
 f_all <- matrix()
 outcome_all <- list()
@@ -95,7 +95,7 @@ for (index_num in index_range){
     myelves <- create_elves(NUM_ELVES)
     
     ### parameters ###
-    C <- 20 # multiple cooling chain
+    C <- 1 # multiple cooling chain
     N0 <- runif(C)*nrow(myToys) # initial point
     h <- 10 # used to modulate the step length.
     S <- 5 # current value times, step width
