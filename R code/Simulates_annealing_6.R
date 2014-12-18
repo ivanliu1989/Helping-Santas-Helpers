@@ -72,7 +72,7 @@ index_range <- 1:500 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 15 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(100,300,1000,3000,6000,9000,11000,20000,30000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
+S <- c(1,10,30,100,300,1000,3000,6000,9000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -144,7 +144,7 @@ for (index_num in index_range){
 }
 
 save(fbest, xbest, file='elf_900.RData')
-save(x_all,f_all, file='optimization_results/simulated_annealing_101:300.RData')
+save(x_all,f_all, file='optimization_results/simulated_annealing_1_300.RData')
 
 x_all <- x_1_300
 f_all <- f_1_300
