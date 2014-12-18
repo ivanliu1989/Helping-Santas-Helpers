@@ -72,7 +72,7 @@ index_range <- 1:600 # 5pm-8am
 toys_dat <- data.frame(toys)
 C <- 20 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(1,5,15,30) # current value times, step width
+S <- c(1,10,100,1000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -96,6 +96,7 @@ for (index_num in index_range){
     for (c in 1:C){ 
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
+        Nd <- xbest[N0[min(c+1, C)]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
         for (s in S){   
@@ -105,8 +106,14 @@ for (index_num in index_range){
             for (np in 1:num){ 
                 partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
                 partition_2 <- min((np/num)*toy_row, toy_row) 
+#                     partition_1 <- max((Ns-Np),1):min((Ns+Np),toy_row) ## New
+#                     partition_2 <- max((Nd-Np),1):min((Nd+Np),toy_row)
                 x1 <- xbest
                 x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
+#                     ori_partition <- sample(x1[partition_1]) ## New
+#                     des_partition <- sample(x1[partition_2])
+#                     x1[partition_1] <- des_partition
+#                     x1[partition_2] <- ori_partition
                 fx1 <- solution_Elf(myToys, myelves, x1)
                 delta <- fx1-fbest
                 if(delta<0){
