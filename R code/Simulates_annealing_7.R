@@ -46,7 +46,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 ### Optimization Body ###
 #########################
 ### main loop ###
-index_range <- 1:8888 # 5pm-8am | 1.8 min | 33/Hour | 215
+index_range <- 1:500 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
@@ -122,8 +122,8 @@ for (index_num in index_range){
     cat(paste('\n Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
 }
 
-save(fbest, xbest, file='elf_900.RData')
-save(x_all,f_all, file='optimization_results/simulated_annealing_1_300.RData')
+save(fbest, xbest, file='elf_900.RData') #1784549033 1894363228
+save(x_all,f_all, file='optimization_results/simulated_annealing_601_900.RData')
 
 x_all <- x_1_300
 f_all <- f_1_300
