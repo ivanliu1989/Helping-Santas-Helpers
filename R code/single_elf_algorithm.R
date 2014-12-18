@@ -30,6 +30,7 @@ solution_Elf_submit <- function(myToys, myelves){
                        dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
     current_toy <- 1
     c_elf_id <- myelves[, 'elf_id']
+    myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),]
     for(current_toy in 1:nrow(myToys)){
         c_elf_start_time <- myelves[, 'next_available_time']
         c_elf_rating <- myelves[, 'current_rating']
@@ -60,5 +61,5 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  ElfId = as.integer(submissions[,2]), 
                                  StartTime = convert_to_chardate(submissions[,3]), 
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
-(submissions[which.max(submissions),3]+submissions[which.max(submissions[,3]), 4])*log(901)
+(submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(901)
 write.csv(submissions_output, 'toys_submission_classification_sort.csv', row.names = FALSE)
