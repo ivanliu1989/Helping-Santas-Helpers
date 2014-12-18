@@ -76,7 +76,7 @@ S <- c(1,10,30,100,3000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    n <- match(max(f_1_300[101:300]),f_1_300[101:300])
+    n <- match(max(f_1_300[101:300]),f_1_300)
     set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num))
