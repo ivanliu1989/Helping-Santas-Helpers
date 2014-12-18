@@ -77,6 +77,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 index_range <- 1:10
 for (index_num in index_range){
     n <- match(max(f_all),f_all)
+    set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num))
     cat(paste('\n Elf:',n))
@@ -91,8 +92,8 @@ for (index_num in index_range){
     ### parameters ###
     C <- 20 # multiple cooling chain
     N0 <- runif(C)*nrow(myToys) # initial point
-    h <- 10 # used to modulate the step length.
-    S <- c(1,10,100) # current value times, step width
+    h <- 0 # used to modulate the step length.
+    S <- c(1,10,30,100,300) # current value times, step width
     x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
     xbest <- x0; fbest <- fx0
     
@@ -132,7 +133,7 @@ for (index_num in index_range){
     x_all[[n]] <- xbest
     f_all[n] <- fbest
     #     outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
-    cat(paste('\n Time used:',Sys.time() - now, '!!!\n'))
+    cat(paste('\n Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
 }
 
 save(fbest, xbest, file='elf_900.RData')
