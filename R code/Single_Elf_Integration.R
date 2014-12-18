@@ -1,4 +1,3 @@
-sourceCpp("R code/c_Functions.cpp")
 sum_index <- c()
 for(i in 1:900){
     sum_index <- c(sum_index,length(index[[i]]))
@@ -10,6 +9,7 @@ load('elf_900.RData')
 load('data/toys.RData')
 source('R code/Functions.R')
 source('R code/c_Functions.r')
+sourceCpp("R code/c_Functions.cpp")
 toys_dat <- data.frame(toys)
 
 NUM_ELVES <- 1
