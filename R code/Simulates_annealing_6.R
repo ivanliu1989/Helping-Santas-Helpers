@@ -70,7 +70,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 ### main loop ###
 index_range <- 1:8888 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
-C <- 15 # multiple cooling chain
+C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
 S <- c(1,10,30,100,300,1000,3000,6000,9000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
 NUM_ELVES <- 1
