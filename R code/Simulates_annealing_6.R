@@ -1,5 +1,3 @@
-library(compiler)
-enableJIT(3)
 #############
 ### Setup ###
 #############
@@ -7,12 +5,8 @@ setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
-source('R code/Functions.R')
-source('R code/c_Functions.r')
-load('data/toys.RData')
-load('data/900_Folds.RData')
-load('simulated_annealing_1_100.RData')
-toys_dat <- data.frame(toys)
+source('R code/Functions.R'); source('R code/c_Functions.r')
+load('data/toys.RData'); load('data/900_Folds.RData'); load('simulated_annealing_1_100.RData')
 
 #################
 ### Functions ###
@@ -75,6 +69,12 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 #########################
 ### main loop ###
 index_range <- 1:600 # 5pm-8am
+toys_dat <- data.frame(toys)
+C <- 20 # multiple cooling chain
+h <- 0 # used to modulate the step length.
+S <- c(1,5,15,30) # current value times, step width
+NUM_ELVES <- 1
+
 for (index_num in index_range){
     n <- match(max(f_all),f_all)
     set.seed(n)
@@ -84,16 +84,12 @@ for (index_num in index_range){
     
     ### Toys establishment ###
     myToys <- data.matrix(toys_dat[index[[n]],])
-    myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),]
+    myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),] # ??
     schedule <- x_all[[n]]
-    NUM_ELVES <- 1
     myelves <- create_elves(NUM_ELVES)
     
     ### parameters ###
-    C <- 20 # multiple cooling chain
     N0 <- runif(C)*nrow(myToys) # initial point
-    h <- 0 # used to modulate the step length.
-    S <- c(1,10,30,100,300) # current value times, step width
     x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
     xbest <- x0; fbest <- fx0
     
@@ -102,7 +98,6 @@ for (index_num in index_range){
         Ns <- xbest[N0[c]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
-        #         while(fbest > 1800000000){
         for (s in S){   
             cat(paste('\n - Step:',s, 'bk:', bk))
             Np <- (1+h+s/10) 
@@ -120,17 +115,13 @@ for (index_num in index_range){
                     cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest), 'bk:', bk))
                     bk <- 0
                 }else{
-                    #                         cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
                     bk <- bk + 1
-                    #                         if (bk > 3) break
                 }
                 if (bk > 10) break
             }
         }
-        #         }
     }
-    ### Record ###
-    x_all[[n]] <- xbest
+    x_all[[n]] <- xbest # Record
     f_all[n] <- fbest
     #     outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
     cat(paste('\n Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
