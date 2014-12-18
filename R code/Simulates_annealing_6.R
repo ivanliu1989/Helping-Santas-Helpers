@@ -91,7 +91,7 @@ for (index_num in index_range){
     ### parameters ###
     C <- 20 # multiple cooling chain
     N0 <- runif(C)*nrow(myToys) # initial point
-    h <- c(1,3,5,7,9) # used to modulate the step length.
+    h <- 10 # used to modulate the step length.
     S <- c(1,10,100) # current value times, step width
     x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
     xbest <- x0; fbest <- fx0
@@ -102,7 +102,7 @@ for (index_num in index_range){
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
         #         while(fbest > 1800000000){
-        for (s in 1:S){   
+        for (s in S){   
             cat(paste('\n - Step:',s, 'bk:', bk))
             Np <- (1+h+s/10) 
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
