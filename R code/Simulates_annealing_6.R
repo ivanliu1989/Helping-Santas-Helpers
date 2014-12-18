@@ -68,11 +68,11 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 ### Optimization Body ###
 #########################
 ### main loop ###
-index_range <- 1:50 # 5pm-8am | 1.6 min | 35/Hour 
+index_range <- 1:500 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 15 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(1000,3000,6000,8000,9000,11000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
+S <- c(300,1000,3000,6000,9000,11000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -95,7 +95,11 @@ for (index_num in index_range){
     
     for (c in 1:C){ 
         toy_row <- nrow(myToys)
-        Ns <- xbest[N0[c]]
+        if(c==1){
+            Ns <- 6588
+        }else{
+            Ns <- xbest[N0[c]]
+        }
         Nd <- xbest[N0[min(c+1, C)]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
