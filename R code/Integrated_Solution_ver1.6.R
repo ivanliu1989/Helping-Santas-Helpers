@@ -16,6 +16,7 @@ solution_sortedElf <- function(myToys, myelves){
         c_toy_id <- assign_toy(myelves, myToys)
         c_toy_arrival <- myToys[c_toy_id, 'Arrival_time'] 
         c_toy_duration <- myToys[c_toy_id,'Duration']
+        c_toy_size <- myToys[c_toy_id,'size']
         
         next_elf <- assign_elf(myelves, c_toy_duration, c_toy_size)
         
