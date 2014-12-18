@@ -75,7 +75,7 @@ cppFunction('int applyRestingPeriod(int current, int unsanctioned) {
         num_days_since_jan1 += 1;
         local_start = 540;
     }
-    if (local_start + rest_time_remaining_minutes > 1140) {
+    if (local_start + rest_time_remaining_minutes >= 1140) {
         num_days_since_jan1 += 1;
         rest_time_remaining_minutes -= (1140 - local_start);
         local_start = 540;

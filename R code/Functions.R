@@ -64,7 +64,7 @@ apply_resting_period <- function(start, num_unsanctioned){
         num_days_since_jan1 <- num_days_since_jan1 + 1
         local_start <- day_start
     }
-    if((local_start + rest_time_remaining_minutes) > day_end){
+    if((local_start + rest_time_remaining_minutes) >= day_end){
         rest_time_in_working_days <- rest_time_in_working_days + 1
         rest_time_remaining_minutes <- rest_time_remaining_minutes - (day_end - local_start)
         local_start <- day_start

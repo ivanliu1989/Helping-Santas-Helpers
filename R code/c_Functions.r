@@ -56,10 +56,10 @@ cppFunction('int updateNextAvailableMinute(int start_minute, int work_duration){
             num_days_since_jan1 += 1;
             local_start = 540;
             }
-            if (local_start + rest_time_remaining_minutes > 1140) {
-            num_days_since_jan1 += 1;
-            rest_time_remaining_minutes -= (1140 - local_start);
-            local_start = 540;
+            if (local_start + rest_time_remaining_minutes >= 1140) {
+                num_days_since_jan1 += 1;
+                rest_time_remaining_minutes -= (1140 - local_start);
+                local_start = 540;
             }
             int total_days = num_days_since_jan1 + rest_time_in_working_days;
             
