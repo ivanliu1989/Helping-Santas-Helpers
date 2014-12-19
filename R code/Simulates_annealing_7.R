@@ -83,10 +83,10 @@ for (index_num in index_range){
                     a <- length(x1); b <- length(table(x1))
                     if(a==b){
                         xbest <- x1; fbest <- fx1
-                        cat(paste('\n -- Find Improvement:',round(delta), '!!! Current Score:',round(fbest)))
+                        cat(paste('\n +++++ Find Improvement:',round(delta), '!!! Current Score:',round(fbest)))
                         bk <- 0
                     }else{
-                        cat(paste('\n -- Error happened during scheduling!!! Toy Number:',a, 'Unique Tasks:',b))
+                        cat(paste('\n ***** Error happened during scheduling!!! Toy Number:',a, 'Unique Tasks:',b))
                         break
                     }
                 }else{
@@ -105,7 +105,7 @@ for(n in 1:900){
     cat(paste('\n',length(table(x_all[[n]]))==length(x_all[[n]])))
 }
 
-save(x_all,f_all, file='optimization_results/simulated_annealing_601_900.RData')
+save(x_all,f_all, file='optimization_results/Simulated_Annealing_All.RData')
 
 
 
