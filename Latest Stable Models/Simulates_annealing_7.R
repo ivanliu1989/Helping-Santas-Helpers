@@ -7,7 +7,7 @@ setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
 load('data/toys.RData'); load('data/900_Folds.RData'); 
-load('optimization_results/Simulated_Annealing_All.RData') #==========>> load('simulated_annealing_1_900.RData')
+load('optimization_results/Simulated_Annealing_1_300.RData') #==========>> load('simulated_annealing_1_900.RData')
 
 #################
 ### Functions ###
@@ -25,7 +25,7 @@ toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
 S <- c(1,10,30,100,300,1000,3000) # current value times, step width
-Tolerance <- 500
+Tolerance <- 1000
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -96,7 +96,7 @@ for (index_num in index_range){
     x_all[[n]] <- xbest # Record
     f_all[n] <- fbest
     cat(paste('\n * Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
-    if(index_num %% 100 == 0) save(x_all,f_all, file='/Users/ivan/Google Drive/fico_solution/Simulated_Annealing_1_300_temp.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
+    if(index_num %% 50 == 0) save(x_all,f_all, file='/Users/ivan/Google Drive/fico_solution/Simulated_Annealing_1_300_temp.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
 }
 
 for(n in 1:900){
