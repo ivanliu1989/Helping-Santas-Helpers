@@ -6,7 +6,7 @@ setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Sant
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
-load('data/toys.RData'); load('data/900_Folds.RData'); load('simulated_annealing_1_900.RData')
+load('data/toys.RData'); load('data/900_Folds.RData'); load('optimization_results/Simulated_Annealing_All.RData') #load('simulated_annealing_1_900.RData')
 
 #################
 ### Functions ###
@@ -23,7 +23,7 @@ index_range <- 1:8000 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(1,10,30,100,300,1000,3000,6000,9000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
+S <- c(1,10,30,100,300,1000,3000,6000,9000,11000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -107,6 +107,6 @@ for(n in 1:900){
 }
 
 save(x_all,f_all, file='optimization_results/Simulated_Annealing_All.RData')
-
+#1923241950.9752 | 1882883347
 
 
