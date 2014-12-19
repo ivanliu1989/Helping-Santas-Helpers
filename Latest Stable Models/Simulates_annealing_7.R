@@ -20,11 +20,11 @@ sourceCpp('R code/c_Functions.cpp')
 ### Optimization Body ###
 #########################
 ### main loop ###
-index_range <- 1:1888 # 5pm-8am | 1.8 min | 33/Hour | 215
+index_range <- 1:888 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 5 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(1,10,30,100,300,1000,3000) # current value times, step width
+S <- c(1,10,30,100,300,1000,3000,6000,9000) # current value times, step width
 Tolerance <- 2000
 NUM_ELVES <- 1
 
