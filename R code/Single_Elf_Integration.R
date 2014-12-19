@@ -13,36 +13,12 @@ load('optimization_results/simulated_annealing_601_900.RData')
 
 NUM_ELVES <- 1
 myelves <- create_elves(NUM_ELVES)
-solution_Elf_submit <- function(myToys, myelves, schedule){
-    outcomes <- matrix(0, nrow = nrow(myToys), ncol = 5, 
-                       dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
-    myToys <- myToys[schedule,]
-    for(current_toy in 1:nrow(myToys)){
-        
-        c_toy_id <- myToys[current_toy,'ToyId']
-        c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
-        c_toy_duration <- myToys[current_toy,'Duration']
-        
-        c_elf_id <- myelves[, 'elf_id']
-        c_elf_start_time <- myelves[, 'next_available_time']
-        c_elf_rating <- myelves[, 'current_rating']
-        
-        if(c_elf_start_time < c_toy_arrival) c_elf_start_time <- c_toy_arrival  
-        work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
-        myelves[c_elf_id, 'next_available_time'] <- updateNextAvailableMinute(c_elf_start_time, work_duration)
-        myelves[c_elf_id, 'current_rating'] <- updateProductivity(c_elf_start_time, work_duration, c_elf_rating)
-        
-        outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
-        if(current_toy %% 100000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
-                                           format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
-    }
-    return(outcomes)
-}
 
-for (index_num in 601:900){
+for (index_num in 1:900){
     myToys <- data.matrix(toys_dat[index[[index_num]],])
+    myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),] # ??
     schedule <- x_all[[index_num]] 
-    outcome <- solution_Elf_submit(myToys, myelves, schedule)
+    outcome <- solution_Elf_submit_c(myToys, myelves, schedule)
     outcome_all <- rbind(outcome_all, outcome)
     cat('\nsuccess! no:', index_num, 'score:', solution_Elf_c(myToys, myelves, schedule),'fbest:',f_all[index_num])
 }

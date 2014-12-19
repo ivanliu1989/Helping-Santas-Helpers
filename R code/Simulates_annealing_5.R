@@ -21,33 +21,6 @@ toys_dat <- data.frame(toys)
 require(Rcpp)
 sourceCpp('R code/c_Functions.cpp')
 
-### Submit ###
-solution_Elf_submit <- function(myToys, myelves, schedule){
-    outcomes <- matrix(0, nrow = nrow(myToys), ncol = 5, 
-                       dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
-    myToys <- myToys[schedule,]
-    for(current_toy in 1:nrow(myToys)){
-        
-        c_toy_id <- myToys[current_toy,'ToyId']
-        c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
-        c_toy_duration <- myToys[current_toy,'Duration']
-        
-        c_elf_id <- myelves[, 'elf_id']
-        c_elf_start_time <- myelves[, 'next_available_time']
-        c_elf_rating <- myelves[, 'current_rating']
-        
-        if(c_elf_start_time < c_toy_arrival) c_elf_start_time <- c_toy_arrival  
-        work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
-        myelves[c_elf_id, 'next_available_time'] <- updateNextAvailableMinute(c_elf_start_time, work_duration)
-        myelves[c_elf_id, 'current_rating'] <- updateProductivity(c_elf_start_time, work_duration, c_elf_rating)
-        
-        outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration, c_elf_rating)
-        if(current_toy %% 100000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
-                                           format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
-    }
-    return(outcomes)
-}
-
 #########################
 ### Optimization Body ###
 #########################
@@ -83,8 +56,6 @@ for (index_num in index_range){
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
-        bk <-0
-#         while(fbest > 1800000000){
             for (s in 1:S){   
                 cat(paste('\n - Step:',s, 'bk:', bk))
                 Np <- (1+h+s/10) 
@@ -99,17 +70,10 @@ for (index_num in index_range){
                     if(delta<0){
                         xbest <- x1; fbest <- fx1
                         cat(paste('\n -- Find Improvement:',round(delta), '!!!'))
-                        cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest), 'bk:', bk))
-                        bk <- 0
-                    }else{
-#                         cat(paste('\n -- Failed~:',fx1, '(', delta,')'))
-                        bk <- bk + 1
-#                         if (bk > 3) break
+                        cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest))
                     }
-                    if (bk > 10) break
                 }
             }
-#         }
     }
     ### Record ###
     x_all[[index_num]] <- xbest
@@ -118,5 +82,4 @@ for (index_num in index_range){
     cat(paste('\n Time used:',Sys.time() - now, '!!!\n'))
 }
 
-save(fbest, xbest, file='elf_900.RData')
-save(x_all,f_all, file='simulated_annealing_101_119.RData')
+save(x_all,f_all, file='simulated_annealing_1_900.RData')
