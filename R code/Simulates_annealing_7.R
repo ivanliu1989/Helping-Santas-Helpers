@@ -79,9 +79,13 @@ for (index_num in index_range){
                 fx1 <- solution_Elf_c(myToys, myelves, x1)
                 delta <- fx1-fbest
                 if(delta<0){
-                    xbest <- x1; fbest <- fx1
-                    cat(paste('\n -- Find Improvement:',round(delta), '!!!'))
-                    cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest)))
+                    if(length(x1)==length(table(x1))){
+                        xbest <- x1; fbest <- fx1
+                        cat(paste('\n -- Find Improvement:',round(delta), '!!!'))
+                        cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest)))
+                    }else{
+                        cat(paste('\n -- Error happened during scheduling!!! Toy Number:',length(x1), 'Unique Tasks:',length(table(x1))))
+                    }
                 }
             }
         }
