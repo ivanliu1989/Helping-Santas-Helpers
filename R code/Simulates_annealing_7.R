@@ -29,7 +29,7 @@ Tolerance <- 100
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    n <- match(max(f_all[1:900]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
+    n <- match(max(f_all[601:900]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
     set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num))
@@ -101,14 +101,14 @@ for (index_num in index_range){
     x_all[[n]] <- xbest # Record
     f_all[n] <- fbest
     cat(paste('\n * Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
-    if(index_num %% 100 == 0) save(x_all,f_all, file='optimization_results/Simulated_Annealing_All_temp.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
+    if(index_num %% 100 == 0) save(x_all,f_all, file='/Users/ivan/Google Drive/fico_solution/Simulated_Annealing_601_900_temp.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
 }
 
 for(n in 1:900){
     cat(paste('\n',length(table(x_all[[n]]))==length(x_all[[n]])))
 }
 
-save(x_all,f_all, file='optimization_results/Simulated_Annealing_All.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
+save(x_all,f_all, file='optimization_results/Simulated_Annealing_601_900.RData') #==========>> 1:300 | 301:600 | 601:900 | 1:900
 #1923241950.9752 | 1882883347(1882883346.8784)
 
 
