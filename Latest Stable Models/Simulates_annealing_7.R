@@ -25,7 +25,7 @@ toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
 S <- c(1,10,30,100,300,1000,3000) # current value times, step width
-Tolerance <- 100
+Tolerance <- 1000
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -48,24 +48,20 @@ for (index_num in index_range){
     
     for (c in 1:C){ 
         toy_row <- nrow(myToys)
-        if(c==1){
-            Ns <- 6588
-        }else{
-            Ns <- xbest[N0[c]]
-        }
+        Ns <- xbest[N0[c]]
         Nd <- xbest[N0[min(c+1, C)]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
         for (s in S){   
-            Np <- (1+h+s/10) 
+            Np <- (1+s)# (1+h+s/10) 
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
-            for (np in 1:num){  # c++
+            for (np in 1:num){  
                 p <- runif(1)
-                if(p<=0.5){
+                x1 <- xbest
+                if(p<=0.5){ # c++
                     partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
                     partition_2 <- min((np/num)*toy_row, toy_row) 
                     rep_range <- as.integer(partition_1:partition_2)
-                    x1 <- xbest
                     x1[rep_range] <- sample(x1[rep_range])
                 }else{
                     partition_1 <- max((Ns-Np),1):min((Ns+Np),toy_row) ## New
@@ -73,12 +69,11 @@ for (index_num in index_range){
                     regulate_rng <- min(length(partition_1),length(partition_2))
                     partition_1 <- partition_1[1:regulate_rng]
                     partition_2 <- partition_2[1:regulate_rng]
-                    x1 <- xbest
                     ori_partition <- sample(x1[partition_1]) ## New
                     des_partition <- sample(x1[partition_2])
                     x1[partition_1] <- des_partition
                     x1[partition_2] <- ori_partition
-                }   
+                } # c++  
                 fx1 <- solution_Elf_c(myToys, myelves, x1)
                 delta <- fx1-fbest
                 if(delta<0){
@@ -96,7 +91,7 @@ for (index_num in index_range){
                 }
                 if (bk > Tolerance) break
             }
-        } # c++
+        } 
     }
     x_all[[n]] <- xbest # Record
     f_all[n] <- fbest
