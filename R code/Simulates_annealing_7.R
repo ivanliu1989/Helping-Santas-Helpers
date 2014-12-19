@@ -53,6 +53,7 @@ for (index_num in index_range){
         }
         Nd <- xbest[N0[min(c+1, C)]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
+        bk <-0
         for (s in S){   
             Np <- (1+h+s/10) 
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
@@ -83,11 +84,15 @@ for (index_num in index_range){
                     if(a==b){
                         xbest <- x1; fbest <- fx1
                         cat(paste('\n -- Find Improvement:',round(delta), '!!! Current Score:',round(fbest)))
+                        bk <- 0
                     }else{
                         cat(paste('\n -- Error happened during scheduling!!! Toy Number:',a, 'Unique Tasks:',b))
                         break
                     }
+                }else{
+                    bk <- bk + 1
                 }
+                if (bk > 10) break
             }
         }
     }
