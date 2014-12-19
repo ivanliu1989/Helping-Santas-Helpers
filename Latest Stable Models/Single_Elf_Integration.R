@@ -7,7 +7,7 @@ toys_dat <- data.frame(toys)
 outcome_all <- matrix(0, nrow = 0, ncol = 4, 
                    dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))
 
-load('optimization_results/Simulated_Annealing_All.RData')
+load('simulated_annealing_1_900.RData')
 
 NUM_ELVES <- 1
 myelves <- create_elves(NUM_ELVES)
