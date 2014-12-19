@@ -81,8 +81,7 @@ for (index_num in index_range){
                 if(delta<0){
                     if(length(x1)==length(table(x1))){
                         xbest <- x1; fbest <- fx1
-                        cat(paste('\n -- Find Improvement:',round(delta), '!!!'))
-                        cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest)))
+                        cat(paste('\n -- Find Improvement:',round(delta), '!!! Current Score:',round(fbest)))
                     }else{
                         cat(paste('\n -- Error happened during scheduling!!! Toy Number:',length(x1), 'Unique Tasks:',length(table(x1))))
                     }
