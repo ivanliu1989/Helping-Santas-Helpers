@@ -50,7 +50,7 @@ index_range <- 1:500 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(1,10,30,100,300,1000,3000,6000,9000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
+S <- c(1,10,30,100,300,1000,3000,6000,9000,11000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -82,26 +82,30 @@ for (index_num in index_range){
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
         for (s in S){   
-            cat(paste('\n - Step:',s, 'bk:', bk))
+            #cat(paste('\n - Step:',s, 'bk:', bk))
             Np <- (1+h+s/10) 
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
             for (np in 1:num){ 
                 p <- runif(1)
-                #                 if(p<=0.5){
+                                if(p<=0.5){
                 partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
                 partition_2 <- min((np/num)*toy_row, toy_row) 
                 rep_range <- as.integer(partition_1:partition_2)
                 x1 <- xbest
                 x1[rep_range] <- sample(x1[rep_range])
-                #                 }else{
-                #                     partition_1 <- max((Ns-Np),1):min((Ns+Np),toy_row) ## New
-                #                     partition_2 <- max((Nd-Np),1):min((Nd+Np),toy_row)
-                #                     x1 <- xbest
-                #                     ori_partition <- sample(x1[partition_1]) ## New
-                #                     des_partition <- sample(x1[partition_2])
-                #                     x1[partition_1] <- des_partition
-                #                     x1[partition_2] <- ori_partition
-                #                 }   
+                                }else{
+                                    partition_1 <- max((Ns-Np),1):min((Ns+Np),toy_row) ## New
+                                    partition_2 <- max((Nd-Np),1):min((Nd+Np),toy_row)
+                                    regulate_rng <- min(length(partition_1),length(partition_2))
+                                    partition_1 <- partition_1[1:regulate_rng]
+                                    partition_2 <- partition_2[1:regulate_rng]
+                                    x1 <- xbest
+                                    ori_partition <- sample(x1[partition_1]) ## New
+                                    des_partition <- sample(x1[partition_2])
+                                    x1[partition_1] <- des_partition
+                                    x1[partition_2] <- ori_partition
+                                    #cat(paste('\n -- des_partition:',length(des_partition), ' -- des_partition:',length(ori_partition)))
+                                }   
                 fx1 <- solution_Elf_c(myToys, myelves, x1)
                 delta <- fx1-fbest
                 if(delta<0){
@@ -120,6 +124,11 @@ for (index_num in index_range){
     f_all[n] <- fbest
     #     outcome_all[[index_num]] <- solution_Elf_outcome(myToys, myelves, xbest)
     cat(paste('\n Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
+}
+
+
+for(n in 601:900){
+    cat(paste('\n',length(table(x_all[[n]]))==length(x_all[[n]])))
 }
 
 save(fbest, xbest, file='elf_900.RData') #1784549033 1894363228
