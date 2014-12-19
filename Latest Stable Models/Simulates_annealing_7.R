@@ -25,10 +25,11 @@ toys_dat <- data.frame(toys)
 C <- 5 # multiple cooling chain
 h <- 0 # used to modulate the step length.
 S <- c(1,10,30,100,300,1000,3000) # current value times, step width
-Tolerance <- 1000
+Tolerance <- 2000
 NUM_ELVES <- 1
 
 for (index_num in index_range){
+    Tolerance <- runif(1,min = 10,max = 5000)
     n <- match(max(f_all[1:300]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
     set.seed(n)
     now <- Sys.time()
