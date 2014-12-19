@@ -23,7 +23,7 @@ index_range <- 1:8000 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
-S <- c(1,10,30,100,300,1000,3000,6000,9000,11000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
+S <- c(1,10,30,100,300,1000,3000,6000,9000) #c(1,3,9,30,90,300,1000,3000,9000) # current value times, step width
 NUM_ELVES <- 1
 
 for (index_num in index_range){
@@ -79,11 +79,13 @@ for (index_num in index_range){
                 fx1 <- solution_Elf_c(myToys, myelves, x1)
                 delta <- fx1-fbest
                 if(delta<0){
-                    if(length(x1)==length(table(x1))){
+                    a <- length(x1); b <- length(table(x1))
+                    if(a==b){
                         xbest <- x1; fbest <- fx1
                         cat(paste('\n -- Find Improvement:',round(delta), '!!! Current Score:',round(fbest)))
                     }else{
-                        cat(paste('\n -- Error happened during scheduling!!! Toy Number:',length(x1), 'Unique Tasks:',length(table(x1))))
+                        cat(paste('\n -- Error happened during scheduling!!! Toy Number:',a, 'Unique Tasks:',b))
+                        break
                     }
                 }
             }
