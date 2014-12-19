@@ -25,7 +25,7 @@ toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
 S <- c(1,10,30,100,300,1000,3000) # current value times, step width
-Tolerance <- 1000
+Tolerance <- 500
 NUM_ELVES <- 1
 
 for (index_num in index_range){
