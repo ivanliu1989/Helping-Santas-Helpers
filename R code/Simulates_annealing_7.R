@@ -6,7 +6,8 @@ setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Sant
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
-load('data/toys.RData'); load('data/900_Folds.RData'); load('optimization_results/Simulated_Annealing_All.RData') #load('simulated_annealing_1_900.RData')
+load('data/toys.RData'); load('data/900_Folds.RData'); 
+load('optimization_results/Simulated_Annealing_All.RData') #==========>> load('simulated_annealing_1_900.RData')
 
 #################
 ### Functions ###
@@ -19,7 +20,7 @@ sourceCpp('R code/c_Functions.cpp')
 ### Optimization Body ###
 #########################
 ### main loop ###
-index_range <- 1:8000 # 5pm-8am | 1.8 min | 33/Hour | 215
+index_range <- 1:88888 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
@@ -28,7 +29,7 @@ Tolerance <- 100
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    n <- match(max(f_all[1:900]),f_all)
+    n <- match(max(f_all[1:900]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
     set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num))
@@ -58,7 +59,7 @@ for (index_num in index_range){
         for (s in S){   
             Np <- (1+h+s/10) 
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
-            for (np in 1:num){ 
+            for (np in 1:num){  # c++
                 p <- runif(1)
                 if(p<=0.5){
                     partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
@@ -87,7 +88,7 @@ for (index_num in index_range){
                         cat(paste('\n +++++ Find Improvement:',round(delta), '!!! Current Score:',round(fbest)))
                         bk <- 0
                     }else{
-                        cat(paste('\n ***** Error happened during scheduling!!! Toy Number:',a, 'Unique Tasks:',b))
+                        cat(paste('\n ----- Error happened during scheduling!!! Toy Number:',a, 'Unique Tasks:',b))
                         break
                     }
                 }else{
@@ -95,19 +96,19 @@ for (index_num in index_range){
                 }
                 if (bk > Tolerance) break
             }
-        }
+        } # c++
     }
     x_all[[n]] <- xbest # Record
     f_all[n] <- fbest
-    cat(paste('\n Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
-    if(index_num %% 100 == 0) save(x_all,f_all, file='optimization_results/Simulated_Annealing_All_temp.RData')
+    cat(paste('\n * Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
+    if(index_num %% 100 == 0) save(x_all,f_all, file='optimization_results/Simulated_Annealing_All_temp.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
 }
 
 for(n in 1:900){
     cat(paste('\n',length(table(x_all[[n]]))==length(x_all[[n]])))
 }
 
-save(x_all,f_all, file='optimization_results/Simulated_Annealing_All.RData')
-#1923241950.9752 | 1882883347
+save(x_all,f_all, file='optimization_results/Simulated_Annealing_All.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
+#1923241950.9752 | 1882883347(1882883346.8784)
 
 
