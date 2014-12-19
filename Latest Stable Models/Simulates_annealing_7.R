@@ -20,7 +20,7 @@ sourceCpp('R code/c_Functions.cpp')
 ### Optimization Body ###
 #########################
 ### main loop ###
-index_range <- 1:88888 # 5pm-8am | 1.8 min | 33/Hour | 215
+index_range <- 1:1888 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 5 # multiple cooling chain
 h <- 0 # used to modulate the step length.
@@ -29,11 +29,11 @@ Tolerance <- 2000
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    Tolerance <- runif(1,min = 10,max = 5000)
+    Tolerance <- runif(1,min = 10,max = 2500)
     n <- match(max(f_all[1:300]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
     set.seed(n)
     now <- Sys.time()
-    cat(paste('\n\nRound :',index_num))
+    cat(paste('\n\nRound :',index_num, Tolerance))
     cat(paste('\n Elf:',n))
     
     ### Toys establishment ###
@@ -97,7 +97,7 @@ for (index_num in index_range){
     x_all[[n]] <- xbest # Record
     f_all[n] <- fbest
     cat(paste('\n * Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
-    if(index_num %% 50 == 0) save(x_all,f_all, file='/Users/ivan/Google Drive/fico_solution/Simulated_Annealing_1_300_temp.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
+    if(index_num %% 50 == 0) save(x_all,f_all, file='optimization_results/Simulated_Annealing_1_300_temp.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
 }
 
 for(n in 1:900){
