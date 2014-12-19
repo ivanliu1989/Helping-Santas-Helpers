@@ -13,6 +13,7 @@ NUM_ELVES <- 1
 myelves <- create_elves(NUM_ELVES)
 
 for (index_num in 1:900){
+    myelves[,'elf_id'] <- index_num
     myToys <- data.matrix(toys_dat[index[[index_num]],])
     myToys <- myToys[order(myToys[,2]+myToys[,3], myToys[,2]),] # ??
     schedule <- x_all[[index_num]] 
@@ -30,3 +31,5 @@ dim(submissions_output)
 
 write.csv(submissions_output, 'toys_submission_SA_test.csv', row.names = FALSE)
 (outcome_all[which.max(outcome_all[,3]),3]+outcome_all[which.max(outcome_all[,3]), 4])*log(901)
+
+submit <- read.csv('toys_submission_SA_test.csv', stringsAsFactors=F)
