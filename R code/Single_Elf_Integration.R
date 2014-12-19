@@ -4,12 +4,10 @@ load('data/toys.RData')
 source('R code/Functions.R');source('R code/c_Functions.r')
 library(Rcpp);sourceCpp("R code/c_Functions.cpp")
 toys_dat <- data.frame(toys)
-outcome_all <- matrix(0, nrow = nrow(myToys), ncol = 5, 
-                   dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
+outcome_all <- matrix(0, nrow = 0, ncol = 4, 
+                   dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))
 
-load('optimization_results/simulated_annealing_1_300.RData')
-load('simulated_annealing_301_600.RData')
-load('optimization_results/simulated_annealing_601_900.RData')
+load('simulated_annealing_1_900.RData')
 
 NUM_ELVES <- 1
 myelves <- create_elves(NUM_ELVES)
@@ -29,12 +27,7 @@ submissions_output <- data.frame(ToyId = as.integer(outcome_all[,1]),
                                  ElfId = as.integer(outcome_all[,2]), 
                                  StartTime = convert_to_chardate(outcome_all[,3]), 
                                  Duration = as.integer(outcome_all[,4]), stringsAsFactors = FALSE)
-# schedule <- data.matrix(submissions[,1:2])
-# save(schedule, file='baseSchedule.RData')
-write.csv(submissions_output, 'toys_submission_18_Dec.csv', row.names = FALSE)
+
+write.csv(submissions_output, 'toys_submission_SA_test.csv', row.names = FALSE)
 
 (outcome_all[which.max(outcome_all[,3]),3]+outcome_all[which.max(outcome_all[,3]), 4])*log(901)
-
-x_all <- x_1_300
-f_all <- f_1_300
-save(x_all,f_all, file='optimization_results/simulated_annealing_1_300.RData')

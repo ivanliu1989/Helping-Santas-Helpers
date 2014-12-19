@@ -27,7 +27,7 @@ S <- c(1,10,30,100,300,1000,3000,6000,9000,11000) #c(1,3,9,30,90,300,1000,3000,9
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    n <- match(max(f_all[601:900]),f_all)
+    n <- match(max(f_all[1:900]),f_all)
     set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num))
