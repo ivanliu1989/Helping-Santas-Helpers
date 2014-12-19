@@ -47,6 +47,8 @@ for (index_num in 601:900){
     cat('\nsuccess! no:', index_num, 'score:', solution_Elf_c(myToys, myelves, schedule),'fbest:',f_all[index_num])
 }
 
+dim(outcome_all)
+
 submissions_output <- data.frame(ToyId = as.integer(outcome_all[,1]), 
                                  ElfId = as.integer(outcome_all[,2]), 
                                  StartTime = convert_to_chardate(outcome_all[,3]), 

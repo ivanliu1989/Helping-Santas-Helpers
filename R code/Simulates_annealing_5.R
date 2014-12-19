@@ -8,7 +8,8 @@ setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Sant
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
-source('R code/c_Functions.r')
+require(Rcpp)
+sourceCpp('R code/c_Functions.cpp')
 load('data/toys.RData')
 load('R_results/baseSchedule.RData')
 load('data/900_Folds.RData')
@@ -76,7 +77,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 #########################
 load('elf_1.RData')
 ### main loop ###
-index_range <- 101:119
+index_range <- 1:900
 x_all <- list()
 f_all <- matrix()
 outcome_all <- list()
@@ -99,7 +100,7 @@ for (index_num in index_range){
     N0 <- runif(C)*nrow(myToys) # initial point
     h <- 10 # used to modulate the step length.
     S <- 5 # current value times, step width
-    x0 <- schedule; fx0 <- solution_Elf(myToys, myelves, x0)
+    x0 <- schedule; fx0 <- solution_Elf_c(myToys, myelves, x0)
     xbest <- x0; fbest <- fx0
     
     for (c in 1:C){ 
@@ -117,7 +118,7 @@ for (index_num in index_range){
                     partition_2 <- min((np/num)*toy_row, toy_row) 
                     x1 <- xbest
                     x1[partition_1:partition_2] <- sample(x1[partition_1:partition_2])
-                    fx1 <- solution_Elf(myToys, myelves, x1)
+                    fx1 <- solution_Elf_c(myToys, myelves, x1)
                     delta <- fx1-fbest
                     if(delta<0){
                         xbest <- x1; fbest <- fx1

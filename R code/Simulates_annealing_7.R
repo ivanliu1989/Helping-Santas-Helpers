@@ -46,7 +46,7 @@ solution_Elf_submit <- function(myToys, myelves, schedule){
 ### Optimization Body ###
 #########################
 ### main loop ###
-index_range <- 1:500 # 5pm-8am | 1.8 min | 33/Hour | 215
+index_range <- 1:50 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
 C <- 8 # multiple cooling chain
 h <- 0 # used to modulate the step length.
