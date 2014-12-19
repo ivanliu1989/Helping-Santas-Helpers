@@ -8,8 +8,6 @@ setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Sant
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
-require(Rcpp)
-sourceCpp('R code/c_Functions.cpp')
 load('data/toys.RData')
 load('R_results/baseSchedule.RData')
 load('data/900_Folds.RData')
@@ -20,30 +18,8 @@ toys_dat <- data.frame(toys)
 ### Functions ###
 #################
 ### f(x) ###
-solution_Elf <- function(myToys, myelves, schedule){
-    outcomes <- matrix(0, nrow = nrow(myToys), ncol = 4, 
-                       dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))
-    myToys <- myToys[schedule,]
-    for(current_toy in 1:nrow(myToys)){
-        
-        c_toy_id <- myToys[current_toy,'ToyId']
-        c_toy_arrival <- myToys[current_toy, 'Arrival_time'] 
-        c_toy_duration <- myToys[current_toy,'Duration']
-        
-        c_elf_id <- myelves[, 'elf_id']
-        c_elf_start_time <- myelves[, 'next_available_time']
-        c_elf_rating <- myelves[, 'current_rating']
-        
-        if(c_elf_start_time < c_toy_arrival) c_elf_start_time <- c_toy_arrival    
-        work_duration <- as.integer(ceiling(c_toy_duration/c_elf_rating))
-        myelves[, 'next_available_time'] <- updateNextAvailableMinute(c_elf_start_time, work_duration)
-        myelves[, 'current_rating'] <- updateProductivity(c_elf_start_time, work_duration, c_elf_rating)
-        outcomes[current_toy,] <- c(c_toy_id, c_elf_id, c_elf_start_time, work_duration)
-        if(current_toy %% 20000 == 0) cat('\nCompleted', current_toy/1000000, 'mil toys, makespan', c_elf_start_time, 'minutes',
-                                            format(Sys.time(),format = '%Y-%m-%d %H:%M:%S')) 
-    }
-    return((outcomes[which.max(outcomes[,3]),3]+outcomes[which.max(outcomes[,3]), 4])*log(901))
-}
+require(Rcpp)
+sourceCpp('R code/c_Functions.cpp')
 
 ### Submit ###
 solution_Elf_submit <- function(myToys, myelves, schedule){

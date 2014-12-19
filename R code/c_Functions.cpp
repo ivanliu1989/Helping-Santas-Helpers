@@ -126,3 +126,36 @@ double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVe
     myelves_c(1) = 1;
     return last_time * log(901);
 }
+
+// [[Rcpp::export]]
+NumericMatrix solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
+    int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time,schedule_index;
+    double c_elf_rating;
+    int n_toys = myToys_c.nrow();
+    NumericMatrix outcomes(n_toys,4);
+    
+    for(int current_toy = 0; current_toy<n_toys; ++current_toy){
+        schedule_index = schedule_c(current_toy) -1;
+        c_toy_id = myToys_c(schedule_index,0);
+        c_toy_arrival = myToys_c(schedule_index,1);
+        c_toy_duration = myToys_c(schedule_index,2);
+        
+        c_elf_id = myelves_c(0);
+        c_elf_start_time = myelves_c(2);
+        c_elf_rating = myelves_c(1);
+        
+        if(c_elf_start_time < c_toy_arrival) c_elf_start_time = c_toy_arrival;
+        work_duration = ceil(c_toy_duration/c_elf_rating);
+        
+        myelves_c(2) = updateNextAvailableMinute(c_elf_start_time, work_duration);
+        myelves_c(1) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);
+        
+        outcomes(current_toy,0) = c_toy_id;
+        outcomes(current_toy,1) = c_elf_id;
+        outcomes(current_toy,2) = c_elf_start_time;
+        outcomes(current_toy,3) = work_duration;
+    }
+    myelves_c(2) =540; 
+    myelves_c(1) = 1;
+    return outcomes;
+}
