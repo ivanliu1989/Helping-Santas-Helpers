@@ -81,8 +81,7 @@ for (index_num in index_range){
                 if(delta<0){
                     xbest <- x1; fbest <- fx1
                     cat(paste('\n -- Find Improvement:',round(delta), '!!!'))
-                    cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest), 'bk:', bk))
-                    bk <- 0
+                    cat(paste('\n -- Find Global Improvement!!! Current Score:',round(fbest)))
                 }
             }
         }
@@ -92,7 +91,7 @@ for (index_num in index_range){
     cat(paste('\n Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
 }
 
-for(n in 601:900){
+for(n in 1:900){
     cat(paste('\n',length(table(x_all[[n]]))==length(x_all[[n]])))
 }
 

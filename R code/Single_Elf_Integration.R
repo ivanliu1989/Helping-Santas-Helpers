@@ -21,13 +21,12 @@ for (index_num in 1:900){
     cat('\nsuccess! no:', index_num, 'score:', solution_Elf_c(myToys, myelves, schedule),'fbest:',f_all[index_num])
 }
 
-dim(outcome_all)
-
+dim(outcome_all); head(outcome_all)
 submissions_output <- data.frame(ToyId = as.integer(outcome_all[,1]), 
                                  ElfId = as.integer(outcome_all[,2]), 
                                  StartTime = convert_to_chardate(outcome_all[,3]), 
                                  Duration = as.integer(outcome_all[,4]), stringsAsFactors = FALSE)
+dim(submissions_output)
 
 write.csv(submissions_output, 'toys_submission_SA_test.csv', row.names = FALSE)
-
 (outcome_all[which.max(outcome_all[,3]),3]+outcome_all[which.max(outcome_all[,3]), 4])*log(901)
