@@ -14,7 +14,7 @@ load('optimization_results/Simulated_Annealing_1_300.RData') #==========>> load(
 #################
 ### f(x) ###
 require(Rcpp)
-sourceCpp('R code/c_Functions.cpp')
+sourceCpp('C++ code/c_Loop.cpp')
 
 #########################
 ### Optimization Body ###
@@ -29,7 +29,7 @@ Tolerance <- 2000
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    Tolerance <- 3000#runif(1,min = 300,max = 2500)
+    Tolerance <- runif(1,min = 300,max = 2500)
     n <- match(max(f_all[1:300]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
     set.seed(n)
     now <- Sys.time()
@@ -51,33 +51,20 @@ for (index_num in index_range){
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
         Nd <- xbest[N0[min(c+1, C)]]
-        cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
+        cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest), 'Toys:', toy_row))
         bk <-0
         for (s in S){   
-            x1 <- xbest
-            swap_v1 <- sample(1:toy_row,s)
-            swap_v2 <- sample(1:toy_row,s)
-            v1 <- x1[swap_v1]
-            v2 <- x1[swap_v2]
-            x1[swap_v1] <- v2
-            x1[swap_v2] <- v1
-            
-            fx1 <- solution_Elf_c(myToys, myelves, x1)
-            delta <- fx1-fbest
-            if(delta<0){
-                a <- length(x1); b <- length(table(x1))
-                if(a==b){
-                    xbest <- x1; fbest <- fx1
-                    cat(paste('\n +++++ Find Improvement:',round(delta), '!!! Current Score:',round(fbest)))
-                    bk <- 0
-                }else{
-                    cat(paste('\n ----- Error happened during scheduling!!! Toy Number:',a, 'Unique Tasks:',b))
-                    break
-                }
-            }else{
-                bk <- bk + 1
+            Np <- (1+s)# (1+h+s/10) 
+            num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
+            for (np in 1:num){
+                x1 <- xbest
+                p1 <- as.integer(max(((np-1)/num)*toy_row + 1, 1))
+                p2 <- as.integer(min((np/num)*toy_row, toy_row))
+                
+                xbest <- assignX1(x1, np, toy_row, num, p1,p2, myToys, myelves, fbest, xbest)
+                fbest <- solution_Elf_c(myToys, myelves, xbest) # 1836299515 \ 1832587189
+                cat(paste('\nNew score:',fbest))
             }
-            if (bk > Tolerance) break
         } 
     }
     x_all[[n]] <- xbest # Record
