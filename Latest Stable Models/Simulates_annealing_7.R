@@ -29,7 +29,7 @@ Tolerance <- 2000
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    Tolerance <- runif(1,min = 300,max = 2500)
+    Tolerance <- runif(1,min = 300,max = 2888)
     n <- match(max(f_all[1:300]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
     set.seed(n)
     now <- Sys.time()
