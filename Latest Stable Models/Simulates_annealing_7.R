@@ -57,7 +57,7 @@ for (index_num in index_range){
             Np <- (1+s)# (1+h+s/10) 
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
             for (np in 1:num){  
-                p <- runif(1)
+#                 p <- runif(1)
                 x1 <- xbest
 #                 if(p<=0.5){ # c++
                     partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
