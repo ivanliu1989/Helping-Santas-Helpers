@@ -6,7 +6,7 @@ solution_sortedElf <- function(myToys, myelves){
     outcomes <- matrix(0, nrow = nrow(myToys), ncol = 5, 
      dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration', 'current_rating')))
     
-    for(i in 1:5){
+    for(i in 1:10000000){
         next_elf <- myelves[which.min(myelves[,3]),]
         c_elf_id <- next_elf[1]
         c_elf_start_time <- next_elf[3]

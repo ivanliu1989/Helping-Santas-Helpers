@@ -10,6 +10,14 @@
       <Platform>Win32</Platform>
     </ProjectConfiguration>
   </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\c_assign_Func.cpp" />
+    <ClCompile Include="..\..\c_Functions.cpp" />
+    <ClCompile Include="..\..\c_Functions_2.cpp" />
+    <ClCompile Include="..\..\c_Loop.cpp" />
+    <ClCompile Include="Hours.cpp" />
+    <ClCompile Include="main.cpp" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{31641CE1-29C2-4780-A984-ED28682883E4}</ProjectGuid>
     <RootNamespace>Santa2014</RootNamespace>
@@ -63,8 +71,6 @@
       <OptimizeReferences>true</OptimizeReferences>
     </Link>
   </ItemDefinitionGroup>
-  <ItemGroup>
-  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
