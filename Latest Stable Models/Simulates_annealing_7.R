@@ -7,7 +7,9 @@ setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
 load('data/toys.RData'); load('data/900_Folds.RData'); 
-load('optimization_results/Simulated_Annealing_1_300.RData') #==========>> load('simulated_annealing_1_900.RData')
+load('optimization_results/Simulated_Annealing_676_900.RData') #==========>> load('optimization_results/simulated_annealing_1_900.RData')
+# x_all <- x_comb; f_all <- f_comb
+# rm(x_comb);rm(f_comb)
 
 #################
 ### Functions ###
@@ -30,7 +32,7 @@ NUM_ELVES <- 1
 
 for (index_num in index_range){
     Tolerance <- runif(1,min = 2000,max = 5888)
-    n <- match(max(f_all[1:300]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
+    n <- match(max(f_all[676:900]),f_all) #==========>> 1:225 | 226:450 | 451:675 | 676:900
     set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num, Tolerance))
@@ -97,13 +99,13 @@ for (index_num in index_range){
     x_all[[n]] <- xbest # Record
     f_all[n] <- fbest
     cat(paste('\n * Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
-    if(index_num %% 50 == 0) save(x_all,f_all, file='optimization_results/Simulated_Annealing_1_300_temp.RData') #==========>> 1:300 | 301:600 | 600:900 | 1:900
+    if(index_num %% 50 == 0) save(x_all,f_all, file='optimization_results/Simulated_Annealing_676_900_temp.RData') #==========>> 1:225 | 226:450 | 451:675 | 676:900
 }
 
 for(n in 1:900){
     cat(paste('\n',length(table(x_all[[n]]))==length(x_all[[n]])))
 }
 
-save(x_all,f_all, file='optimization_results/Simulated_Annealing_1_300.RData') #==========>> 1:300 | 301:600 | 601:900 | 1:900
+save(x_all,f_all, file='optimization_results/Simulated_Annealing_676_900.RData') #==========>> 1:225 | 226:450 | 451:675 | 676:900
 #1923241950.9752 | 1882883347(1882883346.8784)
 

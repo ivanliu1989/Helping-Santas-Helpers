@@ -12,6 +12,7 @@ load('simulated_annealing_1_900.RData')
 NUM_ELVES <- 1
 myelves <- create_elves(NUM_ELVES)
 
+## main loop ##
 for (index_num in 1:900){
     myelves[,'elf_id'] <- index_num
     myToys <- data.matrix(toys_dat[index[[index_num]],])
@@ -22,6 +23,7 @@ for (index_num in 1:900){
     cat('\nsuccess! no:', index_num, 'score:', solution_Elf_c(myToys, myelves, schedule),'fbest:',f_comb[index_num])
 }
 
+## save ##
 dim(outcome_all); head(outcome_all); 
 length(table(outcome_all[,1])); length(table(outcome_all[,2]))
 
@@ -36,7 +38,11 @@ write.csv(submissions_output, 'toys_submission_SA_test.csv', row.names = FALSE)
 
 submit <- read.csv('toys_submission_SA_test.csv', stringsAsFactors=F)
 
-###############
+
+
+###################
+### Integration ###
+###################
 x_comb <- list()
 f_comb <- c()
 load('optimization_results/simulated_annealing_1_300.RData')

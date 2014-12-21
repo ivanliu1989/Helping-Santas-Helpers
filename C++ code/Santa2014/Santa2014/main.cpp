@@ -3,10 +3,10 @@ using namespace Rcpp;
 
 // [[Rcpp::export]]
 NumericMatrix solution_Elf(NumericMatrix myToys， NumericMatrix myelves){
-	NumericMatrix outcomes(n_toys,4);
+	NumericMatrix outcomes(n_toys,4); //ToyId, Arrival_time, Duration, Size, r_duration, start_time, finish, rate_f, refresh
 	for(int i=0; i<10000000; ++i){
 
-		NumericVector next_elf; //search elf *********
+		NumericVector next_elf; //search elf ********* elf_id, current_rating, next_available_time, score
 
 		int c_elf_id = next_elf(0);
 		int c_elf_start_time = next_elf(2);
