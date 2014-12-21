@@ -2,33 +2,35 @@
 using namespace Rcpp;
 
 // [[Rcpp::export]]
-NumericMatrix solution_Elf(NumericMatrix myToys， NumericMatrix myelves){
+NumericMatrix solution_Elf(NumericMatrix myToys_1，NumericMatrix myToys_2,NumericMatrix myToys_3, NumericMatrix myelves){
 	NumericMatrix outcomes(n_toys,4); //ToyId, Arrival_time, Duration, Size, r_duration, start_time, finish, rate_f, refresh
+
 	for(int i=0; i<10000000; ++i){
 
 		NumericVector next_elf; //search elf ********* elf_id, current_rating, next_available_time, score
+		//min_element => for loop == i (row number)
 
 		int c_elf_id = next_elf(0);
 		int c_elf_start_time = next_elf(2);
         int c_elf_rating = next_elf(1);
 
         if(c_elf_rating == 4.0){
-            myToys = myToys[which(myToys[,'Size']==3),] //*********
+            NumericMatrix Toys = myToys_3; 
         }else if(c_elf_rating > 3){
-            myToys <- myToys[which(myToys[,'Size']==2),] //*********
+            NumericMatrix Toys = myToys_2; 
         }else{
-            myToys <- myToys[which(myToys[,'Size']==1),] //*********
+            NumericMatrix Toys = myToys_1; 
         }
 
-        for(int j = 0; j < myToys.nrow(); j++){ 
-        	myToys(j,4) = ceil(myToys(j,2)/c_elf_rating); //duration
-            myToys(j,5) = max(c_elf_start_time, myToys(j, 1)); //start_time
-            myToys(j,7) = updateProductivity(myToys(j,7), myToys(j,4), c_elf_rating); //rate_f
-            myToys(j,8) = updateNextAvailableMinute(myToys(j,5), myToys(j,4); //refresh
-            myToys(j,6) <- myToys(j,4)+ myToys(j,5); //finish
+        for(int j = 0; j < Toys.nrow(); j++){ 
+        	Toys(j,4) = ceil(Toys(j,2)/c_elf_rating); //duration
+            Toys(j,5) = max(c_elf_start_time, Toys(j, 1)); //start_time
+            Toys(j,7) = updateProductivity(Toys(j,7), Toys(j,4), c_elf_rating); //rate_f
+            Toys(j,8) = updateNextAvailableMinute(Toys(j,5), Toys(j,4); //refresh
+            Toys(j,6) <- Toys(j,4)+ Toys(j,5); //finish
         }
         
-        NumericeVector c_toy = myToys[order(-myToys[,'rate_f'],myToys[,'refresh'],myToys[,'finish']),][1,]; //numericeVector *********
+        NumericeVector c_toy = Toys[order(-Toys[,'rate_f'],Toys[,'refresh'],Toys[,'finish']),][1,]; //numericeVector *********
 
         int c_toy_id = c_toy(1);
         int c_elf_start_time = c_toy(6); 
