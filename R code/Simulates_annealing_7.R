@@ -29,7 +29,7 @@ Tolerance <- 100
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    n <- match(max(f_all[601:900]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
+    n <- match(max(f_all[226:450]),f_all) #==========>> 1:300 | 301:600 | 601:900 | 1:900
     set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num))

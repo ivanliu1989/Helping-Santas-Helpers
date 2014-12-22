@@ -64,11 +64,15 @@ toys <- data.matrix(transform(toys, start_time = 0))
 toys <- data.matrix(transform(toys, finish = 0))
 toys <- data.matrix(transform(toys, rate_f = 0))
 toys <- data.matrix(transform(toys, refresh = 0))
+toys <- data.matrix(transform(toys, evaluate = 0))
 toys[which(toys[,'Duration']>toy_break2),'Size'] <- 3 # overwork
 toys[which(toys[,'Duration']<=toy_break2),'Size'] <- 2 # 48 hour
 toys[which(toys[,'Duration']<=toy_break1),'Size'] <- 1 # 10 hour
+myToys_1<- toys[which(toys[,'Size']==1),]
+myToys_2<- toys[which(toys[,'Size']==2),]
+myToys_3<- toys[which(toys[,'Size']==3),]
 
-submissions <- solution_sortedElf(toys, myelves)
+submissions <- solution_sortedElf(myToys_1, myToys_2, myToys_3, myelves)
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
    ElfId = as.integer(submissions[,2]), 
    StartTime = convert_to_chardate(submissions[,3]), 
