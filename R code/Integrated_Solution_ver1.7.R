@@ -27,5 +27,7 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 write.csv(submissions_output, 'toys_submission_classification_sort.csv', row.names = FALSE)
 
+# current best => 1842066118
 # toys[,2&3] => 1855907408
 # toys[,2] => 1875750845
+# toys[,3] => 1847256281
