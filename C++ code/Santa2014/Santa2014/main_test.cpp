@@ -90,13 +90,12 @@ double updateProductivity(int start_minute, int work_duration, double current_ra
     return new_rating;
 }
 
+
 // [[Rcpp::export]]
 NumericMatrix solution_Elf(NumericMatrix myToys_1,NumericMatrix myToys_2,NumericMatrix myToys_3, NumericMatrix myelves){
-    NumericMatrix outcomes(10,4); //ToyId, Arrival_time, Duration, Size, r_duration, start_time, finish, rate_f, refresh, evaluate
-
-    for(int i=0; i<10; ++i){
-
-        int min_val = myelves(0,2);
+    NumericMatrix outcomes(10000000,4);
+    
+    int min_val = myelves(0,2);
         int min_row = 0;
         for(int e=0; e<myelves.nrow(); e++){
             if (min_val > myelves(e,2)){
@@ -104,10 +103,8 @@ NumericMatrix solution_Elf(NumericMatrix myToys_1,NumericMatrix myToys_2,Numeric
                 min_row = e;
             }   
         }
-        //elf_id, current_rating, next_available_time, score
-        //min_element => for loop == i (row number)
-
-        int c_elf_id = myelves(min_row,0);
+    
+    int c_elf_id = myelves(min_row,0);
         int c_elf_start_time = myelves(min_row,2);
         int c_elf_rating = myelves(min_row,1);
         NumericMatrix Toys;
@@ -121,8 +118,8 @@ NumericMatrix solution_Elf(NumericMatrix myToys_1,NumericMatrix myToys_2,Numeric
         }else{
             Toys = myToys_1; 
         }
-
-        //double mean_rate, mean_refresh, mean_finish;
+        
+    //double mean_rate, mean_refresh, mean_finish;
         double min_rate = Toys(0,7);
         double max_rate = Toys(0,7);
         double min_refresh = Toys(0,8);
@@ -149,8 +146,9 @@ NumericMatrix solution_Elf(NumericMatrix myToys_1,NumericMatrix myToys_2,Numeric
             if (max_finish < Toys(j,6)) max_finish = Toys(j,6);
         }
         
-        Toys( _, 9) = ((Toys( _, 7) - min_rate)/(max_rate - min_rate) + (Toys( _, 8) - min_refresh)/(max_refresh - min_refresh) + (Toys( _, 6) - min_finish)/(max_finish - min_finish))/3;
-
+        for(int k = 0; k < Toys.nrow(); k++){ 
+            Toys(k, 9) = ((Toys(k, 7) - min_rate)/(max_rate - min_rate) + (Toys(k, 8) - min_refresh)/(max_refresh - min_refresh) + (Toys(k, 6) - min_finish)/(max_finish - min_finish))/3;
+        }
         double min_toy_val = Toys(0,9);
         int min_toy_row = 0;
         for(int v=0; v<Toys.nrow(); v++){
@@ -161,32 +159,13 @@ NumericMatrix solution_Elf(NumericMatrix myToys_1,NumericMatrix myToys_2,Numeric
                 }
             }  
         }
-        // (e - Emin)/(Emax - Emin)
-
+        
         int c_toy_id = Toys(min_row,0);
         c_elf_start_time = (int)Toys(min_row,5); 
         int work_duration = Toys(min_row,4);
         
         myelves(c_elf_id-1, 2) = Toys(min_row,8); //next_available_time
         myelves(c_elf_id-1, 1) = Toys(min_row,7); //current_rating
-
-        outcomes(i,0) = c_toy_id;
-        outcomes(i,1) = c_elf_id;
-        outcomes(i,2) = c_elf_start_time;
-        outcomes(i,3) = work_duration;
-
-        if(c_elf_rating == 4.0){
-            myToys_3(min_row, 0) = 10000001;  // #################
-        }
-        else if(c_elf_rating > 3){
-            myToys_2(min_row, 0) = 10000001;  // #################
-
-        }else{
-            myToys_1(min_row, 0) = 10000001;  // #################
-        }
-
-        //if(i % 100000 == 0) 
-        Rcpp::Rcout << '\n' << i;
-    }
-    return outcomes;
+        
+    return Toys;
 }
