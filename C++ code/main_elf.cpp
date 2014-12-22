@@ -91,10 +91,10 @@ double updateProductivity(int start_minute, int work_duration, double current_ra
 }
 
 // [[Rcpp::export]]
-NumericMatrix solution_Elf(NumericMatrix myToys, NumericMatrix myelves){
-    NumericMatrix outcomes(10,4); //ToyId, Arrival_time, Duration, Size
+NumericMatrix solution_Elf(NumericMatrix myToys, NumericMatrix myelves, NumericVector myelves_rate){
+    NumericMatrix outcomes(10000000,4); //ToyId, Arrival_time, Duration, Size
     
-    for(int current_toy=0; current_toy<10000000; ++current_toy){
+    for(unsigned long long current_toy=0; current_toy<10000000; ++current_toy){
         
         int c_toy_id = myToys(current_toy,0);
         int c_toy_arrival = myToys(current_toy,1);
@@ -112,14 +112,14 @@ NumericMatrix solution_Elf(NumericMatrix myToys, NumericMatrix myelves){
         
         int c_elf_id = myelves(min_row,0);
         int c_elf_start_time = myelves(min_row,2);
-        int c_elf_rating = myelves(min_row,1);
+        double c_elf_rating = myelves_rate(min_row);
         
         c_elf_start_time = std::max((int)c_elf_start_time, (int)c_toy_arrival);
         
         int work_duration = ceil(c_toy_duration/c_elf_rating);
         
-        myelves(min_row, 1) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);
-        myelves(min_row, 2) = updateNextAvailableMinute(c_elf_start_time, work_duration);
+        myelves_rate(min_row) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);
+        myelves(min_row,2) = updateNextAvailableMinute(c_elf_start_time, work_duration);
         
         outcomes(current_toy,0) = c_toy_id;
         outcomes(current_toy,1) = c_elf_id;
