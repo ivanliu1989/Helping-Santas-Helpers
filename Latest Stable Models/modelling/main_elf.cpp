@@ -99,7 +99,6 @@ NumericMatrix solution_Elf(NumericMatrix myToys, NumericMatrix myelves, NumericV
         int c_toy_id = myToys(current_toy,0);
         int c_toy_arrival = myToys(current_toy,1);
         int c_toy_duration = myToys(current_toy,2);
-        //int c_toy_size = myToys(current_toy,3);
         
         int min_val = myelves(0,2);
         int min_row = 0;
