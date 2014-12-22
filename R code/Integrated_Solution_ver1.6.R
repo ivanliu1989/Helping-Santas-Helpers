@@ -51,8 +51,9 @@ solution_sortedElf <- function(myToys, myelves){
 setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
-gc(); rm(list=ls()); source('R code/Functions.R'); source('R code/c_Functions.r')
+gc(); rm(list=ls()); source('R code/Functions.R'); source('R code/c_Functions.r'); 
 load('data/toys.RData')
+sourceCpp('C++ code/main_elf.cpp')
 
 NUM_ELVES <- 900
 myelves <- create_elves(NUM_ELVES)
@@ -73,6 +74,7 @@ myToys_2<- toys[which(toys[,'Size']==2),]
 myToys_3<- toys[which(toys[,'Size']==3),]
 
 submissions <- solution_sortedElf(myToys_1, myToys_2, myToys_3, myelves)
+submissions <- solution_Elf(toys, myelves)
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
    ElfId = as.integer(submissions[,2]), 
    StartTime = convert_to_chardate(submissions[,3]), 
