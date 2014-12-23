@@ -41,3 +41,34 @@ for(n in 1:900){
 
 save(x_all,f_all, file='optimization_results/overall_optimization.RData')
 range(f_all)
+
+for(n in 1:900){
+    myToys <- data.matrix(toys_dat[index[[n]],])
+    if(nrow(myToys)==11109){
+        x0 <- x_all[[398]]
+        x0 <- x0[-which(x0==11113)]
+        x0 <- x0[-which(x0==11112)]
+        x0 <- x0[-which(x0==11111)]
+        x0 <- x0[-which(x0==11110)]
+        f_all[n] <- solution_Elf_c(myToys, myelves, x0)
+    }else if(nrow(myToys)==11110){
+        x0 <- x_all[[398]]
+        x0 <- x0[-which(x0==11113)]
+        x0 <- x0[-which(x0==11112)]
+        x0 <- x0[-which(x0==11111)]
+        f_all[n] <- solution_Elf_c(myToys, myelves, x0)
+    }else if(nrow(myToys)==11111){
+        x0 <- x_all[[398]]
+        x0 <- x0[-which(x0==11113)]
+        x0 <- x0[-which(x0==11112)]
+        f_all[n] <- solution_Elf_c(myToys, myelves, x0)        
+    }else if(nrow(myToys)==11112){
+        x0 <- x_all[[398]]
+        x0 <- x0[-which(x0==11113)]
+        f_all[n] <- solution_Elf_c(myToys, myelves, x0)
+    }else{
+        f_all[n] <- solution_Elf_c(myToys, myelves, x_all[[398]])
+    }
+    cat('\n',n, ' ', f_all[n]);
+}
+range(f_all)

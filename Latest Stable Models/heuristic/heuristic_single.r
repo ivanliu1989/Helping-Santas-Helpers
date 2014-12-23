@@ -54,11 +54,26 @@ for (index_num in index_range){
             Np <- (1+s)
             num <- length(max((Ns-Np),1):min((Ns+Np),toy_row))
             for (np in 1:num){  
+                
+                p <- runif(1)
                 x1 <- xbest
-                partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
-                partition_2 <- min((np/num)*toy_row, toy_row) 
-                rep_range <- as.integer(partition_1:partition_2)
-                x1[rep_range] <- sample(x1[rep_range])
+                if(p<=0.5){ # c++
+                    partition_1 <- max(((np-1)/num)*toy_row + 1, 1) 
+                    partition_2 <- min((np/num)*toy_row, toy_row) 
+                    rep_range <- as.integer(partition_1:partition_2)
+                    x1[rep_range] <- sample(x1[rep_range])
+                }else{
+                    partition_1 <- max((Ns-Np),1):min((Ns+Np),toy_row) ## New
+                    partition_2 <- max((Nd-Np),1):min((Nd+Np),toy_row)
+                    regulate_rng <- min(length(partition_1),length(partition_2))
+                    partition_1 <- partition_1[1:regulate_rng]
+                    partition_2 <- partition_2[1:regulate_rng]
+                    ori_partition <- sample(x1[partition_1]) ## New
+                    des_partition <- sample(x1[partition_2])
+                    x1[partition_1] <- des_partition
+                    x1[partition_2] <- ori_partition
+                } # c++  
+                
                 fx1 <- solution_Elf_c(myToys, myelves, x1)
                 delta <- fx1-fbest
                 if(delta<0){
