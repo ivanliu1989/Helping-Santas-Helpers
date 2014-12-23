@@ -19,15 +19,15 @@ sourceCpp('Latest Stable Models/heuristic/c_Functions.cpp')
 #########################
 ### Optimization Body ###
 #########################
-x_all <- list(); f_all <- c()
-index_range <- 1:41
+#x_all <- list(); f_all <- c()
+index_range <- 2:41
 toys_dat <- data.frame(toys)
-C <- 8 
+C <- 4 
 S <- c(1,10,30,100,300,1000,3000,6000,9000) 
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    Tolerance <- runif(1,min = 10,max = 10000)
+    Tolerance <- 2500 #runif(1,min = 10,max = 10000)
     n<-candidate[index_num]
     set.seed(index_num)
     cat(paste('\n\nRound :',index_num, Tolerance))
