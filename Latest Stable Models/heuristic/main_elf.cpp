@@ -142,12 +142,16 @@ NumericVector solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelve
     Rcpp::Rcout << '\n' << score_best;
     
     for(int round = 0; round<1000000; ++round){
-        int a = 1000; 
-        int b = 3000;  
-        std::random_shuffle (schedule_c(a), schedule_c(b));
+        srand((unsigned)time(0));
+        int ran_num1=rand() % 1000000;
+        int ran_num2=rand() % 1000000;
+        int low_bound = std::min(ran_num1,ran_num2);
+        int high_bound = std::max(ran_num1,ran_num2);
+        int a = std::max(0, low_bound);
+        int b = std::min(schedule_c.size(),high_bound);  
+        std::random_shuffle(schedule_c.begin()+a, schedule_c.begin()+b);
         score = solution_Elf_c(myToys_c, myelves_c, schedule_c);
         if (score < score_best){
-            
             score_best = score;
             schedule_best = schedule_c; 
         }
