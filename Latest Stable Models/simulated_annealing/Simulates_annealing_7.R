@@ -24,15 +24,15 @@ sourceCpp('R code/c_Functions.cpp')
 ### main loop ###
 index_range <- 1:888 # 5pm-8am | 1.8 min | 33/Hour | 215
 toys_dat <- data.frame(toys)
-C <- 500 # multiple cooling chain
+C <- 5000 # multiple cooling chain
 h <- 0 # used to modulate the step length.
 S <- c(1,10,30,100,300,1000,3000,6000,9000) # current value times, step width
 Tolerance <- 2000
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    Tolerance <- runif(1,min = 2000,max = 9000)
-    n <- match(max(f_all[676:900]),f_all) #==========>> 1:225 | 226:450 | 451:675 | 676:900
+    Tolerance <- runif(1,min = 500,max = 9000)
+    n <- match(min(f_all[676:900]),f_all) #==========>> 1:225 | 226:450 | 451:675 | 676:900
     set.seed(n)
     now <- Sys.time()
     cat(paste('\n\nRound :',index_num, Tolerance))
