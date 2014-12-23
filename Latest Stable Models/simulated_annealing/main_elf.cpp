@@ -1,5 +1,11 @@
+// [[Rcpp::plugins(cpp11)]]
 #include <Rcpp.h>
 #include <algorithm> // std::max
+#include <iostream>     // std::cout
+#include <algorithm>    // std::random_shuffle
+#include <vector>       // std::vector
+#include <ctime>        // std::time
+#include <cstdlib>      // std::rand, std::srand
 using namespace Rcpp;
 
 // [[Rcpp::export]]
@@ -129,13 +135,6 @@ double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVe
 }
 
 // [[Rcpp::export]]
-int rnd() 
-{ 
-    int p=rand() % 999999999; 
-	return (p); 
-}; 
-
-// [[Rcpp::export]]
 NumericVector solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
     double score;
     NumericVector schedule_best = schedule_c;
@@ -143,9 +142,9 @@ NumericVector solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelve
     Rcpp::Rcout << '\n' << score_best;
     
     for(int round = 0; round<1000000; ++round){
-        int a = rnd();  
-        int b = rnd();  
-        std::swap(schedule_c(a),schedule_c(b));
+        int a = 1000; 
+        int b = 3000;  
+        std::random_shuffle (schedule_c(a), schedule_c(b));
         score = solution_Elf_c(myToys_c, myelves_c, schedule_c);
         if (score < score_best){
             
