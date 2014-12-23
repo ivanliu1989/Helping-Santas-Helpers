@@ -21,15 +21,15 @@ sourceCpp('Latest Stable Models/heuristic/c_Functions.cpp')
 ### Optimization Body ###
 #########################
 #x_all <- list(); f_all <- c()
-index_range <- 11:41
+index_range <- 1:888
 toys_dat <- data.frame(toys)
-C <- 5 
+C <- 6 
 S <- c(1,10,30,100,300,1000,3000,6000,9000) 
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    Tolerance <- 2500 #runif(1,min = 10,max = 10000)
-    n<-candidate[index_num]
+    Tolerance <- runif(1,min = 10,max = 10000)
+    n<-candidate[20]
     now <- Sys.time()
     set.seed(index_num)
     cat(paste('\n\nRound :',index_num, Tolerance))
@@ -37,7 +37,7 @@ for (index_num in index_range){
     
     ### Toys establishment ###
     myToys <- data.matrix(toys_dat[index[[n]],])
-    schedule <- c(1:11113)#x_all[[n]]
+    schedule <- x_all[[n]]
     myelves <- create_elves(NUM_ELVES)
     
     ### parameters ###
@@ -82,7 +82,7 @@ for (index_num in index_range){
     x_all[[n]] <- xbest
     f_all[n] <- fbest
     cat(paste('\n * Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
-    if(fbest < 1700000000) save(x_all,f_all, file='/Users/ivan/Google Drive/Simulated_Annealing_676_900_temp.RData')
+    #if(fbest < 1700000000) save(x_all,f_all, file='/Users/ivan/Google Drive/Simulated_Annealing_676_900_temp.RData')
     #if(index_num %% 50 == 0) save(x_all,f_all, file='/Users/ivan/Google Drive/Simulated_Annealing_676_900_temp.RData') #==========>> 1:225 | 226:450 | 451:675 | 676:900
 }
 

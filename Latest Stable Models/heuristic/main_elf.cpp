@@ -136,14 +136,16 @@ double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVe
 
 // [[Rcpp::export]]
 NumericVector solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c, NumericVector S){
+    
     double score;
     NumericVector schedule_best = schedule_c;
-    double score_best = solution_Elf_c(myToys_c, myelves_c, schedule_c);
+    double score_best = solution_Elf_c(myToys_c, myelves_c, schedule_best);
     Rcpp::Rcout << '\n' << score_best;
+    srand((unsigned)time(0));
     
-    for(int round = 0; round<5; ++round){
-        srand((unsigned)time(0));
-        NumericVector xx = runif(1000);
+    //for(int round = 0; round<100; ++round){
+        
+        NumericVector xx = runif(100);
         for(int s = 0; s<S.size(); ++s){
             
             int ran_num=xx(s) * schedule_c.size();
@@ -156,16 +158,11 @@ NumericVector solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelve
             score = solution_Elf_c(myToys_c, myelves_c, schedule_c);
             
             if (score < score_best){
-              
-                //if(schedule_test.size()==schedule_c.size()){
-                    score_best = score;
-                    schedule_best = schedule_c; 
-               // }else{
-               //     Rcpp::Rcout << '\n' << schedule_test.size();
-               // }
+                score_best = score;
+                schedule_best = schedule_c; 
             }
-            Rcpp::Rcout << '\n' << round << ' ' << score_best << ' ' << a << ' ' << b;
         }
-    }
+    //}
+    Rcpp::Rcout << '\n' << score_best;
     return schedule_best;
 }

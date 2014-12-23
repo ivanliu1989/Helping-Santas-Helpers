@@ -1,16 +1,43 @@
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
+setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 
 gc(); rm(list=ls())
 source('R code/Functions.R')
 load('data/toys.RData'); load('Latest Stable Models/heuristic/900_Folds.RData'); 
+load('optimization_results/overall_optimization.RData')
 
 require(Rcpp)
 sourceCpp('Latest Stable Models/heuristic/main_elf.cpp')
 
-n <- 12
+# n <- 12
 toys_dat <- data.frame(toys)
-myToys <- data.matrix(toys_dat[index[[n]],])
-schedule <- c(1:11113)#x_all[[n]]
+# schedule <- c(1:11113)#x_all[[n]]
+# myelves <- create_elves(1)
+S <- c(1,3,10,30,90,300,900,1500,3000,6000,9000,15000,30000,60000,90000) 
+
+#x_all <- list(); f_all <- c()
+myToys <- data.matrix(toys_dat[index[[606]],])
+schedule <- x_all[[606]]
 myelves <- create_elves(1)
-S <- c(1:13)
-solution_Elf_submit_c(myToys,myelves,schedule, S)
+
+for(n in 1:900){
+    cat('\n round:', n)
+    #schedule <- c(1:nrow(myToys))#x_all[[n]]
+    x_all[[606]] <- solution_Elf_submit_c(myToys,myelves,x_all[[606]], S)   
+    if(nrow(myToys)!=length(table(x_all[[606]]))) break
+}
+solution_Elf_c(myToys, myelves, x_all[[606]])
+
+for(n in 1:900){
+    myToys <- data.matrix(toys_dat[index[[n]],])
+    cat('\n',nrow(myToys)==length(table(x_all[[n]])))
+}
+
+for(n in 1:900){
+    myToys <- data.matrix(toys_dat[index[[n]],])
+    myelves <- create_elves(1)
+    f_all[n] <- solution_Elf_c(myToys, myelves, x_all[[n]])
+}
+
+save(x_all,f_all, file='optimization_results/overall_optimization.RData')
+range(f_all)
