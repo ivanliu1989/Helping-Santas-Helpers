@@ -24,11 +24,11 @@ sourceCpp('Latest Stable Models/heuristic/c_Functions.cpp')
 index_range <- 1:888
 toys_dat <- data.frame(toys)
 C <- 6 
-S <- c(1,10,30,100,300,1000,3000,6000,9000) 
+S <- c(1,10,30,100,300,1000,2000,3000,4500,6000,7500,9000,10000) 
 NUM_ELVES <- 1
 
 for (index_num in index_range){
-    Tolerance <- runif(1,min = 10,max = 10000)
+    #Tolerance <- runif(1,min = 2000,max = 10000)
     n<-candidate[20]
     now <- Sys.time()
     set.seed(index_num)
@@ -71,10 +71,10 @@ for (index_num in index_range){
                         cat(paste('\n ----- Error happened during scheduling!!! Toy Number:',a, 'Unique Tasks:',b))
                         break
                     }
-                }else{
-                    bk <- bk + 1
+                #}else{
+                    #bk <- bk + 1
                 }
-                if (bk > Tolerance) break
+                #if (bk > Tolerance) break
             }
         }
         
