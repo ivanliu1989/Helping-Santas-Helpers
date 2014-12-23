@@ -29,10 +29,10 @@ NUM_ELVES <- 1
 
 for (index_num in index_range){
     #Tolerance <- runif(1,min = 2000,max = 10000)
-    n<-candidate[20]
+    n<-398
     now <- Sys.time()
     set.seed(index_num)
-    cat(paste('\n\nRound :',index_num, Tolerance))
+    cat(paste('\n\nRound :',index_num) #, Tolerance))
     cat(paste('\n Elf:',n))
     
     ### Toys establishment ###
@@ -48,6 +48,7 @@ for (index_num in index_range){
     for (c in 1:C){ 
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
+        Nd <- xbest[N0[min(c+1, C)]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
         for (s in S){   
@@ -93,7 +94,7 @@ for (index_num in index_range){
             }
         }
         
-    }
+#     }
     x_all[[n]] <- xbest
     f_all[n] <- fbest
     cat(paste('\n * Time used:',round(Sys.time() - now, digits = 2), '!!!\n'))
