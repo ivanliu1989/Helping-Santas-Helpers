@@ -7,7 +7,7 @@ setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
 load('data/toys.RData'); load('Latest Stable Models/heuristic/900_Folds.RData'); 
-load('Latest Stable Models/heuristic/single_optimization.RData') 
+load('optimization_results/single_optimization.RData') 
 
 #################
 ### Functions ###
@@ -21,7 +21,7 @@ sourceCpp('Latest Stable Models/heuristic/c_Functions.cpp')
 ### Optimization Body ###
 #########################
 #x_all <- list(); f_all <- c()
-index_range <- 3:41
+index_range <- 11:41
 toys_dat <- data.frame(toys)
 C <- 5 
 S <- c(1,10,30,100,300,1000,3000,6000,9000) 
@@ -48,7 +48,6 @@ for (index_num in index_range){
     for (c in 1:C){ 
         toy_row <- nrow(myToys)
         Ns <- xbest[N0[c]]
-        Nd <- xbest[N0[min(c+1, C)]]
         cat(paste('\nChain:',c, '; Initial point:', Ns, '; Current best score:', round(fbest)))
         bk <-0
         for (s in S){   

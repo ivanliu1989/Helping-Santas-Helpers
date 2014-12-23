@@ -135,27 +135,37 @@ double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVe
 }
 
 // [[Rcpp::export]]
-NumericVector solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
+NumericVector solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c, NumericVector S){
     double score;
     NumericVector schedule_best = schedule_c;
     double score_best = solution_Elf_c(myToys_c, myelves_c, schedule_c);
     Rcpp::Rcout << '\n' << score_best;
     
-    for(int round = 0; round<1000000; ++round){
+    for(int round = 0; round<5; ++round){
         srand((unsigned)time(0));
-        int ran_num1=rand() % 1000000;
-        int ran_num2=rand() % 1000000;
-        int low_bound = std::min(ran_num1,ran_num2);
-        int high_bound = std::max(ran_num1,ran_num2);
-        int a = std::max(0, low_bound);
-        int b = std::min(schedule_c.size(),high_bound);  
-        std::random_shuffle(schedule_c.begin()+a, schedule_c.begin()+b);
-        score = solution_Elf_c(myToys_c, myelves_c, schedule_c);
-        if (score < score_best){
-            score_best = score;
-            schedule_best = schedule_c; 
+        NumericVector xx = runif(1000);
+        for(int s = 0; s<S.size(); ++s){
+            
+            int ran_num=xx(s) * schedule_c.size();
+            int low_bound = ran_num-S(s);
+            int high_bound = ran_num+S(s);
+            int a = std::max(0, low_bound);
+            int b = std::min(schedule_c.size(),high_bound);  
+            
+            std::random_shuffle(schedule_c.begin()+a, schedule_c.begin()+b);
+            score = solution_Elf_c(myToys_c, myelves_c, schedule_c);
+            
+            if (score < score_best){
+              
+                //if(schedule_test.size()==schedule_c.size()){
+                    score_best = score;
+                    schedule_best = schedule_c; 
+               // }else{
+               //     Rcpp::Rcout << '\n' << schedule_test.size();
+               // }
+            }
+            Rcpp::Rcout << '\n' << round << ' ' << score_best << ' ' << a << ' ' << b;
         }
-        Rcpp::Rcout << '\n' << round << ' ' << score_best << ' ' << a << ' ' << b;
     }
     return schedule_best;
 }
