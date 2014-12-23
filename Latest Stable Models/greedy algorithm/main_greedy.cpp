@@ -97,11 +97,13 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
     int toy_1 = 0;
     int toy_2 = 0;
     int toy_3 = 0;
+    int c_toy_id, c_toy_arrival, c_toy_duration, min_val, min_row, c_elf_id, c_elf_start_time,work_duration;
+    double c_elf_rating;
     
     for(unsigned long long current_toy=0; current_toy<10000000; ++current_toy){
         
-        int min_val = myelves_rate(0);
-        int min_row = 0;
+        min_val = myelves_rate(0);
+        min_row = 0;
         for(int e=0; e<myelves.nrow(); e++){
             if (min_val < myelves_rate(e)){
                 min_val = myelves_rate(e);
@@ -109,35 +111,35 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             }
         }
         
-        int c_elf_id = myelves(min_row,0);
-        int c_elf_start_time = myelves(min_row,2);
-        double c_elf_rating = myelves_rate(min_row);
+        c_elf_id = myelves(min_row,0);
+        c_elf_start_time = myelves(min_row,2);
+        c_elf_rating = myelves_rate(min_row);
         
         if(c_elf_rating == 4){
-            int c_toy_id = myToys_3(toy_3,0);
-            int c_toy_arrival = myToys_3(toy_3,1);
-            int c_toy_duration = myToys_3(toy_3,2);
+            c_toy_id = myToys_3(toy_3,0);
+            c_toy_arrival = myToys_3(toy_3,1);
+            c_toy_duration = myToys_3(toy_3,2);
             toy_3++;
         }else if(c_elf_rating >= 3){
-            int c_toy_id = myToys_2(toy_2,0);
-            int c_toy_arrival = myToys_2(toy_2,1);
-            int c_toy_duration = myToys_2(toy_2,2);
+            c_toy_id = myToys_2(toy_2,0);
+            c_toy_arrival = myToys_2(toy_2,1);
+            c_toy_duration = myToys_2(toy_2,2);
             toy_2++;
         }else if(c_elf_rating >= 2){
-            int c_toy_id = myToys_1(toy_1,0);
-            int c_toy_arrival = myToys_1(toy_1,1);
-            int c_toy_duration = myToys_1(toy_1,2);
+            c_toy_id = myToys_1(toy_1,0);
+            c_toy_arrival = myToys_1(toy_1,1);
+            c_toy_duration = myToys_1(toy_1,2);
             toy_1++;
         }else{
-            int c_toy_id = myToys_0(toy_0,0);
-            int c_toy_arrival = myToys_0(toy_0,1);
-            int c_toy_duration = myToys_0(toy_0,2);
+            c_toy_id = myToys_0(toy_0,0);
+            c_toy_arrival = myToys_0(toy_0,1);
+            c_toy_duration = myToys_0(toy_0,2);
             toy_0++;
         }
         
         c_elf_start_time = std::max((int)c_elf_start_time, (int)c_toy_arrival);
         
-        int work_duration = ceil(c_toy_duration/c_elf_rating);
+        work_duration = ceil(c_toy_duration/c_elf_rating);
         
         myelves_rate(min_row) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);
         myelves(min_row,2) = updateNextAvailableMinute(c_elf_start_time, work_duration);
