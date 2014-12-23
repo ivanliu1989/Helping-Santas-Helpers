@@ -7,7 +7,7 @@ setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 gc(); rm(list=ls()); source('R code/Functions.R');
 load('data/toys.RData')
 require(Rcpp)
-sourceCpp('C++ code/main_elf.cpp')
+sourceCpp('Latest Stable Models/modelling/main_elf.cpp')
 
 NUM_ELVES <- 900
 myelves <- create_elves(NUM_ELVES)
@@ -15,6 +15,9 @@ myelves_rate <- myelves[,'current_rating']
 
 ### Change ###
 toys <- toys[order(toys[,3]),]
+
+### build matrix ###
+toy_elf_matrix <- build_Matrix()
 
 ### Model ###
 submissions <- solution_Elf(toys, myelves,myelves_rate)

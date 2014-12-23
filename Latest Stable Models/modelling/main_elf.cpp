@@ -129,3 +129,9 @@ NumericMatrix solution_Elf(NumericMatrix myToys, NumericMatrix myelves, NumericV
     }
     return outcomes;
 }
+
+// [[Rcpp::export]]
+NumericMatrix build_Matrix(){
+    NumericMatrix toy_elf_matrix(10000000,900);
+    return toy_elf_matrix;
+}

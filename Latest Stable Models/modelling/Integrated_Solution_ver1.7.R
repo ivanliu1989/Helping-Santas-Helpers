@@ -17,6 +17,10 @@ myelves_rate <- myelves[,'current_rating']
 toys <- data.matrix(toys)
 toys <- toys[order(toys[,4], toys[,3]),]
 
+### toy * elf matrix ###
+toy_elf_matrix <- matrix(0, nrow = 10000000, ncol = 900, 
+                      dimnames = list(NULL, c(1:900)))
+
 ### Model ###
 submissions <- solution_Elf(toys, myelves,myelves_rate)
 

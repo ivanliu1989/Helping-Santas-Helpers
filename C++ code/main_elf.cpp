@@ -99,7 +99,6 @@ NumericMatrix solution_Elf(NumericMatrix myToys, NumericMatrix myelves, NumericV
         int c_toy_id = myToys(current_toy,0);
         int c_toy_arrival = myToys(current_toy,1);
         int c_toy_duration = myToys(current_toy,2);
-        //int c_toy_size = myToys(current_toy,3);
         
         int min_val = myelves(0,2);
         int min_row = 0;
@@ -129,4 +128,10 @@ NumericMatrix solution_Elf(NumericMatrix myToys, NumericMatrix myelves, NumericV
         if(current_toy % 100000 == 0) Rcpp::Rcout << '\n' << (double)current_toy/1000000;
     }
     return outcomes;
+}
+
+// [[Rcpp::export]]
+NumericMatrix build_Matrix(){
+    NumericMatrix toy_elf_matrix(10000000,900);
+    return toy_elf_matrix;
 }
