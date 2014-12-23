@@ -14,13 +14,14 @@ myelves <- create_elves(NUM_ELVES)
 myelves_rate <- myelves[,'current_rating']
 
 ### Change ###
+mytoys_rate <- matrix(0,nrow = 10000000,ncol = 1)
 toys <- toys[order(toys[,3]),]
 
 ### build matrix ###
-toy_elf_matrix <- build_Matrix()
+# toy_elf_matrix <- build_Matrix()
 
 ### Model ###
-submissions <- solution_Elf(toys, myelves,myelves_rate)
+submissions <- solution_Elf(toys, myelves,myelves_rate, mytoys_rate)
 
 (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(901)
 

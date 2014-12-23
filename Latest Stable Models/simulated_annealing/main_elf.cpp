@@ -1,4 +1,3 @@
-// [[Rcpp::plugins(cpp11)]]
 #include <Rcpp.h>
 #include <algorithm> // std::max
 using namespace Rcpp;
@@ -92,59 +91,68 @@ double updateProductivity(int start_minute, int work_duration, double current_ra
 }
 
 // [[Rcpp::export]]
-NumericMatrix solution_Elf(NumericMatrix myToys, NumericMatrix myelves, NumericVector myelves_rate, NumericVector mytoys_rate){
-    NumericMatrix outcomes(10000000,4); //ToyId, Arrival_time, Duration, Size
+double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
+    int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time,schedule_index;
+    double c_elf_rating;
+    int n_toys = myToys_c.nrow();
+    NumericMatrix outcomes(n_toys,4);
     
-    for(unsigned long long current_toy=0; current_toy<10000000; ++current_toy){
+    for(int current_toy = 0; current_toy<n_toys; ++current_toy){
+        schedule_index = schedule_c(current_toy) -1;
+        c_toy_id = myToys_c(schedule_index,0);
+        c_toy_arrival = myToys_c(schedule_index,1);
+        c_toy_duration = myToys_c(schedule_index,2);
         
-        NumericVector elf_start = (int)myelves[ _,2];
-        int min_val = std::min_element(elf_start.begin(), elf_start.end());
-        int min_row = std::search(elf_start.begin(), elf_start.end(), min_val[0] + min_val[0]+0);
-        //for(int e=0; e<myelves.nrow(); e++){
-            //if (min_val > myelves(e,2)){
-                //min_val = myelves(e,2);
-                //min_row = e;
-            //}   
-        //}
-        
-        int c_elf_id = myelves(min_row,0);
-        int c_elf_start_time = myelves(min_row,2);
-        double c_elf_rating = myelves_rate(min_row);
-        
-        mytoys_rate = myToys( _, 2)/c_elf_rating + c_elf_start_time;
-        
-        int min_finish = mytoys_rate(0);
-        int min_toy_row = 0;
-        for(int t=0; t<myToys.nrow(); t++){
-            if (min_finish > mytoys_rate(t)){
-                min_finish = mytoys_rate(t);
-                min_toy_row = t;
-            }   
-        }
-        
-        int c_toy_id = myToys(min_toy_row,0);
-        int c_toy_arrival = myToys(min_toy_row,1);
-        int c_toy_duration = myToys(min_toy_row,2);
-        
-        c_elf_start_time = std::max((int)c_elf_start_time, (int)c_toy_arrival);
-        
-        int work_duration = ceil(c_toy_duration/c_elf_rating);
-        
-        myelves_rate(min_row) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);
-        myelves(min_row,2) = updateNextAvailableMinute(c_elf_start_time, work_duration);
-        
+        c_elf_id = myelves_c(0);
+        c_elf_start_time = myelves_c(2);
+        c_elf_rating = myelves_c(1);
+
+        if(c_elf_start_time < c_toy_arrival) c_elf_start_time = c_toy_arrival;
+        work_duration = ceil(c_toy_duration/c_elf_rating);
+
+        myelves_c(2) = updateNextAvailableMinute(c_elf_start_time, work_duration);
+        myelves_c(1) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);
+
         outcomes(current_toy,0) = c_toy_id;
         outcomes(current_toy,1) = c_elf_id;
         outcomes(current_toy,2) = c_elf_start_time;
         outcomes(current_toy,3) = work_duration;
-        
-        if(current_toy % 1 == 0) Rcpp::Rcout << '\n' << (double)current_toy/1000000;
     }
-    return outcomes;
+    int n_outcomes = outcomes.nrow();
+    int last_time = 0;
+    for(int i = 0; i<n_outcomes; ++i){
+        if(last_time < (outcomes(i,2)+outcomes(i,3))) last_time = (outcomes(i,2)+outcomes(i,3));
+    }
+    myelves_c(2) =540; 
+    myelves_c(1) = 1;
+    return last_time * log(901);
 }
 
 // [[Rcpp::export]]
-NumericMatrix build_Matrix(){
-    NumericMatrix toy_elf_matrix(10000000,900);
-    return toy_elf_matrix;
+int rnd() 
+{ 
+    int p=rand() % 999999999; 
+	return (p); 
+}; 
+
+// [[Rcpp::export]]
+NumericVector solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
+    double score;
+    NumericVector schedule_best = schedule_c;
+    double score_best = solution_Elf_c(myToys_c, myelves_c, schedule_c);
+    Rcpp::Rcout << '\n' << score_best;
+    
+    for(int round = 0; round<1000000; ++round){
+        int a = rnd();  
+        int b = rnd();  
+        std::swap(schedule_c(a),schedule_c(b));
+        score = solution_Elf_c(myToys_c, myelves_c, schedule_c);
+        if (score < score_best){
+            
+            score_best = score;
+            schedule_best = schedule_c; 
+        }
+        Rcpp::Rcout << '\n' << round << ' ' << score_best << ' ' << a << ' ' << b;
+    }
+    return schedule_best;
 }
