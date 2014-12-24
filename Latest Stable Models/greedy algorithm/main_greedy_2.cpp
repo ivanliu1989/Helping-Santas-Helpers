@@ -101,7 +101,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
     int c_toy_id, c_toy_arrival, c_toy_duration, min_val, min_row, c_elf_id, c_elf_start_time,work_duration;
     double c_elf_rating;
     
-    for(unsigned long long current_toy=0; current_toy<10000000; ++current_toy){
+    for(unsigned long long current_toy=0; current_toy<100; ++current_toy){
         
         min_val = myelves(0,2);
         min_row = 0;
@@ -111,13 +111,18 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
                 min_row = e;
             }
         }
-        
+        min_row = 0;
         c_elf_id = myelves(min_row,0);
         c_elf_start_time = myelves(min_row,2);
         c_elf_rating = myelves_rate(min_row);
         
         //.25, .30, .37, .45, .55, .67, .82, 1, 1.22, 1.49, 1.81, 2.21, 2.69, 3.28, 4
-        if((c_elf_rating > 3.2) & (toy_17 < myToys_17.nrow())){
+        if((c_elf_rating > 3.98) & (toy_1 < myToys_1.nrow()/2)){
+            c_toy_id = myToys_1(toy_1,0);
+            c_toy_arrival = myToys_1(toy_1,1);
+            c_toy_duration = myToys_1(toy_1,2);
+            toy_1 += 1;
+        }else if((c_elf_rating > 3.2) & (toy_17 < myToys_17.nrow())){
             c_toy_id = myToys_17(toy_17,0);
             c_toy_arrival = myToys_17(toy_17,1);
             c_toy_duration = myToys_17(toy_17,2);
@@ -152,7 +157,145 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_toy_arrival = myToys_11(toy_11,1);
             c_toy_duration = myToys_11(toy_11,2);
             toy_11 += 1;
-        }else{break;}
+        }else if((c_elf_rating >= .8) & (toy_10 < myToys_10.nrow())){
+            c_toy_id = myToys_10(toy_10,0);
+            c_toy_arrival = myToys_10(toy_10,1);
+            c_toy_duration = myToys_10(toy_10,2);
+            toy_10 += 1;
+        }else if((c_elf_rating >= .65) & (toy_9 < myToys_9.nrow())){
+            c_toy_id = myToys_9(toy_9,0);
+            c_toy_arrival = myToys_9(toy_9,1);
+            c_toy_duration = myToys_9(toy_9,2);
+            toy_9 += 1;
+        }else if((c_elf_rating >= .52) & (toy_8 < myToys_8.nrow())){
+            c_toy_id = myToys_8(toy_8,0);
+            c_toy_arrival = myToys_8(toy_8,1);
+            c_toy_duration = myToys_8(toy_8,2);
+            toy_8 += 1;
+        }else if((c_elf_rating >= .43) & (toy_7 < myToys_7.nrow())){
+            c_toy_id = myToys_7(toy_7,0);
+            c_toy_arrival = myToys_7(toy_7,1);
+            c_toy_duration = myToys_7(toy_7,2);
+            toy_7 += 1;
+        }else if((c_elf_rating >= .35) & (toy_6 < myToys_6.nrow())){
+            c_toy_id = myToys_6(toy_6,0);
+            c_toy_arrival = myToys_6(toy_6,1);
+            c_toy_duration = myToys_6(toy_6,2);
+            toy_6 += 1;
+        }else if((c_elf_rating >= .3) & (toy_5 < myToys_5.nrow())){
+            c_toy_id = myToys_5(toy_5,0);
+            c_toy_arrival = myToys_5(toy_5,1);
+            c_toy_duration = myToys_5(toy_5,2);
+            toy_5 += 1;
+        }else if((c_elf_rating >= .25) & (toy_4 < myToys_4.nrow())){
+            c_toy_id = myToys_4(toy_4,0);
+            c_toy_arrival = myToys_4(toy_4,1);
+            c_toy_duration = myToys_4(toy_4,2);
+            toy_4 += 1;
+        }else if((c_elf_rating > 3.98) & (toy_2 < myToys_2.nrow()/2)){
+            c_toy_id = myToys_2(toy_2,0);
+            c_toy_arrival = myToys_2(toy_2,1);
+            c_toy_duration = myToys_2(toy_2,2);
+            toy_2 += 1;
+        }else if((c_elf_rating > 3.98) & (toy_1 < myToys_1.nrow())){
+            c_toy_id = myToys_1(toy_1,0);
+            c_toy_arrival = myToys_1(toy_1,1);
+            c_toy_duration = myToys_1(toy_1,2);
+            toy_1 += 1;
+        }else{
+            if(toy_0 < myToys_0.nrow()){
+                c_toy_id = myToys_0(toy_0,0);
+                c_toy_arrival = myToys_0(toy_0,1);
+                c_toy_duration = myToys_0(toy_0,2);
+                toy_0 += 1;
+            }else if(toy_1 < myToys_1.nrow()){
+                c_toy_id = myToys_1(toy_1,0);
+                c_toy_arrival = myToys_1(toy_1,1);
+                c_toy_duration = myToys_1(toy_1,2);
+                toy_1 += 1;
+            }
+            }else if(toy_2 < myToys_2.nrow()){
+                c_toy_id = myToys_2(toy_2,0);
+                c_toy_arrival = myToys_2(toy_2,1);
+                c_toy_duration = myToys_2(toy_2,2);
+                toy_2 += 1;
+            }else if(toy_3 < myToys_3.nrow()){
+                c_toy_id = myToys_3(toy_3,0);
+                c_toy_arrival = myToys_3(toy_3,1);
+                c_toy_duration = myToys_3(toy_3,2);
+                toy_3 += 1;
+            }else if(toy_17 < myToys_17.nrow()){
+            c_toy_id = myToys_17(toy_17,0);
+            c_toy_arrival = myToys_17(toy_17,1);
+            c_toy_duration = myToys_17(toy_17,2);
+            toy_17 += 1;
+            }else if(toy_16 < myToys_16.nrow()){
+                c_toy_id = myToys_16(toy_16,0);
+                c_toy_arrival = myToys_16(toy_16,1);
+                c_toy_duration = myToys_16(toy_16,2);
+                toy_16 += 1;
+            }else if(toy_15 < myToys_15.nrow()){
+                c_toy_id = myToys_15(toy_15,0);
+                c_toy_arrival = myToys_15(toy_15,1);
+                c_toy_duration = myToys_15(toy_15,2);
+                toy_15 += 1;
+            }else if(toy_14 < myToys_14.nrow()){
+                c_toy_id = myToys_14(toy_14,0);
+                c_toy_arrival = myToys_14(toy_14,1);
+                c_toy_duration = myToys_14(toy_14,2);
+                toy_14 += 1;
+            }else if(toy_13 < myToys_13.nrow()){
+                c_toy_id = myToys_13(toy_13,0);
+                c_toy_arrival = myToys_13(toy_13,1);
+                c_toy_duration = myToys_13(toy_13,2);
+                toy_13 += 1;
+            }else if(toy_12 < myToys_12.nrow()){
+                c_toy_id = myToys_12(toy_12,0);
+                c_toy_arrival = myToys_12(toy_12,1);
+                c_toy_duration = myToys_12(toy_12,2);
+                toy_12 += 1;
+            }else if(toy_11 < myToys_11.nrow()){
+                c_toy_id = myToys_11(toy_11,0);
+                c_toy_arrival = myToys_11(toy_11,1);
+                c_toy_duration = myToys_11(toy_11,2);
+                toy_11 += 1;
+            }else if(toy_10 < myToys_10.nrow()){
+                c_toy_id = myToys_10(toy_10,0);
+                c_toy_arrival = myToys_10(toy_10,1);
+                c_toy_duration = myToys_10(toy_10,2);
+                toy_10 += 1;
+            }else if(toy_9 < myToys_9.nrow()){
+                c_toy_id = myToys_9(toy_9,0);
+                c_toy_arrival = myToys_9(toy_9,1);
+                c_toy_duration = myToys_9(toy_9,2);
+                toy_9 += 1;
+            }else if(toy_8 < myToys_8.nrow()){
+                c_toy_id = myToys_8(toy_8,0);
+                c_toy_arrival = myToys_8(toy_8,1);
+                c_toy_duration = myToys_8(toy_8,2);
+                toy_8 += 1;
+            }else if(toy_7 < myToys_7.nrow()){
+                c_toy_id = myToys_7(toy_7,0);
+                c_toy_arrival = myToys_7(toy_7,1);
+                c_toy_duration = myToys_7(toy_7,2);
+                toy_7 += 1;
+            }else if(toy_6 < myToys_6.nrow()){
+                c_toy_id = myToys_6(toy_6,0);
+                c_toy_arrival = myToys_6(toy_6,1);
+                c_toy_duration = myToys_6(toy_6,2);
+                toy_6 += 1;
+            }else if(toy_5 < myToys_5.nrow()){
+                c_toy_id = myToys_5(toy_5,0);
+                c_toy_arrival = myToys_5(toy_5,1);
+                c_toy_duration = myToys_5(toy_5,2);
+                toy_5 += 1;
+            }else if(toy_4 < myToys_4.nrow()){
+                c_toy_id = myToys_4(toy_4,0);
+                c_toy_arrival = myToys_4(toy_4,1);
+                c_toy_duration = myToys_4(toy_4,2);
+                toy_4 += 1;
+            }
+        }
         
         c_elf_start_time = std::max((int)c_elf_start_time, (int)c_toy_arrival);
         //if c_elf_start_time late then next day
@@ -166,6 +309,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
         outcomes(current_toy,2) = c_elf_start_time;
         outcomes(current_toy,3) = work_duration;
         
+        //Rcpp::Rcout << '\n' << current_toy << ' ' << c_elf_id << ' ' << c_elf_rating;
         if(current_toy % 100000 == 0) Rcpp::Rcout << '\n' << (double)current_toy/1000000 << ' ' << myToys_3.nrow() << ' ' << toy_3;
     }
     Rcpp::Rcout << '\n' << 10000000/1000000 << ' ' << myToys_3.nrow() << ' ' << toy_3;
