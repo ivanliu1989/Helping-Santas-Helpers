@@ -2,7 +2,8 @@ setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
 # setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 # setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls()); source('R code/Functions.R');
-load('data/toys.RData')
+# load('data/toys.RData')
+load('data/toys_regulated.RData')
 require(Rcpp)
 sourceCpp('Latest Stable Models/greedy algorithm/main_greedy.cpp')
 
@@ -15,9 +16,9 @@ toys[which(toys[,'Duration']>=toy_break2),'Size'] <- 2 # >=600 mins | 0.0366753 
 toys[which(toys[,'Duration']>=toy_break3),'Size'] <- 3 # >=2400 mins | 0.2021468 | Least recover / finish
 # table(toys[,'Size'])/10000000 # 
 toys_0 <- toys[which(toys[,'Size']==0),];  
-toys_0 <- toys_0[order(toys_0[,'Arrival_time']),]
+toys_0 <- toys_0[order(toys_0[,'Arrival_time'],toys_0[,'Duration']),]
 toys_1 <- toys[which(toys[,'Size']==1),] 
-toys_1 <- toys_1[order(toys_1[,'Arrival_time']),]
+toys_1 <- toys_1[order(toys_1[,'Arrival_time'],toys_1[,'Duration']),]
 toys_2 <- toys[which(toys[,'Size']==2),] 
 toys_2 <- toys_2[order(toys_2[,'Duration']),]
 toys_3 <- toys[which(toys[,'Size']==3),] 
@@ -39,6 +40,9 @@ submissions <- solution_Elf(toys_0,toys_1,toys_2,toys_3,myelves,myelves_rate)
 
 (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(901)
 # 1270225657.3792
+# 1839947589 Duration
+# 1838608441 regulated 3.9
+# 1837585765 regulated 3.99
 
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
                                  ElfId = as.integer(submissions[,2]), 

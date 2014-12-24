@@ -115,12 +115,12 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         c_elf_start_time = myelves(min_row,2);
         c_elf_rating = myelves_rate(min_row);
         
-        if(c_elf_rating >3.9 & toy_3 < myToys_3.nrow()){
+        if(c_elf_rating > 3.99 & toy_3 < myToys_3.nrow()){
             c_toy_id = myToys_3(toy_3,0);
             c_toy_arrival = myToys_3(toy_3,1);
             c_toy_duration = myToys_3(toy_3,2);
             toy_3 += 1;
-        }else if(c_elf_rating >= 3 & toy_2 < myToys_2.nrow()){
+        }else if(c_elf_rating >= 3.5 & toy_2 < myToys_2.nrow()){
             c_toy_id = myToys_2(toy_2,0);
             c_toy_arrival = myToys_2(toy_2,1);
             c_toy_duration = myToys_2(toy_2,2);
@@ -136,21 +136,21 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             c_toy_duration = myToys_0(toy_0,2);
             toy_0 += 1;
         }else {
-            if(toy_3 < myToys_3.nrow()){
-                c_toy_id = myToys_3(toy_3,0);
-                c_toy_arrival = myToys_3(toy_3,1);
-                c_toy_duration = myToys_3(toy_3,2);
-                toy_3 += 1;
+            if(toy_1 < myToys_1.nrow()){
+                c_toy_id = myToys_1(toy_1,0);
+                c_toy_arrival = myToys_1(toy_1,1);
+                c_toy_duration = myToys_1(toy_1,2);
+                toy_1 += 1;
             }else if(toy_2 < myToys_2.nrow()){
                 c_toy_id = myToys_2(toy_2,0);
                 c_toy_arrival = myToys_2(toy_2,1);
                 c_toy_duration = myToys_2(toy_2,2);
                 toy_2 += 1;
-            }else if(toy_1 < myToys_1.nrow()){
-                c_toy_id = myToys_1(toy_1,0);
-                c_toy_arrival = myToys_1(toy_1,1);
-                c_toy_duration = myToys_1(toy_1,2);
-                toy_1 += 1;
+            }else if(toy_3 < myToys_3.nrow()){
+                c_toy_id = myToys_3(toy_3,0);
+                c_toy_arrival = myToys_3(toy_3,1);
+                c_toy_duration = myToys_3(toy_3,2);
+                toy_3 += 1;
             }
         }
         
