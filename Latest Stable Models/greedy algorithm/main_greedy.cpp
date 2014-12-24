@@ -90,6 +90,7 @@ double updateProductivity(int start_minute, int work_duration, double current_ra
     return new_rating;
 }
 
+
 // [[Rcpp::export]]
 NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,NumericMatrix myToys_2,NumericMatrix myToys_3,NumericMatrix myelves, NumericVector myelves_rate){
     NumericMatrix outcomes(10000000,4); //ToyId, Arrival_time, Duration, Size
@@ -157,6 +158,9 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         c_elf_start_time = std::max((int)c_elf_start_time, (int)c_toy_arrival);
         //if c_elf_start_time late then next day
         work_duration = ceil(c_toy_duration/c_elf_rating);
+        if(work_duration > 600){
+            c_elf_start_time = c_elf_start_time + 1;
+        }
         
         myelves_rate(min_row) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);
         myelves(min_row,2) = updateNextAvailableMinute(c_elf_start_time, work_duration);
