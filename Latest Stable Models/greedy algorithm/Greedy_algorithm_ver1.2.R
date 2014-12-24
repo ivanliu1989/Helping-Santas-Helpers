@@ -1,5 +1,5 @@
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
-gc(); rm(list=ls()); source('R code/Functions.R');
+#gc(); rm(list=ls()); source('R code/Functions.R');
 require(Rcpp)
 sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_2.cpp')
 

@@ -101,7 +101,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
     int c_toy_id, c_toy_arrival, c_toy_duration, min_val, min_row, c_elf_id, c_elf_start_time,work_duration;
     double c_elf_rating;
     
-    for(unsigned long long current_toy=0; current_toy<100; ++current_toy){
+    for(unsigned long long current_toy=0; current_toy<10000000; ++current_toy){
         
         min_val = myelves(0,2);
         min_row = 0;
@@ -213,7 +213,6 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
                 c_toy_arrival = myToys_1(toy_1,1);
                 c_toy_duration = myToys_1(toy_1,2);
                 toy_1 += 1;
-            }
             }else if(toy_2 < myToys_2.nrow()){
                 c_toy_id = myToys_2(toy_2,0);
                 c_toy_arrival = myToys_2(toy_2,1);
