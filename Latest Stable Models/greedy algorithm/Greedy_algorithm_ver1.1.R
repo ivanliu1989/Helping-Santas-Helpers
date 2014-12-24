@@ -9,7 +9,7 @@ sourceCpp('Latest Stable Models/greedy algorithm/main_greedy.cpp')
 
 ### Segmentation Toys ###
 toys <- data.matrix(toys)
-toy_break1 <- 2.5*60*1.2; toy_break2 <- 10*60; toy_break3 <- 40*60*0.5; # toy_break4 <- 52*60; 
+toy_break1 <- 2.5*60*1.2; toy_break2 <- 10*60; toy_break3 <- 24*60; toy_break4 <- 52*60; 
 toys <- data.matrix(transform(toys, Size = 0)) # <toy_break1 | 0.6408928 | Arrival, Increase
 toys[which(toys[,'Duration']>=toy_break1),'Size'] <- 1 # >=150 mins | 0.1202851 | Arrival, Increase
 toys[which(toys[,'Duration']>=toy_break2),'Size'] <- 2 # >=600 mins | 0.0366753 | Least decrease
