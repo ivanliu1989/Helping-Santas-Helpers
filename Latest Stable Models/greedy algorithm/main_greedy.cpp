@@ -115,17 +115,17 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         c_elf_start_time = myelves(min_row,2);
         c_elf_rating = myelves_rate(min_row);
         
-        if(c_elf_rating > 3.98 & toy_3 < myToys_3.nrow()){
+        if((c_elf_rating > 3.98) & (toy_3 < myToys_3.nrow())){
             c_toy_id = myToys_3(toy_3,0);
             c_toy_arrival = myToys_3(toy_3,1);
             c_toy_duration = myToys_3(toy_3,2);
             toy_3 += 1;
-        }else if(c_elf_rating >= 3.5 & toy_2 < myToys_2.nrow()){
+        }else if((c_elf_rating >= 3.5) & (toy_2 < myToys_2.nrow())){
             c_toy_id = myToys_2(toy_2,0);
             c_toy_arrival = myToys_2(toy_2,1);
             c_toy_duration = myToys_2(toy_2,2);
             toy_2 += 1;
-        }else if(c_elf_rating >= 2 & toy_1 < myToys_1.nrow()){
+        }else if((c_elf_rating >= 2) & (toy_1 < myToys_1.nrow())){
             c_toy_id = myToys_1(toy_1,0);
             c_toy_arrival = myToys_1(toy_1,1);
             c_toy_duration = myToys_1(toy_1,2);
@@ -155,7 +155,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         }
         
         c_elf_start_time = std::max((int)c_elf_start_time, (int)c_toy_arrival);
-        // if c_elf_start_time late then next day
+        //if c_elf_start_time late then next day
         work_duration = ceil(c_toy_duration/c_elf_rating);
         
         myelves_rate(min_row) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);

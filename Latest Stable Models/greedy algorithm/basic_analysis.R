@@ -1,5 +1,5 @@
-setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
-# setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
+# setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
+setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 # setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls()); source('R code/Functions.R');
 # load('data/toys.RData')
