@@ -1,18 +1,6 @@
 #include <Rcpp.h>
 #include <algorithm> // std::max
-#include <time.h>
-#include <string.h>
 using namespace Rcpp;
-
-void init_startTime() {
-    memset(&startTime, 0, sizeof(struct tm));
-    startTime.tm_year = 2014 - 1900;
-    startTime.tm_mon = 0;
-    startTime.tm_mday = 1;
-    startTime.tm_hour = 0;
-    startTime.tm_min = 0;
-    startTime_t = timegm(&startTime);
-}
 
 // [[Rcpp::export]]
 int updateNextAvailableMinute(int start_minute, int work_duration){
@@ -102,19 +90,6 @@ double updateProductivity(int start_minute, int work_duration, double current_ra
     return new_rating;
 }
 
-// [[Rcpp::export]]
-int stringToTime(int year, int month, int day, int hour, int minute) {
-    struct tm nowtime;
-    memset(&nowtime, 0, sizeof(struct tm));
-    nowtime.tm_year = year - 1900;
-    nowtime.tm_mon = month - 1;
-    nowtime.tm_mday = day;
-    nowtime.tm_hour = hour;
-    nowtime.tm_min = minute;
-
-    time_t nowtime_t = timegm(&nowtime);
-    return (nowtime_t - startTime_t) / 60;
-}
 
 // [[Rcpp::export]]
 NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,NumericMatrix myToys_2,NumericMatrix myToys_3,NumericMatrix myelves, NumericVector myelves_rate){
@@ -141,6 +116,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         c_elf_start_time = myelves(min_row,2);
         c_elf_rating = myelves_rate(min_row);
         
+        //matrix calculate GAs
         if((c_elf_rating > 3.98) & (toy_3 < myToys_3.nrow())){
             c_toy_id = myToys_3(toy_3,0);
             c_toy_arrival = myToys_3(toy_3,1);

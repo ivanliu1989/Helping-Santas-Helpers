@@ -1,11 +1,11 @@
 # setwd('/Users/ivan/Work_directory/FICO/Helping-Santas-Helpers/')
-setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
-# setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
+# setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
+setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls()); source('R code/Functions.R');
 # load('data/toys.RData')
 load('data/toys_regulated.RData')
 require(Rcpp)
-sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_2.cpp')
+sourceCpp('Latest Stable Models/greedy algorithm/main_greedy.cpp')
 
 ### Segmentation Toys ###
 toys <- data.matrix(toys)
