@@ -92,12 +92,12 @@ double updateProductivity(int start_minute, int work_duration, double current_ra
 
 
 // [[Rcpp::export]]
-NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,NumericMatrix myToys_2,NumericMatrix myToys_3,NumericMatrix myelves, NumericVector myelves_rate){
+NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,NumericMatrix myToys_2,NumericMatrix myToys_3,NumericMatrix myToys_4,NumericMatrix myToys_5,
+NumericMatrix myToys_6,NumericMatrix myToys_7,NumericMatrix myToys_8,NumericMatrix myToys_9,NumericMatrix myToys_10,NumericMatrix myToys_11,NumericMatrix myToys_12,
+NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericMatrix myToys_16,NumericMatrix myToys_17,NumericMatrix myelves, NumericVector myelves_rate){
+    
     NumericMatrix outcomes(10000000,4); //ToyId, Arrival_time, Duration, Size
-    int toy_0 = 0;
-    int toy_1 = 0;
-    int toy_2 = 0;
-    int toy_3 = 0;
+    int toy_0,toy_1,toy_2,toy_3,toy_4,toy_5,toy_6,toy_7,toy_8,toy_9,toy_10,toy_11,toy_12,toy_13,toy_14,toy_15,toy_16,toy_17;
     int c_toy_id, c_toy_arrival, c_toy_duration, min_val, min_row, c_elf_id, c_elf_start_time,work_duration;
     double c_elf_rating;
     
@@ -116,47 +116,43 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         c_elf_start_time = myelves(min_row,2);
         c_elf_rating = myelves_rate(min_row);
         
-        //1. matrix calculate GAs
-        //2. classify more 
-        //3. time adjust
-        if((c_elf_rating > 3.98) & (toy_3 < myToys_3.nrow())){
-            c_toy_id = myToys_3(toy_3,0);
-            c_toy_arrival = myToys_3(toy_3,1);
-            c_toy_duration = myToys_3(toy_3,2);
-            toy_3 += 1;
-        }else if((c_elf_rating >= 3.5) & (toy_2 < myToys_2.nrow())){
-            c_toy_id = myToys_2(toy_2,0);
-            c_toy_arrival = myToys_2(toy_2,1);
-            c_toy_duration = myToys_2(toy_2,2);
-            toy_2 += 1;
-        }else if((c_elf_rating >= 2) & (toy_1 < myToys_1.nrow())){
-            c_toy_id = myToys_1(toy_1,0);
-            c_toy_arrival = myToys_1(toy_1,1);
-            c_toy_duration = myToys_1(toy_1,2);
-            toy_1 += 1;
-        }else if(toy_0 < myToys_0.nrow()){
-            c_toy_id = myToys_0(toy_0,0);
-            c_toy_arrival = myToys_0(toy_0,1);
-            c_toy_duration = myToys_0(toy_0,2);
-            toy_0 += 1;
-        }else {
-            if(toy_1 < myToys_1.nrow()){
-                c_toy_id = myToys_1(toy_1,0);
-                c_toy_arrival = myToys_1(toy_1,1);
-                c_toy_duration = myToys_1(toy_1,2);
-                toy_1 += 1;
-            }else if(toy_2 < myToys_2.nrow()){
-                c_toy_id = myToys_2(toy_2,0);
-                c_toy_arrival = myToys_2(toy_2,1);
-                c_toy_duration = myToys_2(toy_2,2);
-                toy_2 += 1;
-            }else if(toy_3 < myToys_3.nrow()){
-                c_toy_id = myToys_3(toy_3,0);
-                c_toy_arrival = myToys_3(toy_3,1);
-                c_toy_duration = myToys_3(toy_3,2);
-                toy_3 += 1;
-            }
-        }
+        //.25, .30, .37, .45, .55, .67, .82, 1, 1.22, 1.49, 1.81, 2.21, 2.69, 3.28, 4
+        if((c_elf_rating > 3.2) & (toy_17 < myToys_17.nrow())){
+            c_toy_id = myToys_17(toy_17,0);
+            c_toy_arrival = myToys_17(toy_17,1);
+            c_toy_duration = myToys_17(toy_17,2);
+            toy_17 += 1;
+        }else if((c_elf_rating > 2.6) & (toy_16 < myToys_16.nrow())){
+            c_toy_id = myToys_16(toy_16,0);
+            c_toy_arrival = myToys_16(toy_16,1);
+            c_toy_duration = myToys_16(toy_16,2);
+            toy_16 += 1;
+        }else if((c_elf_rating >= 2.2) & (toy_15 < myToys_15.nrow())){
+            c_toy_id = myToys_15(toy_15,0);
+            c_toy_arrival = myToys_15(toy_15,1);
+            c_toy_duration = myToys_15(toy_15,2);
+            toy_15 += 1;
+        }else if((c_elf_rating >= 1.8) & (toy_14 < myToys_14.nrow())){
+            c_toy_id = myToys_14(toy_14,0);
+            c_toy_arrival = myToys_14(toy_14,1);
+            c_toy_duration = myToys_14(toy_14,2);
+            toy_14 += 1;
+        }else if((c_elf_rating > 1.4) & (toy_13 < myToys_13.nrow())){
+            c_toy_id = myToys_13(toy_13,0);
+            c_toy_arrival = myToys_13(toy_13,1);
+            c_toy_duration = myToys_13(toy_13,2);
+            toy_13 += 1;
+        }else if((c_elf_rating > 1.2) & (toy_12 < myToys_12.nrow())){
+            c_toy_id = myToys_12(toy_12,0);
+            c_toy_arrival = myToys_12(toy_12,1);
+            c_toy_duration = myToys_12(toy_12,2);
+            toy_12 += 1;
+        }else if((c_elf_rating >= 1.0) & (toy_11 < myToys_11.nrow())){
+            c_toy_id = myToys_11(toy_11,0);
+            c_toy_arrival = myToys_11(toy_11,1);
+            c_toy_duration = myToys_11(toy_11,2);
+            toy_11 += 1;
+        }else{break;}
         
         c_elf_start_time = std::max((int)c_elf_start_time, (int)c_toy_arrival);
         //if c_elf_start_time late then next day
