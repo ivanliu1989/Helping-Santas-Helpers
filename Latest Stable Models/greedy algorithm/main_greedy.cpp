@@ -155,7 +155,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         }
         
         c_elf_start_time = std::max((int)c_elf_start_time, (int)c_toy_arrival);
-        
+        // if c_elf_start_time late then next day
         work_duration = ceil(c_toy_duration/c_elf_rating);
         
         myelves_rate(min_row) = updateProductivity(c_elf_start_time, work_duration, c_elf_rating);
