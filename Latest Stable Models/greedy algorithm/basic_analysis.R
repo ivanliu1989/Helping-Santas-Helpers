@@ -38,9 +38,11 @@ myelves_rate <- myelves[,'current_rating']
 submissions <- solution_Elf(toys_0,toys_1,toys_2,toys_3,myelves,myelves_rate)
 
 (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(901)
+# 1270225657.3792
 
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
                                  ElfId = as.integer(submissions[,2]), 
                                  StartTime = convert_to_chardate(submissions[,3]), 
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 write.csv(submissions_output, 'toys_submission_classification_sort.csv', row.names = FALSE)
+
