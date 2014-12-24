@@ -115,7 +115,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         c_elf_start_time = myelves(min_row,2);
         c_elf_rating = myelves_rate(min_row);
         
-        if(c_elf_rating > 3.99 & toy_3 < myToys_3.nrow()){
+        if(c_elf_rating > 3.98 & toy_3 < myToys_3.nrow()){
             c_toy_id = myToys_3(toy_3,0);
             c_toy_arrival = myToys_3(toy_3,1);
             c_toy_duration = myToys_3(toy_3,2);
