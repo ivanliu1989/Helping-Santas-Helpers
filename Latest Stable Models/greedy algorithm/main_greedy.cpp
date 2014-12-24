@@ -125,7 +125,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             c_toy_arrival = myToys_2(toy_2,1);
             c_toy_duration = myToys_2(toy_2,2);
             toy_2 += 1;
-        }else if(c_elf_rating >= 1 & toy_1 < myToys_1.nrow()){
+        }else if(c_elf_rating >= 2 & toy_1 < myToys_1.nrow()){
             c_toy_id = myToys_1(toy_1,0);
             c_toy_arrival = myToys_1(toy_1,1);
             c_toy_duration = myToys_1(toy_1,2);
@@ -168,5 +168,6 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         
         if(current_toy % 100000 == 0) Rcpp::Rcout << '\n' << (double)current_toy/1000000 << ' ' << myToys_3.nrow() << ' ' << toy_3;
     }
+    Rcpp::Rcout << '\n' << 10000000/1000000 << ' ' << myToys_3.nrow() << ' ' << toy_3;
     return outcomes;
 }

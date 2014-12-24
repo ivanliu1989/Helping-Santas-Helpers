@@ -9,7 +9,7 @@ sourceCpp('Latest Stable Models/greedy algorithm/main_greedy.cpp')
 
 ### Segmentation Toys ###
 toys <- data.matrix(toys)
-toy_break1 <- 2.5*60; toy_break2 <- 10*60; toy_break3 <- 40*60; 
+toy_break1 <- 2.5*60*0.8; toy_break2 <- 10*60; toy_break3 <- 40*60*0.5; 
 toys <- data.matrix(transform(toys, Size = 0)) # <toy_break1 | 0.6408928 | Arrival, Increase
 toys[which(toys[,'Duration']>=toy_break1),'Size'] <- 1 # >=150 mins | 0.1202851 | Arrival, Increase
 toys[which(toys[,'Duration']>=toy_break2),'Size'] <- 2 # >=600 mins | 0.0366753 | Least decrease
@@ -40,9 +40,11 @@ submissions <- solution_Elf(toys_0,toys_1,toys_2,toys_3,myelves,myelves_rate)
 
 (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(901)
 # 1270225657.3792
-# 1839947589 Duration
-# 1838608441 regulated 3.9
 # 1837585765 regulated 3.99
+# 1828290313 regulated 3.99, 3, 2 | 2.5*60, 10*60, 40*60
+# 1826867775 regulated 3.99, 3.5, 2 | 2.5*60, 10*60, 40*60
+# 1824634341 regulated 3.99, 3.5, 2 | 2.5*60, 10*60, 40*60*0.5
+# 1824546888 regulated 3.99, 3.5, 2 | 2.5*60*1.5, 10*60, 40*60*0.5
 
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
                                  ElfId = as.integer(submissions[,2]), 
