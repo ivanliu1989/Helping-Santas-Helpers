@@ -25,26 +25,16 @@ toys_3 <- toys[which(toys[,'Size']==3),]
 toys_3 <- toys_3[order(toys_3[,'Duration']),]
 
 ### Segmentation Elf ###
-# elf_break1 <- 1.0; elf_break2 <- 3.0; elf_break3 <- 4.0;
 NUM_ELVES <- 900
 myelves <- create_elves(NUM_ELVES)
 myelves_rate <- myelves[,'current_rating']
 
-### Objectives ###
-# increase <- updateProductivity(time, duration, rate) - rate # seg0,1 (max)
-# recover <- rate - updateProductivity(time, duration, rate) # seg2 (min)
-# finish <- rate * duration # seg3
-
 ### main loop ###
 submissions <- solution_Elf(toys_0,toys_1,toys_2,toys_3,myelves,myelves_rate)
 (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(901)
-# 1270225657.3792
-# 1824203148 regulated 3.98, 3.5, 2 | 2.5*60*1.2, 10*60, 40*60*0.5
-# 1824271891
 
 submissions_output <- data.frame(ToyId = as.integer(submissions[,1]), 
                                  ElfId = as.integer(submissions[,2]), 
                                  StartTime = convert_to_chardate(submissions[,3]), 
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 write.csv(submissions_output, 'toys_submission_classification_sort.csv', row.names = FALSE)
-
