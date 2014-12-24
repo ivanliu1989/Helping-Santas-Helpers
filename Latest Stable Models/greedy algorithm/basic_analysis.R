@@ -39,7 +39,6 @@ myelves_rate <- myelves[,'current_rating']
 submissions <- solution_Elf(toys_0,toys_1,toys_2,toys_3,myelves,myelves_rate)
 (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(901)
 # 1270225657.3792
-# 1824341232 regulated 3.99, 3.5, 2 | 2.5*60*1.2, 10*60, 40*60*0.5
 # 1824203148 regulated 3.98, 3.5, 2 | 2.5*60*1.2, 10*60, 40*60*0.5
 # 1824271891
 
