@@ -118,7 +118,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
     double act_duration, sanc;
     double rate_duration;
     
-    for(unsigned long long current_toy=0; current_toy<10000; ++current_toy){
+    for(unsigned long long current_toy=0; current_toy<10000000; ++current_toy){
         
         min_val = myelves(0,2);
         min_row = 0;
@@ -163,6 +163,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_0(toy_row(17),1));
             act_duration = ceil(myToys_17(toy_row(17),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -184,6 +185,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_0(toy_row(16),1));
             act_duration = ceil(myToys_16(toy_row(16),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -205,6 +207,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_0(toy_row(15),1));
             act_duration = ceil(myToys_15(toy_row(15),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -226,6 +229,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_0(toy_row(14),1));
             act_duration = ceil(myToys_14(toy_row(14),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -247,6 +251,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_0(toy_row(13),1));
             act_duration = ceil(myToys_13(toy_row(13),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -268,6 +273,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_12(toy_row(12),1));
             act_duration = ceil(myToys_12(toy_row(12),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -315,6 +321,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_10(toy_row(10),1));
             act_duration = ceil(myToys_10(toy_row(10),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -336,6 +343,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_9(toy_row(9),1));
             act_duration = ceil(myToys_9(toy_row(9),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -357,6 +365,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_8(toy_row(8),1));
             act_duration = ceil(myToys_8(toy_row(8),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -378,6 +387,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_7(toy_row(7),1));
             act_duration = ceil(myToys_7(toy_row(7),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -399,6 +409,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_6(toy_row(6),1));
             act_duration = ceil(myToys_6(toy_row(6),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -420,6 +431,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_5(toy_row(5),1));
             act_duration = ceil(myToys_5(toy_row(5),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -441,6 +453,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_4(toy_row(4),1));
             act_duration = ceil(myToys_4(toy_row(4),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+            rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
                 c_elf_start_time = c_elf_start_time + 845;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -565,7 +578,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
         outcomes(current_toy,2) = c_elf_start_time;
         outcomes(current_toy,3) = work_duration;
         
-        Rcpp::Rcout << '\n' << current_toy << ' ' << c_elf_id << ' ' << c_elf_rating << ' ' <<work_duration << ' ' <<c_toy_duration << ' ' << c_elf_start_time << ' ' << rate_duration;
+        //Rcpp::Rcout << '\n' << current_toy << ' ' << c_elf_id << ' ' << c_elf_rating << ' ' <<work_duration << ' ' <<c_toy_duration << ' ' << c_elf_start_time << ' ' << rate_duration;
         if(current_toy % 100000 == 0) {
             Rcpp::Rcout << '\n' << (double)current_toy/1000000 << '\n' << myToys_0.nrow() << ' ' << toy_row(0)/myToys_0.nrow()
             << '\n' << myToys_1.nrow() << ' ' << toy_row(1)/myToys_1.nrow()
