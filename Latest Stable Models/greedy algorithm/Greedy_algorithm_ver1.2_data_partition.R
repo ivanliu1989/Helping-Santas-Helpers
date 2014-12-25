@@ -16,8 +16,9 @@ toy_train1 <- c(590:610); toy_train2 <- c(721:741); toy_train3 <- c(881:901);
 toy_train4 <- c(1077:1117); toy_train5 <- c(1315:1335); toy_train6 <- c(1605:1625); toy_train7 <- c(1958:1978);
 
 toys <- data.matrix(transform(toys, Size = 0)) # trival
-toys[which(toys[,'Duration']>=toy_remain),'Size'] <- 1 # remain
-toys[which(toys[,'Duration']>=toy_ex1),'Size'] <- 2 # ex1
+toys[which(toys[,'Duration']<=toy_remain),'Size'] <- 1 # remain
+toys[which(toys[,'Duration']<=min(toy_train7)),'Size'] <- 0 # trival
+toys[which(toys[,'Duration']>toy_remain),'Size'] <- 2 # ex1
 toys[which(toys[,'Duration']>=toy_ex2),'Size'] <- 3 # ex2
 toys[which(toys[,'Duration']%in%toy_retrain1),'Size'] <- 4 # re1
 toys[which(toys[,'Duration']%in%toy_retrain2),'Size'] <- 5 # re2
