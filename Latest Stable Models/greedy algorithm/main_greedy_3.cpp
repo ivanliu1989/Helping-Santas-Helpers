@@ -133,7 +133,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
         c_elf_rating = myelves_rate(min_row);
         
         //.25, .30, .37, .45, .55, .67, .82, 1, 1.22, 1.49, 1.81, 2.21, 2.69, 3.28, 4
-        if((c_elf_rating > 3.98) & (toy_row(1) < myToys_1.nrow()/2)){
+        if((c_elf_rating > 3.95) & (toy_row(1) < myToys_1.nrow()/2)){
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_0(toy_row(0),1));
             if(getSanctionedBreakdown(c_elf_start_time,myToys_1(toy_row(1),2))/myToys_1(toy_row(1),2)<=0.9 & toy_row(0) < myToys_0.nrow()){
                 c_toy_id = myToys_0(toy_row(0),0);
@@ -346,12 +346,12 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
                 toy_row(4) += 1;
             }
             
-        }else if((c_elf_rating > 3.98) & (toy_row(2) < myToys_2.nrow()/2)){
+        }else if((c_elf_rating > 3.9) & (toy_row(2) < myToys_2.nrow()/2)){
             c_toy_id = myToys_2(toy_row(2),0);
             c_toy_arrival = myToys_2(toy_row(2),1);
             c_toy_duration = myToys_2(toy_row(2),2);
             toy_row(2) += 1;
-        }else if((c_elf_rating > 3.98) & (toy_row(1) < myToys_1.nrow())){
+        }else if((c_elf_rating > 3.9) & (toy_row(1) < myToys_1.nrow())){
             c_toy_id = myToys_1(toy_row(1),0);
             c_toy_arrival = myToys_1(toy_row(1),1);
             c_toy_duration = myToys_1(toy_row(1),2);
@@ -463,25 +463,25 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
         outcomes(current_toy,3) = work_duration;
         
         //Rcpp::Rcout << '\n' << current_toy << ' ' << c_elf_id << ' ' << c_elf_rating << ' ' <<work_duration << ' ' <<c_toy_duration;
-        if(current_toy % 1000000 == 0) {
-            Rcpp::Rcout << '\n' << (double)current_toy/1000000 << '\n' << myToys_0.nrow() << ' ' << myelves_rate(min_row) << ' ' << toy_row(0)
-            << '\n' << myToys_1.nrow() << ' ' << toy_row(1)
-            << '\n' << myToys_2.nrow() << ' ' << toy_row(2)
-            << '\n' << myToys_3.nrow() << ' ' << toy_row(3)
-            << '\n' << myToys_4.nrow() << ' ' << toy_row(4)
-            << '\n' << myToys_5.nrow() << ' ' << toy_row(5)
-            << '\n' << myToys_6.nrow() << ' ' << toy_row(6)
-            << '\n' << myToys_7.nrow() << ' ' << toy_row(7)
-            << '\n' << myToys_8.nrow() << ' ' << toy_row(8)
-            << '\n' << myToys_9.nrow() << ' ' << toy_row(9)
-            << '\n' << myToys_10.nrow() << ' ' << toy_row(10)
-            << '\n' << myToys_11.nrow() << ' ' << toy_row(11)
-            << '\n' << myToys_12.nrow() << ' ' << toy_row(12)
-            << '\n' << myToys_13.nrow() << ' ' << toy_row(13)
-            << '\n' << myToys_14.nrow() << ' ' << toy_row(14)
-            << '\n' << myToys_15.nrow() << ' ' << toy_row(15)
-            << '\n' << myToys_16.nrow() << ' ' << toy_row(16)
-            << '\n' << myToys_17.nrow() << ' ' << toy_row(17) << '\n';
+        if(current_toy % 100000 == 0) {
+            Rcpp::Rcout << '\n' << (double)current_toy/1000000 << '\n' << myToys_0.nrow() << ' ' << toy_row(0)/myToys_0.nrow()
+            << '\n' << myToys_1.nrow() << ' ' << toy_row(1)/myToys_1.nrow()
+            << '\n' << myToys_2.nrow() << ' ' << toy_row(2)/myToys_2.nrow()
+            << '\n' << myToys_3.nrow() << ' ' << toy_row(3)/myToys_3.nrow()
+            << '\n' << myToys_4.nrow() << ' ' << toy_row(4)/myToys_4.nrow()
+            << '\n' << myToys_5.nrow() << ' ' << toy_row(5)/myToys_5.nrow()
+            << '\n' << myToys_6.nrow() << ' ' << toy_row(6)/myToys_6.nrow()
+            << '\n' << myToys_7.nrow() << ' ' << toy_row(7)/myToys_7.nrow()
+            << '\n' << myToys_8.nrow() << ' ' << toy_row(8)/myToys_8.nrow()
+            << '\n' << myToys_9.nrow() << ' ' << toy_row(9)/myToys_9.nrow()
+            << '\n' << myToys_10.nrow() << ' ' << toy_row(10)/myToys_10.nrow()
+            << '\n' << myToys_11.nrow() << ' ' << toy_row(11)/myToys_11.nrow()
+            << '\n' << myToys_12.nrow() << ' ' << toy_row(12)/myToys_12.nrow()
+            << '\n' << myToys_13.nrow() << ' ' << toy_row(13)/myToys_13.nrow()
+            << '\n' << myToys_14.nrow() << ' ' << toy_row(14)/myToys_14.nrow()
+            << '\n' << myToys_15.nrow() << ' ' << toy_row(15)/myToys_15.nrow()
+            << '\n' << myToys_16.nrow() << ' ' << toy_row(16)/myToys_16.nrow()
+            << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow() << '\n';
         }
     }
     //Rcpp::Rcout << '\n' << 10000000/1000000 << ' ' << myToys_3.nrow() << ' ' << toy_row(3);
