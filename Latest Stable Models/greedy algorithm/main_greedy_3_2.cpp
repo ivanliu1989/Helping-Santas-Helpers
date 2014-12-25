@@ -144,11 +144,18 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             double a = updateProductivity(c_elf_start_time,(int)act_duration, c_elf_rating)/c_elf_rating;
             
-            if((a<=0.9) & (toy_row(0) < myToys_0.nrow())){
+            if((a<=0.95) & (toy_row(0) < myToys_0.nrow())){
+                
+                while(sanc/act_duration < 1){
+                    c_elf_start_time = 840 + act_duration * (1-sanc/act_duration);
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_1(toy_row(1),0);
                 c_toy_arrival = myToys_1(toy_row(1),1);
