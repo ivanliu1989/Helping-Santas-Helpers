@@ -1,4 +1,4 @@
-setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
+setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 #gc(); rm(list=ls()); source('R code/Functions.R');
 require(Rcpp)
 sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_2.cpp')
@@ -18,7 +18,8 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  ElfId = as.integer(submissions[,2]), 
                                  StartTime = convert_to_chardate(submissions[,3]), 
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
-write.csv(submissions_output, 'toys_submission_classification_sort.csv', row.names = FALSE)
+length(table(submissions[,1]));length(table(submissions[,2]))
+write.csv(submissions_output, 'toys_submission_greedy_algorithm_1_2.csv', row.names = FALSE)
 
 
 ### start from 9.00 am, start time => proper toys dataset ###
