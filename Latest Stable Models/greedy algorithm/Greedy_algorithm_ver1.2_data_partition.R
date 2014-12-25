@@ -1,6 +1,7 @@
 setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls()); source('R code/Functions.R');
-load('data/toys_regulated.RData')
+# load('data/toys_regulated.RData')
+load('data/toys.RData')
 
 ### break down toys dataset ###
 toys <- data.matrix(toys)
