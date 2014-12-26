@@ -139,7 +139,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         
         //.25, .30, .37, .45, .55, .67, .82, 1, 1.22, 1.49, 1.81, 2.21, 2.69, 3.28, 4
         //remain
-        if((c_elf_rating > 3.95) & (toy_row(1) < myToys_1.nrow())){
+        if((c_elf_rating > 3.9) & (toy_row(1) < myToys_1.nrow())){
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_0(toy_row(0),1));
             act_duration = ceil(myToys_1(toy_row(1),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -157,11 +157,11 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 toy_row(1) += 1;
             }
             //ex1            
-        }else if((c_elf_rating > 3.95) & (toy_row(2) < myToys_2.nrow()/2)){
-            c_toy_id = myToys_2(toy_row(2),0);
-            c_toy_arrival = myToys_2(toy_row(2),1);
-            c_toy_duration = myToys_2(toy_row(2),2);
-            toy_row(2) += 1;
+        }else if((c_elf_rating > 3.9) & (toy_row(3) < myToys_3.nrow()/2)){
+            c_toy_id = myToys_2(toy_row(3),0);
+            c_toy_arrival = myToys_2(toy_row(3),1);
+            c_toy_duration = myToys_2(toy_row(3),2);
+            toy_row(3) += 1;
             //tr7            
         }else if((c_elf_rating >= 3.28) & (toy_row(17) < myToys_17.nrow())){
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_17(toy_row(17),1));
@@ -169,7 +169,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -191,7 +191,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -213,7 +213,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -235,7 +235,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -257,7 +257,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -279,7 +279,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -302,7 +302,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             rate_duration = sanc/act_duration;
             
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -325,7 +325,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -347,7 +347,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -369,7 +369,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -391,7 +391,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -413,7 +413,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -435,7 +435,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -457,7 +457,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
             rate_duration = sanc/act_duration;
             while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
+                c_elf_start_time = c_elf_start_time + 840 + sanc;
                 sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
                 rate_duration = sanc/act_duration;
             }
@@ -481,21 +481,21 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
                 
-                }else if(toy_row(1) < myToys_1.nrow()){
-                    c_toy_id = myToys_1(toy_row(1),0);
-                    c_toy_arrival = myToys_1(toy_row(1),1);
-                    c_toy_duration = myToys_1(toy_row(1),2);
-                    toy_row(1) += 1;
-                }else if(toy_row(2) < myToys_2.nrow()){
-                    c_toy_id = myToys_2(toy_row(2),0);
-                    c_toy_arrival = myToys_2(toy_row(2),1);
-                    c_toy_duration = myToys_2(toy_row(2),2);
-                    toy_row(2) += 1;
                 }else if(toy_row(3) < myToys_3.nrow()){
                     c_toy_id = myToys_3(toy_row(3),0);
                     c_toy_arrival = myToys_3(toy_row(3),1);
                     c_toy_duration = myToys_3(toy_row(3),2);
                     toy_row(3) += 1;
+                }else if(toy_row(2) < myToys_2.nrow()){
+                    c_toy_id = myToys_2(toy_row(2),0);
+                    c_toy_arrival = myToys_2(toy_row(2),1);
+                    c_toy_duration = myToys_2(toy_row(2),2);
+                    toy_row(2) += 1;
+                }else if(toy_row(1) < myToys_1.nrow()){
+                    c_toy_id = myToys_1(toy_row(1),0);
+                    c_toy_arrival = myToys_1(toy_row(1),1);
+                    c_toy_duration = myToys_1(toy_row(1),2);
+                    toy_row(1) += 1;
                 }
         }
         

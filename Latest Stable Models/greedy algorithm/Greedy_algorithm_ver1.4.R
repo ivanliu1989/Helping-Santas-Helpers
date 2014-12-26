@@ -1,4 +1,4 @@
-setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
+#setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 #gc(); rm(list=ls()); source('R code/Functions.R');
 require(Rcpp)
 sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_4.cpp')
@@ -40,6 +40,11 @@ write.csv(submissions_output, 'toys_submission_greedy_algorithm_1_2.csv', row.na
 ### 1. circle aside <= different chunks of tasks
 
 # 1782626492 (4)
+# 1781186734
+# 1780706352
+# 1780238278
+# 1728119244 (ex2)
+# 1178085908
 
 x_all <- list()
 for (i in 1:900){
