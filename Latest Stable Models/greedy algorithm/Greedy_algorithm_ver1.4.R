@@ -40,10 +40,9 @@ write.csv(submissions_output, 'toys_submission_greedy_algorithm_1_2.csv', row.na
 ### 1. circle aside <= different chunks of tasks
 
 # 1782626492 (4)
-# 1781186734
-# 1780706352
-# 1780238278
-# 1728119244 (ex2)
+
+# 1788308181
+# 1783495477
 
 x_all <- list()
 for (i in 1:900){

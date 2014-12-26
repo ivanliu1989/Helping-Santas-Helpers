@@ -157,11 +157,11 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 toy_row(1) += 1;
             }
             //ex1            
-        }else if((c_elf_rating > 3.95) & (toy_row(3) < myToys_3.nrow()/2)){
-            c_toy_id = myToys_3(toy_row(3),0);
-            c_toy_arrival = myToys_3(toy_row(3),1);
-            c_toy_duration = myToys_3(toy_row(3),2);
-            toy_row(3) += 1;
+        }else if((c_elf_rating > 3.90) & (toy_row(2) < myToys_2.nrow()/2)){
+            c_toy_id = myToys_2(toy_row(2),0);
+            c_toy_arrival = myToys_2(toy_row(2),1);
+            c_toy_duration = myToys_2(toy_row(2),2);
+            toy_row(2) += 1;
             //tr7            
         }else if((c_elf_rating >= 3.28) & (toy_row(17) < myToys_17.nrow())){
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_17(toy_row(17),1));

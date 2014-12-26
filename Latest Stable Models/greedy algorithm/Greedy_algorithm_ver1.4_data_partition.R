@@ -1,5 +1,5 @@
-# setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
-setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
+setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
+# setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls()); source('R code/Functions.R');
 # load('data/toys_regulated.RData')
 load('data/toys.RData')
@@ -59,7 +59,7 @@ toys_16 <- toys[which(toys[,'Size']==16),]
 toys_17 <- toys[which(toys[,'Size']==17),]
 
 toys_0 <- toys_0[order(toys_0[,'Arrival_time'],-toys_0[,'Duration']),]
-toys_1 <- toys_1[order(toys_1[,'Arrival_time'],-toys_1[,'Duration']),]
+toys_1 <- toys_1[order(-toys_1[,'Duration']),]
 toys_2 <- toys_2[order(toys_2[,'Duration']),]
 toys_3 <- toys_3[order(toys_3[,'Duration']),]
 toys_4 <- toys_4[order(toys_4[,'Arrival_time'],toys_4[,'Duration']),]
