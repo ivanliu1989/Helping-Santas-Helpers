@@ -36,7 +36,7 @@ toys[which(toys[,'Duration']%in%toy_train5),'Size'] <- 15 # tr5
 toys[which(toys[,'Duration']%in%toy_train6),'Size'] <- 16 # tr6
 toys[which(toys[,'Duration']%in%toy_train7),'Size'] <- 17 # tr7
 
-table(toys[,'Size'])
+#table(toys[,'Size'])
 
 toys_0 <- toys[which(toys[,'Size']==0),]  
 toys_1 <- toys[which(toys[,'Size']==1),] 
