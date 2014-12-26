@@ -40,3 +40,4 @@ write.csv(submissions_output, 'toys_submission_greedy_algorithm_1_2.csv', row.na
 
 
 # 1834904021
+# 1822773466
