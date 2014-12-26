@@ -40,3 +40,9 @@ write.csv(submissions_output, 'toys_submission_greedy_algorithm_1_2.csv', row.na
 ### 1. circle aside <= different chunks of tasks
 
 # 1790688537 (4)
+
+x_all <- list()
+for (i in 1:900){
+    x_all[[i]] <- submissions[which(submissions[,2]==i), 1]
+}
+save(x_all, file='greedy_algorithm_solution.RData')
