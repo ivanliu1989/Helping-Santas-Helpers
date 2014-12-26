@@ -117,7 +117,8 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
     double c_elf_rating;
     double act_duration, sanc;
     double rate_duration;
-    int rate_count, retrain_count, c_elf_start_time_2;
+    int rate_count, c_elf_start_time_2;
+    int retrain_count = 0;
     for(unsigned long long current_toy=0; current_toy<10000000; ++current_toy){
         
         min_val = myelves(0,2);
@@ -137,8 +138,8 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         c_elf_rating = myelves_rate(min_row);
         
         //.25, .30, .37, .45, .55, .67, .82, 1, 1.22, 1.49, 1.81, 2.21, 2.69, 3.28, 4
-        //remain
-        if((c_elf_rating > 3.95) & (toy_row(1) < myToys_1.nrow())){
+//remain
+        if((c_elf_rating == 4.0) & (toy_row(1) < myToys_1.nrow())){
             
             c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_1(toy_row(1),1));
             act_duration = ceil(myToys_1(toy_row(1),2)/c_elf_rating);
@@ -150,7 +151,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
                 sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
                 
-                while(sanc/act_duration < 1){
+                while(sanc/act_duration < 0.98){
                     c_elf_start_time = 840 + sanc + c_elf_start_time;
                     act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
                     sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -166,13 +167,8 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_duration = myToys_1(toy_row(1),2);
                 toy_row(1) += 1;
             }
-            //ex1            
-        }else if((c_elf_rating > 3.95) & (toy_row(2) < myToys_2.nrow()/2)){
-            c_toy_id = myToys_2(toy_row(2),0);
-            c_toy_arrival = myToys_2(toy_row(2),1);
-            c_toy_duration = myToys_2(toy_row(2),2);
-            toy_row(2) += 1;
-            //tr7            
+
+//tr7            
         }else if((c_elf_rating >= 3.28) & (toy_row(17) < myToys_17.nrow())){
             
             c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_17(toy_row(17),1)); // update
@@ -185,7 +181,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
                 sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
                 
-                while(sanc/act_duration < 1){
+                while(sanc/act_duration < 0.98){
                     c_elf_start_time = 840 + sanc + c_elf_start_time;
                     act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
                     sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -201,7 +197,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_duration = myToys_17(toy_row(17),2);
                 toy_row(17) += 1;
             }
-            //tr6            
+//tr6            
         }else if((c_elf_rating >= 2.69) & (toy_row(16) < myToys_16.nrow())){
             
             c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_16(toy_row(16),1)); // update
@@ -214,7 +210,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
                 sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
                 
-                while(sanc/act_duration < 1){
+                while(sanc/act_duration < 0.98){
                     c_elf_start_time = 840 + sanc + c_elf_start_time;
                     act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
                     sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -230,111 +226,145 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_duration = myToys_16(toy_row(16),2);
                 toy_row(16) += 1;
             }
-            //tr5            
+//tr5            
         }else if((c_elf_rating >= 2.21) & (toy_row(15) < myToys_15.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_15(toy_row(15),1));
-            act_duration = ceil(myToys_15(toy_row(15),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_15(toy_row(15),1)); // update
+            act_duration = ceil(myToys_15(toy_row(15),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_15(toy_row(15),0);
                 c_toy_arrival = myToys_15(toy_row(15),1);
                 c_toy_duration = myToys_15(toy_row(15),2);
                 toy_row(15) += 1;
             }
-            //tr4            
+//tr4            
         }else if((c_elf_rating >= 1.81) & (toy_row(14) < myToys_14.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_14(toy_row(14),1));
-            act_duration = ceil(myToys_14(toy_row(14),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_14(toy_row(14),1)); // update
+            act_duration = ceil(myToys_14(toy_row(14),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_14(toy_row(14),0);
                 c_toy_arrival = myToys_14(toy_row(14),1);
                 c_toy_duration = myToys_14(toy_row(14),2);
                 toy_row(14) += 1;
             }
-            //tr3            
+//tr3            
         }else if((c_elf_rating >= 1.49) & (toy_row(13) < myToys_13.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_13(toy_row(13),1));
-            act_duration = ceil(myToys_13(toy_row(13),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_13(toy_row(13),1)); // update
+            act_duration = ceil(myToys_13(toy_row(13),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_13(toy_row(13),0);
                 c_toy_arrival = myToys_13(toy_row(13),1);
                 c_toy_duration = myToys_13(toy_row(13),2);
                 toy_row(13) += 1;
             }
-            //tr2            
+//tr2            
         }else if((c_elf_rating >= 1.22) & (toy_row(12) < myToys_12.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_12(toy_row(12),1));
-            act_duration = ceil(myToys_12(toy_row(12),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_12(toy_row(12),1)); // update
+            act_duration = ceil(myToys_12(toy_row(12),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_12(toy_row(12),0);
                 c_toy_arrival = myToys_12(toy_row(12),1);
                 c_toy_duration = myToys_12(toy_row(12),2);
                 toy_row(12) += 1;
             }
-            //tr1            
+//tr1            
         }else if((c_elf_rating >= 1.0) & (toy_row(11) < myToys_11.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_11(toy_row(11),1));
-            act_duration = ceil(myToys_11(toy_row(11),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
             
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((rate_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_11(toy_row(11),1)); // update
+            act_duration = ceil(myToys_11(toy_row(11),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_11(toy_row(11),0);
                 c_toy_arrival = myToys_11(toy_row(11),1);
@@ -342,161 +372,215 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 toy_row(11) += 1;
                 
             }
-            //re7            
+//re7            
         }else if((c_elf_rating >= .82) & (toy_row(10) < myToys_10.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_10(toy_row(10),1));
-            act_duration = ceil(myToys_10(toy_row(10),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_10(toy_row(10),1)); // update
+            act_duration = ceil(myToys_10(toy_row(10),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_10(toy_row(10),0);
                 c_toy_arrival = myToys_10(toy_row(10),1);
                 c_toy_duration = myToys_10(toy_row(10),2);
                 toy_row(10) += 1;
             }
-            //tr6            
+//re6            
         }else if((c_elf_rating >= .67) & (toy_row(9) < myToys_9.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_9(toy_row(9),1));
-            act_duration = ceil(myToys_9(toy_row(9),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_9(toy_row(9),1)); // update
+            act_duration = ceil(myToys_9(toy_row(9),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_9(toy_row(9),0);
                 c_toy_arrival = myToys_9(toy_row(9),1);
                 c_toy_duration = myToys_9(toy_row(9),2);
                 toy_row(9) += 1;
             }
-            //tr5            
+//re5            
         }else if((c_elf_rating >= .55) & (toy_row(8) < myToys_8.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_8(toy_row(8),1));
-            act_duration = ceil(myToys_8(toy_row(8),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_8(toy_row(8),1)); // update
+            act_duration = ceil(myToys_8(toy_row(8),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_8(toy_row(8),0);
                 c_toy_arrival = myToys_8(toy_row(8),1);
                 c_toy_duration = myToys_8(toy_row(8),2);
                 toy_row(8) += 1;
             }
-            //tr4            
+//re4            
         }else if((c_elf_rating >= .45) & (toy_row(7) < myToys_7.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_7(toy_row(7),1));
-            act_duration = ceil(myToys_7(toy_row(7),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_7(toy_row(7),1)); // update
+            act_duration = ceil(myToys_7(toy_row(7),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_7(toy_row(7),0);
                 c_toy_arrival = myToys_7(toy_row(7),1);
                 c_toy_duration = myToys_7(toy_row(7),2);
                 toy_row(7) += 1;
             }
-            //tr3            
+//re3            
         }else if((c_elf_rating >= .37) & (toy_row(6) < myToys_6.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_6(toy_row(6),1));
-            act_duration = ceil(myToys_6(toy_row(6),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_6(toy_row(6),1)); // update
+            act_duration = ceil(myToys_6(toy_row(6),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_6(toy_row(6),0);
                 c_toy_arrival = myToys_6(toy_row(6),1);
                 c_toy_duration = myToys_6(toy_row(6),2);
                 toy_row(6) += 1;
             }
-            //tr2            
+//re2            
         }else if((c_elf_rating >= .3) & (toy_row(5) < myToys_5.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_5(toy_row(5),1));
-            act_duration = ceil(myToys_5(toy_row(5),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_5(toy_row(5),1)); // update
+            act_duration = ceil(myToys_5(toy_row(5),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_5(toy_row(5),0);
                 c_toy_arrival = myToys_5(toy_row(5),1);
                 c_toy_duration = myToys_5(toy_row(5),2);
                 toy_row(5) += 1;
             }
-            //tr1            
+//re1            
         }else if((c_elf_rating >= .25) & (toy_row(4) < myToys_4.nrow())){
-            c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_4(toy_row(4),1));
-            act_duration = ceil(myToys_4(toy_row(4),2)/c_elf_rating);
-            sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-            rate_duration = sanc/act_duration;
-            while(rate_duration<=0.03){
-                c_elf_start_time = c_elf_start_time + 845;
-                sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
-                rate_duration = sanc/act_duration;
-            }
-            if((sanc/act_duration<=0.95) & (toy_row(0) < myToys_0.nrow())){
+            
+            c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_4(toy_row(4),1)); // update
+            act_duration = ceil(myToys_4(toy_row(4),2)/c_elf_rating); // update
+            sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+            double a = updateProductivity(c_elf_start_time_2,(int)act_duration, c_elf_rating)/c_elf_rating;
+            
+            if((a<1) & (toy_row(0) < myToys_0.nrow())){
+                c_elf_start_time = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1));
+                act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration);
+                
+                while(sanc/act_duration < 0.98){
+                    c_elf_start_time = 840 + sanc + c_elf_start_time;
+                    act_duration = ceil(myToys_0(toy_row(0),2)/c_elf_rating);
+                    sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
+                }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
+                
             }else{
                 c_toy_id = myToys_4(toy_row(4),0);
                 c_toy_arrival = myToys_4(toy_row(4),1);
                 c_toy_duration = myToys_4(toy_row(4),2);
                 toy_row(4) += 1;
             }
-            
+//ex1            
+        }else if((c_elf_rating == 4.0) & (toy_row(2) < myToys_2.nrow()/2)){
+            c_toy_id = myToys_2(toy_row(2),0);
+            c_toy_arrival = myToys_2(toy_row(2),1);
+            c_toy_duration = myToys_2(toy_row(2),2);
+            toy_row(2) += 1;
         }else{
             
             if(toy_row(0) < myToys_0.nrow()){
@@ -535,7 +619,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         outcomes(current_toy,2) = c_elf_start_time;
         outcomes(current_toy,3) = work_duration;
         
-        if(c_elf_rating==4 & myelves_rate(min_row)<4){
+        if((c_elf_rating==4) & (myelves_rate(min_row)<4)){
             retrain_count++;
         }
         
