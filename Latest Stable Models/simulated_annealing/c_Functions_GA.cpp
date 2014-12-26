@@ -90,6 +90,22 @@ double updateProductivity(int start_minute, int work_duration, double current_ra
 }
 
 // [[Rcpp::export]]
+int getSanctionedBreakdown(int startMinute, int duration) {
+    int S = 0;
+    int U = 0;
+    int full_days = duration / (60*24);
+    S = full_days * (10*60);
+    U = full_days * (14*60);
+    int remainder = startMinute + full_days * (60*24);
+    for (int i = remainder; i < (startMinute+duration); ++i) {
+        bool isSanctionedTime = ((i - 540) % (60*24)) < 600;
+        if (isSanctionedTime) S += 1;
+        else U += 1;
+    }
+    return S;
+}
+
+// [[Rcpp::export]]
 double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
     int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time,schedule_index;
     double c_elf_rating;

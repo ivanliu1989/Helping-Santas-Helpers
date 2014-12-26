@@ -4,7 +4,7 @@ source('R code/Functions.R');source('R code/c_Functions.r')
 library(Rcpp);sourceCpp("Latest Stable Models/simulated_annealing/c_Functions_GA.cpp")
 toys_dat <- data.frame(toys)
 outcome_all <- matrix(0, nrow = 0, ncol = 4, 
-                   dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))
+                      dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))
 
 #load('simulated_annealing_1_900.RData')
 
