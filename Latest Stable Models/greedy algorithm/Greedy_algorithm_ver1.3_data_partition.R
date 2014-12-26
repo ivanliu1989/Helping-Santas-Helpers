@@ -10,11 +10,11 @@ toy_ex1 <- 5760; toy_ex2 <- 12480;
 
 toy_remain <- 2848
 
-toy_retrain1 <- c(140:150); toy_retrain2 <- c(173:183); toy_retrain3 <- c(213:223);
-toy_retrain4 <- c(262:272); toy_retrain5 <- c(321:331); toy_retrain6 <- c(394:404); toy_retrain7 <- c(482:492);
+toy_retrain1 <- c(140:150); toy_retrain2 <- c(151:183); toy_retrain3 <- c(184:223);
+toy_retrain4 <- c(224:272); toy_retrain5 <- c(273:331); toy_retrain6 <- c(332:404); toy_retrain7 <- c(405:492);
 
-toy_train1 <- c(590:610); toy_train2 <- c(721:741); toy_train3 <- c(881:901);
-toy_train4 <- c(1077:1117); toy_train5 <- c(1315:1335); toy_train6 <- c(1605:1625); toy_train7 <- c(1958:1978);
+toy_train1 <- c(493:610); toy_train2 <- c(611:741); toy_train3 <- c(742:901);
+toy_train4 <- c(902:1117); toy_train5 <- c(1118:1335); toy_train6 <- c(1336:1625); toy_train7 <- c(1626:1978);
 
 toys <- data.matrix(transform(toys, Size = 0)) # trival
 toys[which(toys[,'Duration']<=toy_remain),'Size'] <- 1 # remain
@@ -36,7 +36,7 @@ toys[which(toys[,'Duration']%in%toy_train5),'Size'] <- 15 # tr5
 toys[which(toys[,'Duration']%in%toy_train6),'Size'] <- 16 # tr6
 toys[which(toys[,'Duration']%in%toy_train7),'Size'] <- 17 # tr7
 
-# table(toys[,'Size'])
+table(toys[,'Size'])
 
 toys_0 <- toys[which(toys[,'Size']==0),]  
 toys_1 <- toys[which(toys[,'Size']==1),] 
