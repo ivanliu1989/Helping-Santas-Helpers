@@ -45,4 +45,4 @@ x_all <- list()
 for (i in 1:900){
     x_all[[i]] <- submissions[which(submissions[,2]==i), 1]
 }
-save(x_all, file='greedy_algorithm_solution.RData')
+save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData')

@@ -1,7 +1,7 @@
 gc(); rm(list=ls())
 load('data/toys.RData'); load('Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData'); 
 source('R code/Functions.R');source('R code/c_Functions.r')
-library(Rcpp);sourceCpp("R code/c_Functions.cpp")
+library(Rcpp);sourceCpp("Latest Stable Models/simulated_annealing/c_Functions_GA.cpp")
 toys_dat <- data.frame(toys)
 outcome_all <- matrix(0, nrow = 0, ncol = 4, 
                    dimnames = list(NULL, c('ToyId', 'ElfId', 'StartTime', 'Duration')))
@@ -13,9 +13,9 @@ myelves <- create_elves(NUM_ELVES)
 
 for (index_num in 1:900){
     myelves[,'elf_id'] <- index_num
-    myToys <- data.matrix(toys_dat[x_all[[index_num]],])
-    myToys <- myToys[order(x_all[[index_num]]),] # ??
-    schedule <- c(1:nrow(myToys)) 
+    myToys <- data.matrix(toys_dat)#data.matrix(toys_dat[x_all[[index_num]],])
+    # myToys <- myToys[order(x_all[[index_num]]),] # ??
+    schedule <- x_all[[index_num]] 
     outcome <- solution_Elf_submit_c(myToys, myelves, schedule)
     outcome_all <- rbind(outcome_all, outcome)
     cat('\nsuccess! no:', index_num, 'score:', solution_Elf_c(myToys, myelves, schedule))#,'fbest:',f_all[index_num])

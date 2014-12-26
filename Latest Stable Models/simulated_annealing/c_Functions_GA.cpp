@@ -93,7 +93,7 @@ double updateProductivity(int start_minute, int work_duration, double current_ra
 double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
     int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time,schedule_index;
     double c_elf_rating;
-    int n_toys = myToys_c.nrow();
+    int n_toys = schedule_c.size();
     NumericMatrix outcomes(n_toys,4);
     
     for(int current_toy = 0; current_toy<n_toys; ++current_toy){
@@ -131,7 +131,7 @@ double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVe
 NumericMatrix solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
     int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time,schedule_index;
     double c_elf_rating;
-    int n_toys = myToys_c.nrow();
+    int n_toys = schedule_c.size();
     NumericMatrix outcomes(n_toys,4);
     
     for(int current_toy = 0; current_toy<n_toys; ++current_toy){
