@@ -139,7 +139,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         
         //.25, .30, .37, .45, .55, .67, .82, 1, 1.22, 1.49, 1.81, 2.21, 2.69, 3.28, 4
         //remain
-        if((c_elf_rating > 3.9) & (toy_row(1) < myToys_1.nrow())){
+        if((c_elf_rating > 3.95) & (toy_row(1) < myToys_1.nrow())){
             c_elf_start_time = std::max((int)c_elf_start_time, (int)myToys_0(toy_row(0),1));
             act_duration = ceil(myToys_1(toy_row(1),2)/c_elf_rating);
             sanc = getSanctionedBreakdown(c_elf_start_time, act_duration);
@@ -157,10 +157,10 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 toy_row(1) += 1;
             }
             //ex1            
-        }else if((c_elf_rating > 3.9) & (toy_row(3) < myToys_3.nrow()/2)){
-            c_toy_id = myToys_2(toy_row(3),0);
-            c_toy_arrival = myToys_2(toy_row(3),1);
-            c_toy_duration = myToys_2(toy_row(3),2);
+        }else if((c_elf_rating > 3.95) & (toy_row(3) < myToys_3.nrow()/2)){
+            c_toy_id = myToys_3(toy_row(3),0);
+            c_toy_arrival = myToys_3(toy_row(3),1);
+            c_toy_duration = myToys_3(toy_row(3),2);
             toy_row(3) += 1;
             //tr7            
         }else if((c_elf_rating >= 3.28) & (toy_row(17) < myToys_17.nrow())){
@@ -535,5 +535,24 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100 << '\n';
         }
     }
+    Rcpp::Rcout << '\n' << rate_count << ' ' << retrain_count
+            << '\n' << myToys_0.nrow() << ' ' << toy_row(0)/myToys_0.nrow()*100
+            << '\n' << myToys_1.nrow() << ' ' << toy_row(1)/myToys_1.nrow()*100
+            << '\n' << myToys_2.nrow() << ' ' << toy_row(2)/myToys_2.nrow()*100
+            << '\n' << myToys_3.nrow() << ' ' << toy_row(3)/myToys_3.nrow()*100
+            << '\n' << myToys_4.nrow() << ' ' << toy_row(4)/myToys_4.nrow()*100
+            << '\n' << myToys_5.nrow() << ' ' << toy_row(5)/myToys_5.nrow()*100
+            << '\n' << myToys_6.nrow() << ' ' << toy_row(6)/myToys_6.nrow()*100
+            << '\n' << myToys_7.nrow() << ' ' << toy_row(7)/myToys_7.nrow()*100
+            << '\n' << myToys_8.nrow() << ' ' << toy_row(8)/myToys_8.nrow()*100
+            << '\n' << myToys_9.nrow() << ' ' << toy_row(9)/myToys_9.nrow()*100
+            << '\n' << myToys_10.nrow() << ' ' << toy_row(10)/myToys_10.nrow()*100
+            << '\n' << myToys_11.nrow() << ' ' << toy_row(11)/myToys_11.nrow()*100
+            << '\n' << myToys_12.nrow() << ' ' << toy_row(12)/myToys_12.nrow()*100
+            << '\n' << myToys_13.nrow() << ' ' << toy_row(13)/myToys_13.nrow()*100
+            << '\n' << myToys_14.nrow() << ' ' << toy_row(14)/myToys_14.nrow()*100
+            << '\n' << myToys_15.nrow() << ' ' << toy_row(15)/myToys_15.nrow()*100
+            << '\n' << myToys_16.nrow() << ' ' << toy_row(16)/myToys_16.nrow()*100
+            << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100 << '\n';
     return outcomes;
 }

@@ -44,7 +44,6 @@ write.csv(submissions_output, 'toys_submission_greedy_algorithm_1_2.csv', row.na
 # 1780706352
 # 1780238278
 # 1728119244 (ex2)
-# 1720139501
 
 x_all <- list()
 for (i in 1:900){
