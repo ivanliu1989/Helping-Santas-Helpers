@@ -183,7 +183,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -217,7 +217,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -250,7 +250,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -284,7 +284,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -318,7 +318,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -352,7 +352,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -386,7 +386,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -420,7 +420,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -487,7 +487,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -521,7 +521,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -555,7 +555,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -589,7 +589,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
             
-            if(sanc_rate <= 0.95){
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -622,8 +622,8 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             int act_duration = ceil(myToys_4(toy_row(4),2)/c_elf_rating); //toy1 actual work time 
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
             double sanc_rate = (double)sanc/act_duration;
-            //Rcpp::Rcout << '\n' << c_elf_start_time_2 << ' ' << act_duration << ' ' << sanc << ' ' << sanc_rate;
-            if(sanc_rate <= 0.95){
+            
+            if(sanc_rate < 1){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -688,9 +688,6 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         
         if((c_elf_rating==4) & (myelves_rate(min_row)<4)){
             retrain_count++;
-        }
-        if((c_elf_rating<2) & (myelves_rate(min_row)==4)){
-            Rcpp::Rcout << '\n' << c_elf_start_time << ' ' << work_duration << ' ' << c_elf_rating;
         }
         
         if(current_toy % 100000 == 0) {
