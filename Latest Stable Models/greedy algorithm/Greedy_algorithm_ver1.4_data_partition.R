@@ -13,6 +13,8 @@ toy_remain <- 2848
 
 toy_retrain1 <- c(140:150); toy_retrain2 <- c(151:183); toy_retrain3 <- c(184:223);
 toy_retrain4 <- c(224:272); toy_retrain5 <- c(273:331); toy_retrain6 <- c(332:404); toy_retrain7 <- c(405:492);
+# toy_retrain1 <- c(150); toy_retrain2 <- c(183); toy_retrain3 <- c(223);
+# toy_retrain4 <- c(272); toy_retrain5 <- c(331); toy_retrain6 <- c(404); toy_retrain7 <- c(492);
 
 toy_train1 <- c(493:610); toy_train2 <- c(611:741); toy_train3 <- c(742:901);
 toy_train4 <- c(902:1097); toy_train5 <- c(1098:1335); toy_train6 <- c(1336:1625); toy_train7 <- c(1626:1978);
