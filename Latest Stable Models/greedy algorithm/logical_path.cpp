@@ -94,7 +94,7 @@ if((c_elf_rating == 4.0) & (toy_row(1) < myToys_1.nrow())){
         
         int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
         int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
-        int sanc_2 = getSanctionedBreakdown(c_elf_start_time_3, act_duration); //trival sanctional time
+        int sanc_2 = getSanctionedBreakdown(c_elf_start_time_3, act_duration_2); //trival sanctional time
         double sanc_rate_2 = (double)sanc_2/act_duration_2;
         
         if((toy_row(0) < myToys_0.nrow()) && (sanc_rate_2 >= 0.95)){
