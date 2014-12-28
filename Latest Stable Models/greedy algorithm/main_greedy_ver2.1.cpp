@@ -153,7 +153,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
                     }
                 }
             }
-            //Rcpp::Rcout << '\n' << opt_row << ' ' << index_rate << ' ' << c_elf_rating;
+            
             if(index_rate < c_elf_rating){
                 c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -184,6 +184,7 @@ NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericM
                 myToys_1(opt_row,4) = 1;
             }
             
+            Rcpp::Rcout << '\n' << opt_row << ' ' << index_rate << ' ' << c_elf_rating;
             
             //ex1            
         }else if((c_elf_rating > 3.9) & (toy_row(3) < myToys_3.nrow())){\
