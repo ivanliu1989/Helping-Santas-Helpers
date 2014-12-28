@@ -22,13 +22,9 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 write.csv(submissions_output, 'toys_submission_greedy_algorithm_1_2.csv', row.names = FALSE)
 
-# 1695631955
-# 1695641820
-# 1695633200
-# 1695613055
-# 1690830993
-# 1690680615
 # 1690679003
+# 1690354959
+# 1689779341
 
 x_all <- list()
 for (i in 1:900){

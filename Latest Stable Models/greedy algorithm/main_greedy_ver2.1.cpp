@@ -137,7 +137,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         
         //.25, .30, .37, .45, .55, .67, .82, 1, 1.22, 1.49, 1.81, 2.21, 2.69, 3.28, 4
 //remain
-        if((c_elf_rating > 3.95) & (toy_row(1) < myToys_1.nrow())){
+        if((c_elf_rating > 3.98) & (toy_row(1) < myToys_1.nrow())){
             
             int c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_1(toy_row(1),1)); //toy1 start time 
             int act_duration = ceil(myToys_1(toy_row(1),2)/c_elf_rating); //toy1 actual work time 
@@ -717,6 +717,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_arrival = myToys_3(toy_row(3),1);
                 c_toy_duration = myToys_3(toy_row(3),2);
                 toy_row(3) += 1;
+                
             }else if(toy_row(2) < myToys_2.nrow()){
                 c_toy_id = myToys_2(toy_row(2),0);
                 c_toy_arrival = myToys_2(toy_row(2),1);
