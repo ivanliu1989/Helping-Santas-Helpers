@@ -1,7 +1,7 @@
 #setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 #gc(); rm(list=ls()); source('R code/Functions.R');
 require(Rcpp)
-sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_4.cpp')
+sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_5.cpp')
 
 ### Segmentation Elf ###
 NUM_ELVES <- 900
@@ -22,31 +22,13 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 write.csv(submissions_output, 'toys_submission_greedy_algorithm_1_2.csv', row.names = FALSE)
 
-
-### start from 9.00 am, start time => proper toys dataset ###
-
-### maintain skill at 4 set(time)
-
-### decide circle => 2848(penalty free) (first arrive first work)
-
-### end circle in an exhausion work
-
-### set aside 14 days tasks to retrain
-
-### assign remaining tasks before the exhausion tasks
-
-### only fully train 1/2 longest exhausion tasks | train first 1/2 exhausion tasks
-
-### 1. circle aside <= different chunks of tasks
-
-# 1782626492 (4)
-
-# 1788308181
-# 1783495477
-# 1783613837 - 122134
+# 1695631955
 
 x_all <- list()
 for (i in 1:900){
     x_all[[i]] <- submissions[which(submissions[,2]==i), 1]
 }
 save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData')
+
+## search toys_0 | chunk of toys_0 = train1-14
+## delay = 51274116 | 3% | 1644365377

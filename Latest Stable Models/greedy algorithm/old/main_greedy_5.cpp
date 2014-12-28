@@ -725,7 +725,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
                 double sanc_rate = (double)sanc/act_duration;
                 
-                if(sanc_rate < 0.83){
+                if(sanc_rate < 0.99){
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
