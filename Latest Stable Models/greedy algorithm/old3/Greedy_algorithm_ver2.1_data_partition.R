@@ -7,11 +7,11 @@ load('data/toys.RData')
 ### break down toys dataset ###
 toys <- data.matrix(toys)
 
-toy_ex1 <- 5760; toy_ex2 <- 15480;
+toy_ex1 <- 5760; toy_ex2 <- 12480;
 
 toy_remain <- 2948 # 2848
 
-toy_retrain1 <- c(100:173); toy_retrain2 <- c(174:210); toy_retrain3 <- c(211:256);
+toy_retrain1 <- c(120:173); toy_retrain2 <- c(174:210); toy_retrain3 <- c(211:256);
 toy_retrain4 <- c(257:312); toy_retrain5 <- c(313:381); toy_retrain6 <- c(382:464); toy_retrain7 <- c(465:566);
 # toy_retrain1 <- c(150); toy_retrain2 <- c(183); toy_retrain3 <- c(223);
 # toy_retrain4 <- c(272); toy_retrain5 <- c(331); toy_retrain6 <- c(404); toy_retrain7 <- c(492);
@@ -79,4 +79,5 @@ toys_15 <- toys_15[order(toys_15[,'Arrival_time'],-toys_15[,'Duration']),]
 toys_16 <- toys_16[order(toys_16[,'Arrival_time'],-toys_16[,'Duration']),]
 toys_17 <- toys_17[order(toys_17[,'Arrival_time'],-toys_17[,'Duration']),]
 
+toys_1 <- data.matrix(transform(toys_1, index = 0)) # trival
 # 7days seperate

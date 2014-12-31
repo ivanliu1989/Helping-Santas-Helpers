@@ -712,6 +712,42 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_duration = myToys_0(toy_row(0),2);
                 toy_row(0) += 1;
                 
+            }else if(toy_row(4) < myToys_4.nrow()){
+                c_toy_id = myToys_4(toy_row(4),0);
+                c_toy_arrival = myToys_4(toy_row(4),1);
+                c_toy_duration = myToys_4(toy_row(4),2);
+                toy_row(4) += 1;
+            }else if(toy_row(5) < myToys_5.nrow()){
+                c_toy_id = myToys_5(toy_row(5),0);
+                c_toy_arrival = myToys_5(toy_row(5),1);
+                c_toy_duration = myToys_5(toy_row(5),2);
+                toy_row(5) += 1;
+            }else if(toy_row(6) < myToys_6.nrow()){
+                c_toy_id = myToys_6(toy_row(6),0);
+                c_toy_arrival = myToys_6(toy_row(6),1);
+                c_toy_duration = myToys_6(toy_row(6),2);
+                toy_row(6) += 1;
+            }else if(toy_row(7) < myToys_7.nrow()){
+                c_toy_id = myToys_7(toy_row(7),0);
+                c_toy_arrival = myToys_7(toy_row(7),1);
+                c_toy_duration = myToys_7(toy_row(7),2);
+                toy_row(7) += 1;
+            }else if(toy_row(8) < myToys_8.nrow()){
+                c_toy_id = myToys_8(toy_row(8),0);
+                c_toy_arrival = myToys_8(toy_row(8),1);
+                c_toy_duration = myToys_8(toy_row(8),2);
+                toy_row(8) += 1;
+            }else if(toy_row(9) < myToys_9.nrow()){
+                c_toy_id = myToys_9(toy_row(9),0);
+                c_toy_arrival = myToys_9(toy_row(9),1);
+                c_toy_duration = myToys_9(toy_row(9),2);
+                toy_row(9) += 1;
+            }else if(toy_row(10) < myToys_10.nrow()){
+                c_toy_id = myToys_10(toy_row(10),0);
+                c_toy_arrival = myToys_10(toy_row(10),1);
+                c_toy_duration = myToys_10(toy_row(10),2);
+                toy_row(10) += 1;
+                
             }else if(toy_row(3) < myToys_3.nrow()){
                 c_toy_id = myToys_3(toy_row(3),0);
                 c_toy_arrival = myToys_3(toy_row(3),1);
