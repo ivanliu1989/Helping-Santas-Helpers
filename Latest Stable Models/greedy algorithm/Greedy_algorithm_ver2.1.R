@@ -2,7 +2,7 @@
 #gc(); rm(list=ls()); source('R code/Functions.R');
 require(Rcpp)
 sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_ver2.1.cpp')
-
+# sourceCpp('Latest Stable Models/greedy algorithm/test.cpp')
 ### Segmentation Elf ###
 NUM_ELVES <- 900
 myelves <- create_elves(NUM_ELVES)
