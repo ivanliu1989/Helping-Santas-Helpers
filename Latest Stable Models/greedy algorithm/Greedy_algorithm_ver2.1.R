@@ -34,3 +34,4 @@ save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solu
 
 ## search toys_0 | chunk of toys_0 = train1-14
 ## delay = 51274116 | 3% | 1644365377
+## 10+14+10
