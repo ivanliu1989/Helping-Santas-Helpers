@@ -11,7 +11,7 @@ myelves_rate <- myelves[,'current_rating']
 ### main loop ###
 submissions <- solution_Elf(toys_0,toys_1,toys_2,toys_3,toys_4,toys_5,toys_6,toys_7,toys_8,
                             toys_9,toys_10,toys_11,toys_12,toys_13,toys_14,toys_15,toys_16,
-                            toys_17,myelves,myelves_rate)
+                            toys_17,myelves,myelves_rate, toys_18)
 (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(1+NUM_ELVES)
 
 length(table(submissions[,1]));length(table(submissions[,2]))
@@ -33,7 +33,7 @@ for (i in 1:900){
 save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData')
 
 ## search toys_0 | chunk of toys_0 = train1-14
-## delay = 171753437 | 1372732 | 125.118 | 10.2% | 1515304033 
-## 10 + 14 + 10 
-## 4.0 => 1.0 +
-## delay time after trivals are used 
+## delay = 51274116 | 3% | 1644365377
+## 10 + 14 + 10 = 96810
+## (7200: 10 + 14 + 6)
+## (8160: 10 + 14 + 10)
