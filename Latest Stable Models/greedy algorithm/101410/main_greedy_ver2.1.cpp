@@ -119,6 +119,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
     int rate_count;
     int retrain_count=0;
     int delay_sum=0;
+    int delay_num=0;
     for(unsigned long long current_toy=0; current_toy<10000000; ++current_toy){
         
         min_val = myelves(0,2);
@@ -160,6 +161,14 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 }else{
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     delay_sum += sanc;
+                    delay_num += 1;
+                    
+                   /* if(sanc>100){
+                        Rcpp::Rcout << '\n' << sanc_rate_2 << ' ' << sanc << ' ' << c_elf_start_time << ' ' << c_elf_start_time_2
+                    << ' ' << c_elf_id << ' ' << act_duration << ' ' << myToys_0(toy_row(0),2);
+                    } */
+                    
+                    
                     c_toy_id = myToys_1(toy_row(1),0);
                     c_toy_arrival = myToys_1(toy_row(1),1);
                     c_toy_duration = myToys_1(toy_row(1),2);
@@ -172,15 +181,15 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 toy_row(1) += 1; 
             }
             
-//ex1            
-        }else if((c_elf_rating == 4.0) & (toy_row(18) < myToys_18.nrow())){
+//10 + 14 + 10            
+        }else if((c_elf_rating >= 3.95) & (toy_row(18) < myToys_18.nrow())){
             
             int c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_18(toy_row(18),1)); //toy1 start time 
             int act_duration = ceil(myToys_18(toy_row(18),2)/c_elf_rating); //toy1 actual work time 
             int sanc = getSanctionedBreakdown(c_elf_start_time_2, act_duration); //toy1 sanctional time
-            int unsanc = act_duration - sanc;
+            int sanc_t = getSanctionedBreakdown(c_elf_start_time_2, act_duration/2); //toy1 sanctional time
             
-            if(unsanc > 840){
+            if(sanc <= 1100){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -193,8 +202,9 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_toy_duration = myToys_0(toy_row(0),2);
                     toy_row(0) += 1;
                 }else{
-                    c_elf_start_time = 840 + sanc + c_elf_start_time_2; 
-                    delay_sum += sanc;
+                    c_elf_start_time = 840 + sanc_t + c_elf_start_time_2;
+                    delay_sum += sanc_t;
+                    delay_num += 1;
                     
                     c_toy_id = myToys_18(toy_row(18),0);
                     c_toy_arrival = myToys_18(toy_row(18),1);
@@ -205,11 +215,11 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_id = myToys_18(toy_row(18),0);
                 c_toy_arrival = myToys_18(toy_row(18),1);
                 c_toy_duration = myToys_18(toy_row(18),2);
-                toy_row(18) += 1;
-            } 
-//ex1                      
-        }else if((c_elf_rating > 3.9) & (toy_row(3) < myToys_3.nrow())){\
+                toy_row(18) += 1; 
+            }
             
+//ex1            
+        }else if((c_elf_rating > 3.9) & (toy_row(3) < myToys_3.nrow())){\
             c_toy_id = myToys_3(toy_row(3),0);
             c_toy_arrival = myToys_3(toy_row(3),1);
             c_toy_duration = myToys_3(toy_row(3),2);
@@ -238,7 +248,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 }else{
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2; 
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_17(toy_row(17),0);
                     c_toy_arrival = myToys_17(toy_row(17),1);
                     c_toy_duration = myToys_17(toy_row(17),2);
@@ -275,7 +285,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_16(toy_row(16),0);
                     c_toy_arrival = myToys_16(toy_row(16),1);
                     c_toy_duration = myToys_16(toy_row(16),2);
@@ -311,7 +321,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_15(toy_row(15),0);
                     c_toy_arrival = myToys_15(toy_row(15),1);
                     c_toy_duration = myToys_15(toy_row(15),2);
@@ -348,7 +358,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_14(toy_row(14),0);
                     c_toy_arrival = myToys_14(toy_row(14),1);
                     c_toy_duration = myToys_14(toy_row(14),2);
@@ -385,7 +395,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_13(toy_row(13),0);
                     c_toy_arrival = myToys_13(toy_row(13),1);
                     c_toy_duration = myToys_13(toy_row(13),2);
@@ -422,7 +432,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_12(toy_row(12),0);
                     c_toy_arrival = myToys_12(toy_row(12),1);
                     c_toy_duration = myToys_12(toy_row(12),2);
@@ -459,7 +469,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_11(toy_row(11),0);
                     c_toy_arrival = myToys_11(toy_row(11),1);
                     c_toy_duration = myToys_11(toy_row(11),2);
@@ -496,7 +506,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_10(toy_row(10),0);
                     c_toy_arrival = myToys_10(toy_row(10),1);
                     c_toy_duration = myToys_10(toy_row(10),2);
@@ -532,7 +542,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_9(toy_row(9),0);
                     c_toy_arrival = myToys_9(toy_row(9),1);
                     c_toy_duration = myToys_9(toy_row(9),2);
@@ -569,7 +579,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_8(toy_row(8),0);
                     c_toy_arrival = myToys_8(toy_row(8),1);
                     c_toy_duration = myToys_8(toy_row(8),2);
@@ -606,7 +616,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_7(toy_row(7),0);
                     c_toy_arrival = myToys_7(toy_row(7),1);
                     c_toy_duration = myToys_7(toy_row(7),2);
@@ -643,7 +653,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_6(toy_row(6),0);
                     c_toy_arrival = myToys_6(toy_row(6),1);
                     c_toy_duration = myToys_6(toy_row(6),2);
@@ -680,7 +690,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_5(toy_row(5),0);
                     c_toy_arrival = myToys_5(toy_row(5),1);
                     c_toy_duration = myToys_5(toy_row(5),2);
@@ -717,7 +727,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
-                    
+                    delay_num += 1;
                     c_toy_id = myToys_4(toy_row(4),0);
                     c_toy_arrival = myToys_4(toy_row(4),1);
                     c_toy_duration = myToys_4(toy_row(4),2);
@@ -743,6 +753,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     
                     delay_sum += sanc;
+                    delay_num += 1;
                 }
                 c_toy_id = myToys_0(toy_row(0),0);
                 c_toy_arrival = myToys_0(toy_row(0),1);
@@ -785,11 +796,6 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_duration = myToys_10(toy_row(10),2);
                 toy_row(10) += 1;
                 
-            }else if(toy_row(18) < myToys_18.nrow()){
-                c_toy_id = myToys_18(toy_row(18),0);
-                c_toy_arrival = myToys_18(toy_row(18),1);
-                c_toy_duration = myToys_18(toy_row(18),2);
-                toy_row(18) += 1;
             }else if(toy_row(3) < myToys_3.nrow()){
                 c_toy_id = myToys_3(toy_row(3),0);
                 c_toy_arrival = myToys_3(toy_row(3),1);
@@ -819,11 +825,10 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
         }
         
         if(current_toy % 100000 == 0) {
-            Rcpp::Rcout << '\n' << (double)current_toy/1000000 << ' ' << rate_count << ' ' << retrain_count << ' ' << delay_sum
+            Rcpp::Rcout << '\n' << (double)current_toy/1000000 << ' ' << rate_count << ' ' << retrain_count << ' ' << delay_sum << ' ' << delay_num
             << '\n' << myToys_0.nrow() << ' ' << toy_row(0)/myToys_0.nrow()*100
             << '\n' << myToys_1.nrow() << ' ' << toy_row(1)/myToys_1.nrow()*100
             << '\n' << myToys_2.nrow() << ' ' << toy_row(2)/myToys_2.nrow()*100
-            << '\n' << myToys_18.nrow() << ' ' << toy_row(18)/myToys_18.nrow()*100
             << '\n' << myToys_3.nrow() << ' ' << toy_row(3)/myToys_3.nrow()*100
             << '\n' << myToys_4.nrow() << ' ' << toy_row(4)/myToys_4.nrow()*100
             << '\n' << myToys_5.nrow() << ' ' << toy_row(5)/myToys_5.nrow()*100
@@ -838,14 +843,14 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             << '\n' << myToys_14.nrow() << ' ' << toy_row(14)/myToys_14.nrow()*100
             << '\n' << myToys_15.nrow() << ' ' << toy_row(15)/myToys_15.nrow()*100
             << '\n' << myToys_16.nrow() << ' ' << toy_row(16)/myToys_16.nrow()*100
-            << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100 << '\n';
+            << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100
+            << '\n' << myToys_18.nrow() << ' ' << toy_row(18)/myToys_18.nrow()*100 << '\n';
         }
     }
-    Rcpp::Rcout << '\n' << rate_count << ' ' << retrain_count << ' ' << delay_sum
+    Rcpp::Rcout << '\n' << rate_count << ' ' << retrain_count << ' ' << delay_sum<< ' ' << delay_num
     << '\n' << myToys_0.nrow() << ' ' << toy_row(0)/myToys_0.nrow()*100
     << '\n' << myToys_1.nrow() << ' ' << toy_row(1)/myToys_1.nrow()*100
     << '\n' << myToys_2.nrow() << ' ' << toy_row(2)/myToys_2.nrow()*100
-    << '\n' << myToys_18.nrow() << ' ' << toy_row(18)/myToys_18.nrow()*100
     << '\n' << myToys_3.nrow() << ' ' << toy_row(3)/myToys_3.nrow()*100
     << '\n' << myToys_4.nrow() << ' ' << toy_row(4)/myToys_4.nrow()*100
     << '\n' << myToys_5.nrow() << ' ' << toy_row(5)/myToys_5.nrow()*100
@@ -860,6 +865,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
     << '\n' << myToys_14.nrow() << ' ' << toy_row(14)/myToys_14.nrow()*100
     << '\n' << myToys_15.nrow() << ' ' << toy_row(15)/myToys_15.nrow()*100
     << '\n' << myToys_16.nrow() << ' ' << toy_row(16)/myToys_16.nrow()*100
-    << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100 << '\n';
+    << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100
+    << '\n' << myToys_18.nrow() << ' ' << toy_row(18)/myToys_18.nrow()*100 << '\n';
     return outcomes;
 }
