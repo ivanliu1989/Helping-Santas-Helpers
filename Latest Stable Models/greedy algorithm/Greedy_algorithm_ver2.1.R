@@ -11,7 +11,7 @@ myelves_rate <- myelves[,'current_rating']
 ### main loop ###
 submissions <- solution_Elf(toys_0,toys_1,toys_2,toys_3,toys_4,toys_5,toys_6,toys_7,toys_8,
                             toys_9,toys_10,toys_11,toys_12,toys_13,toys_14,toys_15,toys_16,
-                            toys_17,myelves,myelves_rate,toys_18)
+                            toys_17,myelves,myelves_rate)
 (submissions[which.max(submissions[,3]),3]+submissions[which.max(submissions[,3]), 4])*log(1+NUM_ELVES)
 
 length(table(submissions[,1]));length(table(submissions[,2]))
