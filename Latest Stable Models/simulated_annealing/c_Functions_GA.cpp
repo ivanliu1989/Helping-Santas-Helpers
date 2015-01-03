@@ -106,17 +106,16 @@ int getSanctionedBreakdown(int startMinute, int duration) {
 }
 
 // [[Rcpp::export]]
-double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
-    int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time,schedule_index;
+double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c){
+    int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time;
     double c_elf_rating;
-    int n_toys = schedule_c.size();
+    int n_toys = myToys_c.nrow();
     NumericMatrix outcomes(n_toys,4);
     
     for(int current_toy = 0; current_toy<n_toys; ++current_toy){
-        schedule_index = schedule_c(current_toy) -1;
-        c_toy_id = myToys_c(schedule_index,0);
-        c_toy_arrival = myToys_c(schedule_index,1);
-        c_toy_duration = myToys_c(schedule_index,2);
+        c_toy_id = myToys_c(current_toy,0);
+        c_toy_arrival = myToys_c(current_toy,1);
+        c_toy_duration = myToys_c(current_toy,2);
         
         c_elf_id = myelves_c(0);
         c_elf_start_time = myelves_c(2);
@@ -144,17 +143,16 @@ double solution_Elf_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVe
 }
 
 // [[Rcpp::export]]
-NumericMatrix solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c, NumericVector schedule_c){
-    int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time,schedule_index;
+NumericMatrix solution_Elf_submit_c(NumericMatrix myToys_c, NumericVector myelves_c){
+    int work_duration,c_toy_id,c_toy_arrival,c_toy_duration,c_elf_id,c_elf_start_time;
     double c_elf_rating;
-    int n_toys = schedule_c.size();
+    int n_toys = myToys_c.nrow();
     NumericMatrix outcomes(n_toys,4);
     
     for(int current_toy = 0; current_toy<n_toys; ++current_toy){
-        schedule_index = schedule_c(current_toy) -1;
-        c_toy_id = myToys_c(schedule_index,0);
-        c_toy_arrival = myToys_c(schedule_index,1);
-        c_toy_duration = myToys_c(schedule_index,2);
+        c_toy_id = myToys_c(current_toy,0);
+        c_toy_arrival = myToys_c(current_toy,1);
+        c_toy_duration = myToys_c(current_toy,2);
         
         c_elf_id = myelves_c(0);
         c_elf_start_time = myelves_c(2);

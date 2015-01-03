@@ -6,8 +6,8 @@ setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Sant
 setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls())
 source('R code/Functions.R')
-load('data/toys.RData'); load('Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData'); 
-load('optimization_results/Simulated_Annealing_676_900.RData') #==========>> load('optimization_results/simulated_annealing_1_900.RData')
+load('data/toys_regulated.RData'); load('Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData'); 
+# load('optimization_results/Simulated_Annealing_676_900.RData') #==========>> load('optimization_results/simulated_annealing_1_900.RData')
 # x_all <- x_comb; f_all <- f_comb
 # rm(x_comb);rm(f_comb)
 
