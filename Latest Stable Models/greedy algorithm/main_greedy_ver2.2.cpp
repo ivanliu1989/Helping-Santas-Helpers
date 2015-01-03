@@ -164,8 +164,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_arrival = myToys_1(toy_row(1),1);
                 c_toy_duration = myToys_1(toy_row(1),2);
                 toy_row(1) += 1; 
-            }
-            
+            }          
 //ex1            
         }else if((c_elf_rating > 3.6) && (toy_row(3) < myToys_3.nrow())){
             

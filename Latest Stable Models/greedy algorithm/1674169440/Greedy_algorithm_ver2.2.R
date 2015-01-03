@@ -1,7 +1,7 @@
 #setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 #gc(); rm(list=ls()); source('R code/Functions.R');
 require(Rcpp)
-sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_ver2.1.cpp')
+sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_ver2.2.cpp')
 
 ### Segmentation Elf ###
 NUM_ELVES <- 900
