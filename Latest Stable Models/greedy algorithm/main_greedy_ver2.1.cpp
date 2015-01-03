@@ -109,10 +109,11 @@ int getSanctionedBreakdown(int startMinute, int duration) {
 // [[Rcpp::export]]
 NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,NumericMatrix myToys_2,NumericMatrix myToys_3,NumericMatrix myToys_4,NumericMatrix myToys_5,
                            NumericMatrix myToys_6,NumericMatrix myToys_7,NumericMatrix myToys_8,NumericMatrix myToys_9,NumericMatrix myToys_10,NumericMatrix myToys_11,NumericMatrix myToys_12,
-                           NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericMatrix myToys_16,NumericMatrix myToys_17,NumericMatrix myelves, NumericVector myelves_rate){
+                           NumericMatrix myToys_13,NumericMatrix myToys_14,NumericMatrix myToys_15,NumericMatrix myToys_16,NumericMatrix myToys_17,NumericMatrix myelves, NumericVector myelves_rate,
+                           NumericMatrix myToys_18){
     
     NumericMatrix outcomes(10000000,4); //ToyId, Arrival_time, Duration, Size
-    NumericVector toy_row(18);
+    NumericVector toy_row(19);
     int c_toy_id, c_toy_arrival, c_toy_duration, min_val, min_row, c_elf_id, c_elf_start_time,work_duration;
     double c_elf_rating;
     int rate_count;
@@ -148,7 +149,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             
             late_start = (c_elf_start_time_2 - (int)myelves(min_row,2));
             
-            if((sanc_rate <= 0.8) || (late_start >= 200000)){
+            if((sanc_rate <= 0.8) || (late_start >= 100000)){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -160,17 +161,17 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_toy_arrival = myToys_0(toy_row(0),1);
                     c_toy_duration = myToys_0(toy_row(0),2);
                     toy_row(0) += 1;
-                }else if((toy_row(2) < myToys_2.nrow()) && (late_start >= 200000)){
+                }else if((toy_row(18) < myToys_18.nrow()) && (late_start >= 100000)){
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     delay_sum += sanc;
                     delay_num += 1;
                     
                     Rcpp::Rcout << '\n' << late_start << ' ' << c_elf_start_time << ' '<< myelves(min_row,2);
                 
-                    c_toy_id = myToys_2(toy_row(2),0);
-                    c_toy_arrival = myToys_2(toy_row(2),1);
-                    c_toy_duration = myToys_2(toy_row(2),2);
-                    toy_row(2) += 1;   
+                    c_toy_id = myToys_18(toy_row(18),0);
+                    c_toy_arrival = myToys_18(toy_row(18),1);
+                    c_toy_duration = myToys_18(toy_row(18),2);
+                    toy_row(18) += 1;   
                 }else{
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     delay_sum += sanc;
@@ -186,7 +187,43 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_duration = myToys_1(toy_row(1),2);
                 toy_row(1) += 1; 
             }
+// 24
+        }else if((c_elf_rating > 3.98) & (toy_row(18) < myToys_18.nrow())){
             
+            int c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_18(toy_row(18),1)); //toy1 start time 
+            int act_duration = ceil(myToys_18(toy_row(18),2)/c_elf_rating); //toy1 actual work time 
+            int sanc = getSanctionedBreakdown(c_elf_start_time_2, 600); //toy1 sanctional time
+            double sanc_rate = (double)sanc/600;
+            
+            late_start = (c_elf_start_time_2 - (int)myelves(min_row,2));
+            
+            if((sanc_rate < 0.95)){
+        
+                int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
+                int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
+                int sanc_2 = getSanctionedBreakdown(c_elf_start_time_3, act_duration_2); //trival sanctional time
+                double sanc_rate_2 = (double)sanc_2/act_duration_2;
+                
+                if((toy_row(0) < myToys_0.nrow()) && (sanc_rate_2 >= 0.950)){
+                    c_toy_id = myToys_0(toy_row(0),0);
+                    c_toy_arrival = myToys_0(toy_row(0),1);
+                    c_toy_duration = myToys_0(toy_row(0),2);
+                    toy_row(0) += 1;
+                }else{
+                    c_elf_start_time = 840 + sanc + c_elf_start_time_2;
+                    delay_sum += sanc;
+                    delay_num += 1;
+                    c_toy_id = myToys_18(toy_row(18),0);
+                    c_toy_arrival = myToys_18(toy_row(18),1);
+                    c_toy_duration = myToys_18(toy_row(18),2);
+                    toy_row(18) += 1;   
+                }
+            }else{
+                c_toy_id = myToys_18(toy_row(18),0);
+                c_toy_arrival = myToys_18(toy_row(18),1);
+                c_toy_duration = myToys_18(toy_row(18),2);
+                toy_row(18) += 1; 
+            }    
 //ex1            
         }else if((c_elf_rating > 3.6) & (toy_row(3) < myToys_3.nrow())){
             
@@ -777,7 +814,16 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                 c_toy_arrival = myToys_10(toy_row(10),1);
                 c_toy_duration = myToys_10(toy_row(10),2);
                 toy_row(10) += 1;
-            
+            }else if(toy_row(17) < myToys_17.nrow()){
+                c_toy_id = myToys_17(toy_row(17),0);
+                c_toy_arrival = myToys_17(toy_row(17),1);
+                c_toy_duration = myToys_17(toy_row(17),2);
+                toy_row(17) += 1;
+            }else if(toy_row(18) < myToys_18.nrow()){
+                c_toy_id = myToys_18(toy_row(18),0);
+                c_toy_arrival = myToys_18(toy_row(18),1);
+                c_toy_duration = myToys_18(toy_row(18),2);
+                toy_row(18) += 1;
             }else if(toy_row(1) < myToys_1.nrow()){
                 c_toy_id = myToys_1(toy_row(1),0);
                 c_toy_arrival = myToys_1(toy_row(1),1);
@@ -832,7 +878,8 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             << '\n' << myToys_14.nrow() << ' ' << toy_row(14)/myToys_14.nrow()*100
             << '\n' << myToys_15.nrow() << ' ' << toy_row(15)/myToys_15.nrow()*100
             << '\n' << myToys_16.nrow() << ' ' << toy_row(16)/myToys_16.nrow()*100
-            << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100 << '\n';
+            << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100
+            << '\n' << myToys_18.nrow() << ' ' << toy_row(18)/myToys_18.nrow()*100 << '\n';
         }
     }
     Rcpp::Rcout << '\n' << rate_count << ' ' << retrain_count << ' ' << delay_sum<< ' ' << delay_num << ' ' << late_start
@@ -853,6 +900,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
     << '\n' << myToys_14.nrow() << ' ' << toy_row(14)/myToys_14.nrow()*100
     << '\n' << myToys_15.nrow() << ' ' << toy_row(15)/myToys_15.nrow()*100
     << '\n' << myToys_16.nrow() << ' ' << toy_row(16)/myToys_16.nrow()*100
-    << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100 << '\n';
+    << '\n' << myToys_17.nrow() << ' ' << toy_row(17)/myToys_17.nrow()*100
+    << '\n' << myToys_18.nrow() << ' ' << toy_row(18)/myToys_18.nrow()*100 << '\n';
     return outcomes;
 }

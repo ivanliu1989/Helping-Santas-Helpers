@@ -7,19 +7,19 @@ load('data/toys_regulated.RData')
 ### break down toys dataset ###
 toys <- data.matrix(toys)
 
-toy_ex1 <- 5760; toy_ex2 <- 15480;
+toy_ex1 <- c(2849:3080,8058:8160); toy_ex2 <- 15480;
 
-toy_remain <- 3080 # 2848
+toy_remain <- 2848 # 2848
 
-toy_retrain1 <- c(120:153); toy_retrain2 <- c(174:210); toy_retrain3 <- c(211:256);
+toy_retrain1 <- c(140:153); toy_retrain2 <- c(174:210); toy_retrain3 <- c(211:256);
 toy_retrain4 <- c(257:312); toy_retrain5 <- c(313:381); toy_retrain6 <- c(382:464); 
-toy_retrain7 <- c(465:566,30:34);
+toy_retrain7 <- c(465:566);
 # toy_retrain1 <- c(150); toy_retrain2 <- c(183); toy_retrain3 <- c(223);
 # toy_retrain4 <- c(272); toy_retrain5 <- c(331); toy_retrain6 <- c(404); toy_retrain7 <- c(492);
 
 toy_train1 <- c(567:690,35:39); toy_train2 <- c(691:841,40:49); toy_train3 <- c(842:1025,50:59);
 toy_train4 <- c(1026:1250,60:69); toy_train5 <- c(1251:1523,70:79); toy_train6 <- c(1524:1857,80:89); 
-toy_train7 <- c(1858:2264,100:105);
+toy_train7 <- c(1858:2264,100:120);
 
 toys <- data.matrix(transform(toys, Size = 0)) # trival
 toys[which(toys[,'Duration']<=toy_remain),'Size'] <- 1 # remain 13500-495900
@@ -40,6 +40,7 @@ toys[which(toys[,'Duration']%in%toy_train4),'Size'] <- 14 # tr4
 toys[which(toys[,'Duration']%in%toy_train5),'Size'] <- 15 # tr5
 toys[which(toys[,'Duration']%in%toy_train6),'Size'] <- 16 # tr6
 toys[which(toys[,'Duration']%in%toy_train7),'Size'] <- 17 # tr7
+toys[which(toys[,'Duration']%in%toy_ex1),'Size'] <- 18 # 10+14+10
 
 #table(toys[,'Size'])
 
@@ -61,6 +62,7 @@ toys_14 <- toys[which(toys[,'Size']==14),]
 toys_15 <- toys[which(toys[,'Size']==15),]
 toys_16 <- toys[which(toys[,'Size']==16),]
 toys_17 <- toys[which(toys[,'Size']==17),]
+toys_18 <- toys[which(toys[,'Size']==18),]
 
 toys_0 <- toys_0[order(toys_0[,'Arrival_time']),]
 toys_1 <- toys_1[order(-toys_1[,'Duration'],toys_1[,'Arrival_time']),]
@@ -80,5 +82,6 @@ toys_14 <- toys_14[order(toys_14[,'Arrival_time'],-toys_14[,'Duration']),]
 toys_15 <- toys_15[order(toys_15[,'Arrival_time'],-toys_15[,'Duration']),]
 toys_16 <- toys_16[order(toys_16[,'Arrival_time'],-toys_16[,'Duration']),]
 toys_17 <- toys_17[order(toys_17[,'Arrival_time'],-toys_17[,'Duration']),]
+toys_18 <- toys_18[order(toys_18[,'Arrival_time'],-toys_18[,'Duration']),]
 
 # 7days seperate
