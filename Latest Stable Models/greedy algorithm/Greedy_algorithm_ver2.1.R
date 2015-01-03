@@ -22,4 +22,6 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 write.csv(submissions_output, 'toys_submission_1687057470.csv', row.names = FALSE)
 
-# 1675676634
+# 1674960497
+
+# first train large 

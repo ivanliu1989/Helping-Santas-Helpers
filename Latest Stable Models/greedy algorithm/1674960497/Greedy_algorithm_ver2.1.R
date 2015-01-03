@@ -22,19 +22,7 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 write.csv(submissions_output, 'toys_submission_1687057470.csv', row.names = FALSE)
 
-# 1675883774
-# 1675704393
 # 1675676634
-
-x_all <- list()
-for (i in 1:900){
-    x_all[[i]] <- submissions[which(submissions[,2]==i), 1]
-}
-save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData')
-
-names(submissions) <- c('toy_id', 'elf_id', 'elf_start_time', 'work_duration')
-submissions_output <- submissions
-save(submissions_output, file='comparison_GA.RData')
-
-gc(); rm(list=ls())
-load('comparison_GA.RData')
+# 1675237455
+# 1675225337
+# 1674960497
