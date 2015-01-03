@@ -32,4 +32,9 @@ for (i in 1:900){
 }
 save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData')
 
-save(submissions_output, outcome_all, file='comparison_GA.RData')
+names(submissions) <- c('toy_id', 'elf_id', 'elf_start_time', 'work_duration')
+submissions_output <- submissions
+save(submissions_output, file='comparison_GA.RData')
+
+gc(); rm(list=ls())
+load('comparison_GA.RData')
