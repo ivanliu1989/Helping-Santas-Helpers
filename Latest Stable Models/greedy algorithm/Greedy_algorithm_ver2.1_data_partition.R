@@ -17,7 +17,7 @@ toy_retrain4 <- c(257:312); toy_retrain5 <- c(313:381); toy_retrain6 <- c(382:46
 # toy_retrain4 <- c(272); toy_retrain5 <- c(331); toy_retrain6 <- c(404); toy_retrain7 <- c(492);
 
 toy_train1 <- c(567:690,30:39); toy_train2 <- c(691:841,40:49); toy_train3 <- c(842:1025,50:59);
-toy_train4 <- c(1026:1250,60:69); toy_train5 <- c(1251:1523,70:79); toy_train6 <- c(1524:1857,80:89); toy_train7 <- c(1858:2264,100:119);
+toy_train4 <- c(1026:1250,60:69); toy_train5 <- c(1251:1523,70:79); toy_train6 <- c(1524:1857,80:89); toy_train7 <- c(1858:2264,100:105);
 
 toys <- data.matrix(transform(toys, Size = 0)) # trival
 toys[which(toys[,'Duration']<=toy_remain),'Size'] <- 1 # remain

@@ -23,40 +23,16 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
 write.csv(submissions_output, 'toys_submission_1687057470.csv', row.names = FALSE)
 
 
-# 1688322303
-# 1687057470
-# 1686088855
-# 1685520864
+# 1685460701
+# 1684243982
+# 1682885023
+# 1682157980
+# 1680386939
+# 1679474603
+# 1678280928
 
 x_all <- list()
 for (i in 1:900){
     x_all[[i]] <- submissions[which(submissions[,2]==i), 1]
 }
 save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData')
-
-## search toys_0 | chunk of toys_0 = train1-14
-## delay = 171753437 | 1372732 | 125.118 | 10.2% | 1515304033 
-## 10 + 14 + 10 
-## 4.0 => 1.0 +
-## delay time after trivals are used 
-# 
-# 0 50566 174563460 1245081
-# 3185692 100
-# 755044 100
-# 1253715 100
-# 693851 100
-# 208833 100
-# 239119 100
-# 207244 100
-# 172995 100
-# 143425 100
-# 115076 100
-# 93054 100
-# 700608 100
-# 554417 100
-# 450298 100
-# 373775 100
-# 317785 100
-# 276818 100
-# 247964 100
-# 10287 100

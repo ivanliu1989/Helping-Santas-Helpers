@@ -148,7 +148,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             
             late_start = (c_elf_start_time_2 - (int)myelves(min_row,2));
             
-            if((sanc_rate <= 0.8) || (late_start >= 1000)){
+            if((sanc_rate <= 0.8) || (late_start >= 10000)){
         
                 int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
                 int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
@@ -184,32 +184,25 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             }
             
 //ex1            
-        }else if((c_elf_rating > 3.9) & (toy_row(3) < myToys_3.nrow())){
+        }else if((c_elf_rating > 3.6) & (toy_row(3) < myToys_3.nrow())){
             
             int c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_3(toy_row(3),1)); //toy1 start time 
             
             late_start = (c_elf_start_time_2 - (int)myelves(min_row,2));
             
-            if(late_start >= 1000){
+            if((late_start >= 10000)&&(toy_row(0) < myToys_0.nrow())){
                 
-                int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
-                int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
-                int sanc_2 = getSanctionedBreakdown(c_elf_start_time_3, act_duration_2); //trival sanctional time
-                double sanc_rate_2 = (double)sanc_2/act_duration_2;
+                c_toy_id = myToys_0(toy_row(0),0);
+                c_toy_arrival = myToys_0(toy_row(0),1);
+                c_toy_duration = myToys_0(toy_row(0),2);
+                toy_row(0) += 1;
                 
-                
-                if((toy_row(0) < myToys_0.nrow()) && (sanc_rate_2 >= 0.950)){
-                    c_toy_id = myToys_0(toy_row(0),0);
-                    c_toy_arrival = myToys_0(toy_row(0),1);
-                    c_toy_duration = myToys_0(toy_row(0),2);
-                    toy_row(0) += 1;
-                }else{
+            }else{
                     c_toy_id = myToys_3(toy_row(3),0);
                     c_toy_arrival = myToys_3(toy_row(3),1);
                     c_toy_duration = myToys_3(toy_row(3),2);
                     toy_row(3) += 1;
                 }
-            }
 //tr7            
         }else if((c_elf_rating >= 3.28) & (toy_row(17) < myToys_17.nrow())){
             
