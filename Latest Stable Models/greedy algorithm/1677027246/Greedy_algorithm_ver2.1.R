@@ -23,6 +23,14 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
 write.csv(submissions_output, 'toys_submission_1687057470.csv', row.names = FALSE)
 
 
+# 1685460701
+# 1684243982
+# 1682885023
+# 1682157980
+# 1680386939
+# 1679474603
+# 1678280928
+# 1677301359
 # 1677288534
 # 1677027246
 
