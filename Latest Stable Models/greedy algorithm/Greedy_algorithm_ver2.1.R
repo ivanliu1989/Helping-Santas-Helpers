@@ -23,8 +23,9 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
 write.csv(submissions_output, 'toys_submission_1687057470.csv', row.names = FALSE)
 
 
-# 1677288534
-# 1677027246
+# 1676922193
+# 1676724619
+# 1676664116
 
 x_all <- list()
 for (i in 1:900){
