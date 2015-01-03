@@ -9,7 +9,7 @@ toys <- data.matrix(toys)
 
 toy_ex1 <- 5760; toy_ex2 <- 15480;
 
-toy_remain <- 2988 # 2848
+toy_remain <- 3080 # 2848
 
 toy_retrain1 <- c(120:153); toy_retrain2 <- c(174:210); toy_retrain3 <- c(211:256);
 toy_retrain4 <- c(257:312); toy_retrain5 <- c(313:381); toy_retrain6 <- c(382:464); toy_retrain7 <- c(465:566,30:34);
@@ -63,7 +63,7 @@ toys_17 <- toys[which(toys[,'Size']==17),]
 toys_0 <- toys_0[order(toys_0[,'Arrival_time']),]
 toys_1 <- toys_1[order(-toys_1[,'Duration'],toys_1[,'Arrival_time']),]
 toys_2 <- toys_2[order(toys_2[,'Arrival_time'],toys_2[,'Duration']),]
-toys_3 <- toys_3[order(-toys_3[,'Duration']),]
+toys_3 <- toys_3[order(-toys_3[,'Duration'],toys_3[,'Arrival_time']),]
 toys_4 <- toys_4[order(toys_4[,'Arrival_time'],-toys_4[,'Duration']),]
 toys_5 <- toys_5[order(toys_5[,'Arrival_time'],-toys_5[,'Duration']),]
 toys_6 <- toys_6[order(toys_6[,'Arrival_time'],-toys_6[,'Duration']),]
