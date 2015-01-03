@@ -22,15 +22,7 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
                                  Duration = as.integer(submissions[,4]), stringsAsFactors = FALSE)
 write.csv(submissions_output, 'toys_submission_1687057470.csv', row.names = FALSE)
 
+# 1674960497
+# 1674169440
 
-# 1685460701
-# 1684243982
-# 1682885023
-# 1682157980
-# 1680386939
-
-x_all <- list()
-for (i in 1:900){
-    x_all[[i]] <- submissions[which(submissions[,2]==i), 1]
-}
-save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData')
+# first train large 

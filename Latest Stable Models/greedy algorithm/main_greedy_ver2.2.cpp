@@ -150,18 +150,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             
             if((sanc_rate <= 0.8) || (late_start >= 10000)){
         
-                int c_elf_start_time_3 = std::max(c_elf_start_time, (int)myToys_0(toy_row(0),1)); //trival start time 
-                int act_duration_2 = ceil(myToys_0(toy_row(0),2)/c_elf_rating); //trival actual work time 
-                int sanc_2 = getSanctionedBreakdown(c_elf_start_time_3, act_duration_2); //trival sanctional time
-                double sanc_rate_2 = (double)sanc_2/act_duration_2;
                 
-                
-                if((toy_row(0) < myToys_0.nrow()) && (sanc_rate_2 >= 0.950)){
-                    c_toy_id = myToys_0(toy_row(0),0);
-                    c_toy_arrival = myToys_0(toy_row(0),1);
-                    c_toy_duration = myToys_0(toy_row(0),2);
-                    toy_row(0) += 1;
-                }else{
                     c_elf_start_time = 840 + sanc + c_elf_start_time_2;
                     delay_sum += sanc;
                     delay_num += 1;
@@ -175,7 +164,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
                     c_toy_arrival = myToys_1(toy_row(1),1);
                     c_toy_duration = myToys_1(toy_row(1),2);
                     toy_row(1) += 1;   
-                }
+                
             }else{
                 c_toy_id = myToys_1(toy_row(1),0);
                 c_toy_arrival = myToys_1(toy_row(1),1);
@@ -184,7 +173,7 @@ NumericMatrix solution_Elf(NumericMatrix myToys_0, NumericMatrix myToys_1,Numeri
             }
             
 //ex1            
-        }else if((c_elf_rating > 3.6) & (toy_row(3) < myToys_3.nrow())){
+        }else if((c_elf_rating > 3.6) && (toy_row(3) < myToys_3.nrow()) && (toy_row(0) >= myToys_0.nrow())){
             
             int c_elf_start_time_2 = std::max(c_elf_start_time, (int)myToys_3(toy_row(3),1)); //toy1 start time 
             

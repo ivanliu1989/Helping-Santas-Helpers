@@ -1,7 +1,7 @@
 #setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
 #gc(); rm(list=ls()); source('R code/Functions.R');
 require(Rcpp)
-sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_ver2.1.cpp')
+sourceCpp('Latest Stable Models/greedy algorithm/main_greedy_ver2.2.cpp')
 
 ### Segmentation Elf ###
 NUM_ELVES <- 900
@@ -23,5 +23,6 @@ submissions_output <- data.frame(ToyId = as.integer(submissions[,1]),
 write.csv(submissions_output, 'toys_submission_1687057470.csv', row.names = FALSE)
 
 # 1674960497
+# 1674169440
 
 # first train large 
