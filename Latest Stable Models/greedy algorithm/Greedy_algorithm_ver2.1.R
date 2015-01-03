@@ -26,8 +26,3 @@ write.csv(submissions_output, 'toys_submission_1687057470.csv', row.names = FALS
 # 1675704393
 # 1675676634
 
-x_all <- list()
-for (i in 1:900){
-    x_all[[i]] <- submissions[which(submissions[,2]==i), 1]
-}
-save(x_all, file='Latest Stable Models/simulated_annealing/greedy_algorithm_solution.RData')

@@ -15,11 +15,11 @@ myelves <- create_elves(NUM_ELVES)
 for (index_num in 1:900){
     myelves[,'elf_id'] <- index_num
     myToys <- data.matrix(submissions_output[which(submissions_output[,2]==index_num),])
-    #myToys <- myToys[order(x_all[[index_num]]),] # ??
-    #schedule <- c(1:nrow(myToys)) #x_all[[index_num]] 
+    myToys <- myToys[order(myToys[,3]),]
     outcome <- solution_Elf_submit_c(myToys, myelves)
+    outcome_score <- (outcome[which.max(outcome[,3]),3]+outcome[which.max(outcome[,3]), 4])*log(901)
     outcome_all <- rbind(outcome_all, outcome)
-    cat('\nsuccess! no:', index_num, 'score:', solution_Elf_c(myToys, myelves))#,'fbest:',f_all[index_num])
+    cat('\nsuccess! no:', index_num, 'score:', outcome_score)#,'fbest:',f_all[index_num])
 }
 
 dim(outcome_all); head(outcome_all); 

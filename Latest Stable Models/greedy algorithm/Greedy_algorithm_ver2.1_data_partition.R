@@ -1,5 +1,5 @@
-setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
-# setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
+#setwd('C:/Users/Ivan.Liuyanfeng/Desktop/Data_Mining_Work_Space/FICO/Helping-Santas-Helpers')
+setwd('H:/Machine_Learning/FICO/Helping-Santas-Helpers')
 gc(); rm(list=ls()); source('R code/Functions.R');
 load('data/toys_regulated.RData')
 # load('data/toys.RData')
@@ -12,18 +12,20 @@ toy_ex1 <- 5760; toy_ex2 <- 15480;
 toy_remain <- 3080 # 2848
 
 toy_retrain1 <- c(120:153); toy_retrain2 <- c(174:210); toy_retrain3 <- c(211:256);
-toy_retrain4 <- c(257:312); toy_retrain5 <- c(313:381); toy_retrain6 <- c(382:464); toy_retrain7 <- c(465:566,30:34);
+toy_retrain4 <- c(257:312); toy_retrain5 <- c(313:381); toy_retrain6 <- c(382:464); 
+toy_retrain7 <- c(465:566,30:34);
 # toy_retrain1 <- c(150); toy_retrain2 <- c(183); toy_retrain3 <- c(223);
 # toy_retrain4 <- c(272); toy_retrain5 <- c(331); toy_retrain6 <- c(404); toy_retrain7 <- c(492);
 
 toy_train1 <- c(567:690,35:39); toy_train2 <- c(691:841,40:49); toy_train3 <- c(842:1025,50:59);
-toy_train4 <- c(1026:1250,60:69); toy_train5 <- c(1251:1523,70:79); toy_train6 <- c(1524:1857,80:89); toy_train7 <- c(1858:2264,100:105);
+toy_train4 <- c(1026:1250,60:69); toy_train5 <- c(1251:1523,70:79); toy_train6 <- c(1524:1857,80:89); 
+toy_train7 <- c(1858:2264,100:105);
 
 toys <- data.matrix(transform(toys, Size = 0)) # trival
-toys[which(toys[,'Duration']<=toy_remain),'Size'] <- 1 # remain
+toys[which(toys[,'Duration']<=toy_remain),'Size'] <- 1 # remain 13500-495900
 toys[which(toys[,'Duration']<1858),'Size'] <- 0 # trival
-toys[which(toys[,'Duration']>toy_remain),'Size'] <- 2 # ex1
-toys[which(toys[,'Duration']>=toy_ex2),'Size'] <- 3 # ex2
+toys[which(toys[,'Duration']>toy_remain),'Size'] <- 2 # ex1 540-493020
+toys[which(toys[,'Duration']>=toy_ex2),'Size'] <- 3 # ex2 157500-446940
 toys[which(toys[,'Duration']%in%toy_retrain1),'Size'] <- 4 # re1
 toys[which(toys[,'Duration']%in%toy_retrain2),'Size'] <- 5 # re2
 toys[which(toys[,'Duration']%in%toy_retrain3),'Size'] <- 6 # re3
